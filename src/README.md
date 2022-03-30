@@ -3,42 +3,43 @@
 [Hamlib/rotators/easycomm](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm)
 ([see easycomm.txt](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.txt))
 
-| Command                                         | Meaning                     | Perameters                     | Hamlib Config Token  | Standard  | Supported  |
-|-------------------------------------------------|-----------------------------|--------------------------------|----------------------|-----------|------------|
-| AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD |                             |                                |                      | I         | yes        |
-| AZ                                              | 	Azimuth                    | number - 1 decimal place [deg] |                      | II        | no         |
-| EL	                                             | 	Elevation                  | number - 1 decimal place [deg] |                      | II        | no         |
-| UP	                                             | 	Uplink freq                | in Hertz                       |                      | II        | no         |
-| DN	                                             | 	Downlink freq              | in Hertz                       |                      | II        | no         |
-| DM	                                             | 	Downlink Mode              | ascii, eg SSB, FM              |                      | II        | no         |
-| UM	                                             | 	Uplink Mode                | ascii, eg SSB, FM              |                      | II        | no         |
-| DR	                                             | 	Downlink Radio             | number                         |                      | II        | no         |
-| UR	                                             | 	Uplink Radio               | number                         |                      | II        | no         |
-| ML	                                             | 	Move Left                  |                                |                      | II        | no         |
-| MR	                                             | 	Move Right                 |                                |                      | II        | no         |
-| MU	                                             | 	Move Up                    |                                |                      | II        | no         |
-| MD	                                             | 	Move Down                  |                                |                      | II        | no         |
-| SA	                                             | 	Stop azimuth moving        |                                |                      | II        | no         |
-| SE	                                             | 	Stop elevation moving      |                                |                      | II        | no         |
-| AO	                                             | 	AOS                        |                                |                      | II        | no         |
-| LO	                                             | 	LOS                        |                                |                      | II        | no         |
-| OP	                                             | 	Set output                 | number                         |                      | II        | no         |
-| IP	                                             | 	Read an input              | number                         |                      | II        | no         |
-| AN	                                             | 	Read analogue input        | number                         |                      | II        | no         |
-| ST	                                             | 	Set time                   | YY:MM:DD:HH:MM:SS              |                      | II        | no         |
-| VE                                              | Request Version             |                                |                      | II        | no         |
-| VL	                                             | 	Velocity Left              | number [mdeg/s]                |                      | III       | no         |
-| VR	                                             | 	Velocity Right             | number [mdeg/s]                |                      | III       | no         |
-| VU	                                             | 	Velocity Up	               | number [mdeg/s]                |                      | III       | no         |
-| VD	                                             | 	Velocity Down              | number [mdeg/s]                |                      | III       | no         |
-| CR	                                             | 	Read config                | register [0-x]	                | 1                    | III       | no         |
-| CW	                                             | 	Write config               | register [0-x]	                | 2                    | III       | no         |
-| GS	                                             | 	Get status register	       |                                | 3                    | III       | no         |
-| GE	                                             | 	Get error register         |                                | 4                    | III       | no         |
-| VE	                                             | 	Request Version            |                                | 5                    | III       | no         |
-| IP	                                             | 	Read an input number       |                                | 6                    | III       | no         |
-| OP	                                             | 	Set output number          |                                | 7                    | III       | no         |
-| AN	                                             | 	Read analogue input number |                                | 8                    | III       | no         |
+| Command    | Meaning                    | Perameters                                      | Hamlib Config Token | Standard | Supported |
+|------------|----------------------------|-------------------------------------------------|---------------------|----------|-----------|
+| Easycomm 1 | single line command        | AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD |                     | 1        | yes       |
+| ^^         | ^^                         | ^^ AZaaa.a ELeee.e UPuuu UUU DNddd DDD          |                     | ^^       |^^         |
+| AZ         | azimuth                    | unsigned float, 1 decimal place [deg]           |                     | 2        | yes       |
+| EL         | elevation                  | unsigned float, 1 decimal place [deg]           |                     | 2        | yes       |
+| UP         | uplink freq                | in [Hz]                                         |                     | 2        | no        |
+| DN         | downlink freq              | in [Hz]                                         |                     | 2        | no        |
+| DM         | downlink Mode              | string,  [a-zA-Z]{1,3}, eg SSB, FM              |                     | 2        | no        |
+| UM         | uplink Mode                | string,  [a-zA-Z]{1,3}, eg SSB, FM              |                     | 2        | no        |
+| DR         | downlink Radio             | unsigned integer                                |                     | 2        | no        |
+| UR         | uplink Radio               | unsigned integer                                |                     | 2        | no        |
+| ML         | move Left                  |                                                 |                     | 2        | no        |
+| MR         | move Right                 |                                                 |                     | 2        | no        |
+| MU         | move Up                    |                                                 |                     | 2        | no        |
+| MD         | move Down                  |                                                 |                     | 2        | no        |
+| SA         | stop azimuth moving        |                                                 |                     | 2        | no        |
+| SE         | stop elevation moving      |                                                 |                     | 2        | no        |
+| AO         | AOS                        |                                                 |                     | 2        | no        |
+| LO         | LOS                        |                                                 |                     | 2        | no        |
+| OP         | set output                 | unsigned integer                                |                     | 2        | no        |
+| IP         | read an input              | unsigned integer                                |                     | 2        | no        |
+| AN         | read analogue input        | unsigned integer                                |                     | 2        | no        |
+| ST         | set time                   | YY:MM:DD:HH:MM:SS                               |                     | 2        | no        |
+| VE         | request Version            |                                                 |                     | 2        | no        |
+| VL         | velocity Left              | unsigned integer [mdeg/s]                       |                     | 3        | no        |
+| VR         | velocity Right             | unsigned integer [mdeg/s]                       |                     | 3        | no        |
+| VU         | velocity Up                | unsigned integer [mdeg/s]                       |                     | 3        | no        |
+| VD         | velocity Down              | unsigned integer [mdeg/s]                       |                     | 3        | no        |
+| CR         | read config                | register [0-x]                                  | 1                   | 3        | no        |
+| CW         | write config               | register [0-x]                                  | 2                   | 3        | no        |
+| GS         | get status register        |                                                 | 3                   | 3        | no        |
+| GE         | get error register         |                                                 | 4                   | 3        | no        |
+| VE         | request Version            |                                                 | 5                   | 3        | no        |
+| IP         | read an input number       |                                                 | 6                   | 3        | no        |
+| OP         | set output number          |                                                 | 7                   | 3        | no        |
+| AN         | read analogue input number |                                                 | 8                   | 3        | no        |
 
 
 | Status  | Meaning  |
@@ -48,7 +49,7 @@
 | 4       | Pointing |
 | 8       | Error    |
 
-| Error  | Meaning      |	
+| Error  | Meaning      |
 |--------|--------------|
 | 1      | Sensor Error |
 | 2      | Jam          |
