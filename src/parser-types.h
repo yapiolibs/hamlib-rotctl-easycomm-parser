@@ -13,6 +13,9 @@ typedef enum {
     EasycommIdSingleLine,
 } EasycommCommandId;
 
+typedef enum EasycommCommandLength {
+    EasycommSingleLineLength = 47,
+} EasycommCommandLength;
 
 typedef union EasycommFrequency {
     struct {
@@ -49,7 +52,7 @@ typedef struct EasycommData {
 
 void easycommFrequency(EasycommFrequency *d);
 
-void easycommSingleLine(EasycommSingleLine *d);
+void easycommSingleLine(EasycommSingleLine * d);
 
 void easycommPayload(EasycommPayload *d);
 
@@ -72,6 +75,7 @@ void easycommSingleLineCopy(const EasycommSingleLine *from, EasycommSingleLine *
 void easycommPayloadCopy(const EasycommPayload *from, EasycommPayload *to);
 
 void easycommDataCopy(const EasycommData *from, EasycommData *to);
+
 
 void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to);
 

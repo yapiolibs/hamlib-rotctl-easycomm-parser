@@ -15,11 +15,13 @@ typedef struct CommandParser {
 
 
 bool isEasycommISingleLine(const char *buffer) {
+    // buffer: "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
     // buffer length: 47 + '\n'
-    if (buffer == NULL || strlen(buffer) != 47) {
+    if (buffer == NULL || strlen(buffer) != EasycommSingleLineLength) {
         return false;
     }
-    return true;
+
+    return buffer[0] == 'A' && buffer[1] == 'Z';
 }
 
 

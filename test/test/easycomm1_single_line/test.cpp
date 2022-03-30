@@ -10,7 +10,7 @@
 #include <easycomm-parser.h>
 
 void printEasycommSingleLine(const EasycommSingleLine *data) {
-    char buffer[48];
+    char buffer[EasycommSingleLineLength + 1];
     easycommSingleLineSprintf(data, buffer);
     printf("%s", buffer);
 }

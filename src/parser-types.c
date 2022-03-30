@@ -29,10 +29,11 @@ bool easycommFrequencyEquals(const EasycommFrequency *a, const EasycommFrequency
 
 
 bool easycommSingleLineEquals(const EasycommSingleLine *a, const EasycommSingleLine *b) {
+    const float margin = 0.1;
     return (a == NULL && b == NULL) ||
            ((a != NULL && b != NULL) &&
-            a->azimuth == b->azimuth &&
-            a->elevation == b->elevation &&
+            (a->azimuth <= b->azimuth + margin && a->azimuth >= b->azimuth - margin) &&
+            (a->elevation <= b->elevation + margin && a->elevation >= b->elevation - margin) &&
             a->uplink_frequency.as.uint32 == b->uplink_frequency.as.uint32 &&
             a->downlink_frequency.as.uint32 == b->downlink_frequency.as.uint32 &&
             a->mode_down[0] == b->mode_down[0] &&
