@@ -15,6 +15,7 @@ typedef struct CommandParser {
 
 
 bool isEasycommISingleLine(const char *buffer) {
+    // buffer length: 47 + '\n'
     if (buffer == NULL || strlen(buffer) != 47) {
         return false;
     }
@@ -24,8 +25,6 @@ bool isEasycommISingleLine(const char *buffer) {
 
 bool readEasycommISingleLine(const char *buffer, EasycommData *parsed) {
     // buffer: "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
-    // len: 47 + \n
-
     char c;
     parsed->commandId = EasycommIdSingleLine;
 

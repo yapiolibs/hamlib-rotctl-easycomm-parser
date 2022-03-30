@@ -1,8 +1,7 @@
 #include <unity.h>
-#include <easycomm-parser.h>
-
 #include <string.h>
 #include <stdio.h>
+#include <easycomm-parser.h>
 
 void printEasycommSingleLine(const EasycommSingleLine *data) {
     char buffer[48];

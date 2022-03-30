@@ -29,18 +29,18 @@ bool easycommFrequencyEquals(const EasycommFrequency *a, const EasycommFrequency
 
 
 bool easycommSingleLineEquals(const EasycommSingleLine *a, const EasycommSingleLine *b) {
-    //return 0 == memcmp(a, b, sizeof(EasycommSingleLine));
-    return (a == NULL && b == NULL) || ((a != NULL && b != NULL) &&
-       a->azimuth == b->azimuth &&
-       a->elevation == b->elevation &&
-       a->uplink_frequency.as.uint32 == b->uplink_frequency.as.uint32 &&
-       a->downlink_frequency.as.uint32 == b->downlink_frequency.as.uint32 &&
-       a->mode_down[0] == b->mode_down[0] &&
-       a->mode_down[1] == b->mode_down[1] &&
-       a->mode_down[2] == b->mode_down[2] &&
-       a->mode_up[0] == b->mode_up[0] &&
-       a->mode_up[1] == b->mode_up[1] &&
-       a->mode_up[2] == b->mode_up[2]);
+    return (a == NULL && b == NULL) ||
+           ((a != NULL && b != NULL) &&
+            a->azimuth == b->azimuth &&
+            a->elevation == b->elevation &&
+            a->uplink_frequency.as.uint32 == b->uplink_frequency.as.uint32 &&
+            a->downlink_frequency.as.uint32 == b->downlink_frequency.as.uint32 &&
+            a->mode_down[0] == b->mode_down[0] &&
+            a->mode_down[1] == b->mode_down[1] &&
+            a->mode_down[2] == b->mode_down[2] &&
+            a->mode_up[0] == b->mode_up[0] &&
+            a->mode_up[1] == b->mode_up[1] &&
+            a->mode_up[2] == b->mode_up[2]);
 }
 
 
@@ -50,19 +50,7 @@ bool easycommPayloadEquals(const EasycommPayload *a, const EasycommPayload *b) {
 
 
 bool easycommDataEquals(const EasycommData *a, const EasycommData *b) {
-    /*return a->commandId == b->commandId &&
-           a->as.singleLine.azimuth == b->as.singleLine.azimuth &&
-           a->as.singleLine.elevation == b->as.singleLine.elevation &&
-           a->as.singleLine.uplink_frequency.as.uint32 == b->as.singleLine.uplink_frequency.as.uint32 &&
-           a->as.singleLine.downlink_frequency.as.uint32 == b->as.singleLine.downlink_frequency.as.uint32 &&
-           a->as.singleLine.mode_down[0] == b->as.singleLine.mode_down[0] &&
-           a->as.singleLine.mode_down[1] == b->as.singleLine.mode_down[1] &&
-           a->as.singleLine.mode_down[2] == b->as.singleLine.mode_down[2] &&
-           a->as.singleLine.mode_up[0] == b->as.singleLine.mode_up[0] &&
-           a->as.singleLine.mode_up[1] == b->as.singleLine.mode_up[1] &&
-           a->as.singleLine.mode_up[2] == b->as.singleLine.mode_up[2];*/
     return 0 == memcmp(a, b, sizeof(EasycommData));
-
 }
 
 
