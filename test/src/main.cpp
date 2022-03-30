@@ -8,24 +8,21 @@
 
 #endif
 
-bool parse() {
+bool parse()
+{
     const char *data = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
     EasycommData result;
     return easycommParse(data, &result);
 }
 
 #ifdef ENV_NATIVE
-int main() {
-    return (parse()) ? 0 : 1;
-}
+int main() { return (parse()) ? 0 : 1; }
 
 #else
 
 void setup() {}
 
 
-void loop() {
-    parse();
-}
+void loop() { parse(); }
 
 #endif

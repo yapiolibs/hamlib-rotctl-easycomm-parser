@@ -1,83 +1,92 @@
 #pragma once
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-#include <stdbool.h>
 #include <inttypes.h>
+#include <stdbool.h>
 
 
-typedef enum {
-    EasycommIdInvalid,
-    EasycommIdSingleLine,
-} EasycommCommandId;
+    typedef enum
+    {
+        EasycommIdInvalid,
+        EasycommIdSingleLine,
+    } EasycommCommandId;
 
-typedef enum EasycommCommandLength {
-    EasycommSingleLineLength = 47,
-} EasycommCommandLength;
+    typedef enum EasycommCommandLength
+    {
+        EasycommSingleLineLength = 47,
+    } EasycommCommandLength;
 
-typedef union EasycommFrequency {
-    struct {
-        uint32_t uint32;
-        uint8_t array[4];
-        struct {
-            uint16_t low;
-            uint16_t high;
-        } dword;
-    } as;
-} EasycommFrequency;
-
-
-typedef struct EasycommSingleLine {
-    float azimuth; // [deg]
-    float elevation; // [deg]
-    EasycommFrequency uplink_frequency; // [Hz] 100 000 000 000
-    EasycommFrequency downlink_frequency;  // [Hz]
-    char mode_up[3];
-    char mode_down[3];
-} EasycommSingleLine;
+    typedef union EasycommFrequency
+    {
+        struct
+        {
+            uint32_t uint32;
+            uint8_t array[4];
+            struct
+            {
+                uint16_t low;
+                uint16_t high;
+            } dword;
+        } as;
+    } EasycommFrequency;
 
 
-typedef union EasycommPayload {
-    EasycommSingleLine singleLine;
-} EasycommPayload;
+    typedef struct EasycommSingleLine
+    {
+        float azimuth;                        // [deg]
+        float elevation;                      // [deg]
+        EasycommFrequency uplink_frequency;   // [Hz] 100 000 000 000
+        EasycommFrequency downlink_frequency; // [Hz]
+        char mode_up[3];
+        char mode_down[3];
+    } EasycommSingleLine;
 
 
-typedef struct EasycommData {
-    EasycommCommandId commandId;
-    EasycommPayload as;
-} EasycommData;
+    typedef union EasycommPayload
+    {
+        EasycommSingleLine singleLine;
+    } EasycommPayload;
 
 
-void easycommFrequency(EasycommFrequency *d);
-
-void easycommSingleLine(EasycommSingleLine * d);
-
-void easycommPayload(EasycommPayload *d);
-
-void easycommData(EasycommData *d);
+    typedef struct EasycommData
+    {
+        EasycommCommandId commandId;
+        EasycommPayload as;
+    } EasycommData;
 
 
-bool easycommFrequencyEquals(const EasycommFrequency *a, const EasycommFrequency *b);
+    void easycommFrequency(EasycommFrequency *d);
 
-bool easycommSingleLineEquals(const EasycommSingleLine *a, const EasycommSingleLine *b);
+    void easycommSingleLine(EasycommSingleLine *d);
 
-bool easycommPayloadEquals(const EasycommPayload *a, const EasycommPayload *b);
+    void easycommPayload(EasycommPayload *d);
 
-bool easycommDataEquals(const EasycommData *a, const EasycommData *b);
-
-
-void easycommFrequencyCopy(const EasycommFrequency *from, EasycommFrequency *to);
-
-void easycommSingleLineCopy(const EasycommSingleLine *from, EasycommSingleLine *to);
-
-void easycommPayloadCopy(const EasycommPayload *from, EasycommPayload *to);
-
-void easycommDataCopy(const EasycommData *from, EasycommData *to);
+    void easycommData(EasycommData *d);
 
 
-void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to);
+    bool easycommFrequencyEquals(const EasycommFrequency *a, const EasycommFrequency *b);
+
+    bool easycommSingleLineEquals(const EasycommSingleLine *a, const EasycommSingleLine *b);
+
+    bool easycommPayloadEquals(const EasycommPayload *a, const EasycommPayload *b);
+
+    bool easycommDataEquals(const EasycommData *a, const EasycommData *b);
+
+
+    void easycommFrequencyCopy(const EasycommFrequency *from, EasycommFrequency *to);
+
+    void easycommSingleLineCopy(const EasycommSingleLine *from, EasycommSingleLine *to);
+
+    void easycommPayloadCopy(const EasycommPayload *from, EasycommPayload *to);
+
+    void easycommDataCopy(const EasycommData *from, EasycommData *to);
+
+
+    void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to);
 
 #ifdef __cplusplus
 }

@@ -4,14 +4,15 @@
 
 #endif
 
-#include <unity.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
+#include <unity.h>
 
 
-void test_sscanf() {
+void test_sscanf()
+{
     // may require: build_flags += -Wl,-u,vfscanf,-lscanf_flt,-u,vfprintf,-lprintf_flt
-    char buffer[] = "ABC -123 123.4 def 42", abc[4] = {0}, def[4] = {0};
+    char buffer[] = "ABC -123 123.4 def 42", abc[4] = { 0 }, def[4] = { 0 };
     float fn = 0, fp = 0;
 #ifdef ARDUINO_AVR_MEGA2560
     int16_t d = 0;
@@ -44,6 +45,4 @@ void loop()
 #ifdef ARDUINO_AVR_MEGA2560
     return 0;
 #endif
-
 }
-
