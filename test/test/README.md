@@ -1,0 +1,3 @@
+```bash
+pio test
+```

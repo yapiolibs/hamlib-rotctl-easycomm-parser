@@ -1,0 +1,22 @@
+{
+  "name": "HamlibRotctlEasycommParser",
+  "keywords": "hamlib, rotctl, easycomm, parser, antenna, rotor",
+  "description": "easycomm parser for hamlib rotator control",
+  "homepage": "https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser.git"
+  },
+  "authors": [
+    {
+        "name": "Raoul Rubien",
+        "url": "https://github.com/rubienr",
+        "maintainer" : "true"
+    }
+  ],
+  "dependencies": [],
+  "version": "0.1",
+  "frameworks": "*",
+  "platforms": "*"
+}
+
