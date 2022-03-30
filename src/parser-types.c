@@ -76,7 +76,13 @@ void easycommDataCopy(const EasycommData *from, EasycommData *to) {
 
 void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to) {
     // example "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD": 47 chars + \n
-    sprintf(to, "AZ%05.1f EL%05.1f UP%09d %c%c%c DN%09d %c%c%c",
+
+    sprintf(to,
+#ifdef ARDUINO_AVR_MEGA2560
+            "AZ%05.1f EL%05.1f UP%09lu %c%c%c DN%09lu %c%c%c",
+#else
+            "AZ%05.1f EL%05.1f UP%09u %c%c%c DN%09u %c%c%c",
+#endif
             from->azimuth,
             from->elevation,
             from->uplink_frequency.as.uint32,

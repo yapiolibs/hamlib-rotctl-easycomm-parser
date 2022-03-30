@@ -1,3 +1,9 @@
+#ifndef ENV_NATIVE
+
+#include <Arduino.h>
+
+#endif
+
 #include <unity.h>
 #include <string.h>
 #include <stdio.h>
@@ -16,19 +22,25 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
     easycommData(&parsed);
     bool is_parsed = easycommParse(data, &parsed);
 
-    printf("parsing:  %s\n", data);
-    printf("parsed:   ");
-    printEasycommSingleLine(&parsed.as.singleLine);
-    printf("\n");
+    //printf("parsed:   ");
+    //printf("parsing:  %s\n", data);
+    //printf("parsed:   ");
+    //printEasycommSingleLine(&parsed.as.singleLine);
+    //printf("\n");
     if (expected != NULL) {
-        printf("expected: ");
-        printEasycommSingleLine(&expected->as.singleLine);
-        printf("\n");
+        //printf("expected: ");
+        //printEasycommSingleLine(&expected->as.singleLine);
+        //printf("\n");
     }
 
     if (expect_parser_success) {
         if (is_parsed) {
             TEST_ASSERT_EQUAL(EasycommIdSingleLine, parsed.commandId);
+
+            char parsed_to_string[49] = {0};
+            easycommSingleLineSprintf(&parsed.as.singleLine, parsed_to_string);
+            TEST_ASSERT_EQUAL_STRING(data, parsed_to_string);
+
             TEST_ASSERT_TRUE(easycommSingleLineEquals(&parsed.as.singleLine, &expected->as.singleLine));
         } else {
             TEST_FAIL_MESSAGE("failed to parse");
@@ -70,10 +82,10 @@ void test_parse_azimuth_02() {
 }
 
 void test_parse_elevation() {
-    const char *valid_data = "AZ000.0 EL213.4 UP000000000 UUU DN000000000 DDD";
+    const char *valid_data = "AZ000.0 EL977.3 UP000000000 UUU DN000000000 DDD";
     EasycommData expected_result;
     easycommData(&expected_result);
-    expected_result.as.singleLine.elevation = 213.4f;
+    expected_result.as.singleLine.elevation = 977.3f;
     memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
     memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
     expected_result.commandId = EasycommIdSingleLine;
@@ -193,7 +205,15 @@ void test_parse_invalid_uplink_frequency() {
                                              expect_parser_fail);
 }
 
-int main(int argc, char **argv) {
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
+int main(int argc, char **argv)
+#else
+
+void setup() {}
+
+void loop()
+#endif
+{
     UNITY_BEGIN();
     RUN_TEST(test_parse_azimuth_01);
     RUN_TEST(test_parse_azimuth_02);
@@ -208,6 +228,10 @@ int main(int argc, char **argv) {
     RUN_TEST(test_parse_invalid_downlink_mode);
     RUN_TEST(test_parse_invalid_uplink_frequency);
     UNITY_END();
+
+#ifdef ARDUINO_AVR_MEGA2560
     return 0;
+#endif
+
 }
 

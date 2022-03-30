@@ -28,7 +28,12 @@ bool readEasycommISingleLine(const char *buffer, EasycommData *parsed) {
     char c;
     parsed->commandId = EasycommIdSingleLine;
 
-    uint8_t items = sscanf(buffer, "%c%c%f %c%c%f %c%c%d %c%c%c %c%c%d %c%c%c",
+    uint8_t items = sscanf(buffer,
+#ifdef ARDUINO_AVR_MEGA2560
+            "%c%c%f %c%c%f %c%c%ld %c%c%c %c%c%ld %c%c%c",
+#else
+                           "%c%c%f %c%c%f %c%c%d %c%c%c %c%c%d %c%c%c",
+#endif
                            &c, &c, &parsed->as.singleLine.azimuth,
                            &c, &c, &parsed->as.singleLine.elevation,
                            &c, &c, &parsed->as.singleLine.uplink_frequency.as.uint32,
