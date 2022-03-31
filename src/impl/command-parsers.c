@@ -249,19 +249,16 @@ bool readEasycomm1SingleLine(const char *buffer, EasycommData *parsed)
     // - "DDD", "DD", "D"
     char c;
     easycommSingleLine(&parsed->as.singleLine);
-
-    return 18 ==
+    return 14 ==
            sscanf(buffer,
 #ifdef ARDUINO_AVR_MEGA2560
-                  "%c%c%f %c%c%f %c%c%lu %c%c%c %c%c%lu %c%c%c",
+                  "%c%c%f %c%c%f %c%c%lu %s %c%c%lu %s", // TODO limit mode %s to max 3 letters %3s
 #else
-                  "%c%c%f %c%c%f %c%c%u %c%c%c %c%c%u %c%c%c",
+                  "%c%c%f %c%c%f %c%c%u %s %c%c%u %s", // TODO limit mode %s to max 3 letters %3s
 #endif
                   &c, &c, &parsed->as.singleLine.azimuth, &c, &c, &parsed->as.singleLine.elevation, &c,
-                  &c, &parsed->as.singleLine.uplinkFrequency.as.uint32, &parsed->as.singleLine.modeUp[0],
-                  &parsed->as.singleLine.modeUp[1], &parsed->as.singleLine.modeUp[2], &c, &c,
-                  &parsed->as.singleLine.downlinkFrequency.as.uint32, &parsed->as.singleLine.modeDown[0],
-                  &parsed->as.singleLine.modeDown[1], &parsed->as.singleLine.modeDown[2]);
+                  &c, &parsed->as.singleLine.uplinkFrequency.as.uint32, parsed->as.singleLine.modeUp,
+                  &c, &c, &parsed->as.singleLine.downlinkFrequency.as.uint32, parsed->as.singleLine.modeDown);
 }
 
 
@@ -318,7 +315,8 @@ bool readEasycomm2UplinkMode(const char *buffer, EasycommData *parsed)
     // buffer examples: "UMmmm", "UMmm", "UMm"
     char c;
     easycommUplinkMode(&parsed->as.uplinkMode);
-    return 3 == sscanf(buffer, "%c%c%s", &c, &c, parsed->as.uplinkMode.mode);
+    return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.uplinkMode.mode[0],
+                       &parsed->as.uplinkMode.mode[1], &parsed->as.uplinkMode.mode[2]);
 }
 
 
@@ -327,7 +325,8 @@ bool readEasycomm2DownlinkMode(const char *buffer, EasycommData *parsed)
     // buffer examples: "DMmmm", "DMmm", "DMm"
     char c;
     easycommDownlinkMode(&parsed->as.downlinkMode);
-    return 3 == sscanf(buffer, "%c%c%s", &c, &c, parsed->as.downlinkMode.mode);
+    return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.downlinkMode.mode[0],
+                       &parsed->as.downlinkMode.mode[1], &parsed->as.downlinkMode.mode[2]);
 }
 
 

@@ -21,12 +21,6 @@ void easycommResponseElevation(EasycommResponseElevation *d)
 }
 
 
-void easycommResponseAzimuthElevation(EasycommResponseAzimuthElevation *d)
-{
-    memset(d, 0, sizeof(EasycommResponseAzimuthElevation));
-}
-
-
 void easycommResponseUplinkFrequency(EasycommResponseUplinkFrequency *d)
 {
     memset(d, 0, sizeof(EasycommResponseUplinkFrequency));

@@ -29,8 +29,8 @@ extern "C"
         float elevation;
         EasycommFrequency uplinkFrequency;
         EasycommFrequency downlinkFrequency;
-        char modeUp[3];
-        char modeDown[3];
+        char modeUp[4];
+        char modeDown[4];
     } EasycommResponseSingleLine;
 
     /**
@@ -50,16 +50,6 @@ extern "C"
     {
         float elevation;
     } EasycommResponseElevation;
-
-    /**
-     * examples: "AZaaa.a ELeee.e"
-     * Easycomm 2 standard
-     */
-    typedef struct EasycommResponseAzimuthElevation
-    {
-        float azimuth;
-        float elevation;
-    } EasycommResponseAzimuthElevation;
 
     /**
      * example:
@@ -85,7 +75,7 @@ extern "C"
      */
     typedef struct EasycommResponseUplinkMode
     {
-        char mode[3];
+        char mode[4];
     } EasycommResponseUplinkMode;
 
     /**
@@ -94,7 +84,7 @@ extern "C"
      */
     typedef struct EasycommResponseDownlinkMode
     {
-        char mode[3];
+        char mode[4];
     } EasycommResponseDownlinkMode;
 
     /**

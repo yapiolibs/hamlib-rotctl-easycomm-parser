@@ -179,24 +179,33 @@ void test_parse_unexpected_elevation()
                                              expected_representation, expect_parser_success);
 }
 
-void test_parse_invalid_uplink_mode()
+void test_parse_trimmed_uplink_mode()
 {
     const char *invalid_data = "AZ000.0 EL000.0 UP10 UUUU DN000000000 DDD";
-    const char *expected_representation = "AZ0.0 EL0.0 UP10 UUUU DN0 DDD";
-    const EasycommData *dont_care = NULL;
-    const bool expect_parser_fail = false;
+    const char *expected_representation = "AZ0.0 EL0.0 UP10 UUU DN0 DDD";
+    EasycommData expected_result;
+    easycommSingleLine(&expected_result.as.singleLine);
+    expected_result.as.singleLine.uplinkFrequency.as.uint32 = 10;
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
+    const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(invalid_data, dont_care, expected_representation, expect_parser_fail);
+    invariant_test_parse_Easycomm1SingleLine(invalid_data, &expected_result,
+                                             expected_representation, expect_parser_success);
 }
 
-void test_parse_invalid_downlink_mode()
+void test_parse_short_downlink_mode()
 {
-    const char *invalid_data = "AZ000.0 EL000.0 UP10 UUU DN000000000 DD";
-    const char *expected_representation = "don't care";
-    const EasycommData *dont_care = NULL;
-    const bool expect_parser_fail = false;
+    const char *data = "AZ000.0 EL000.0 UP10 UUU DN000000000 DD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP10 UUU DN0 DD";
+    EasycommData expected_result;
+    easycommSingleLine(&expected_result.as.singleLine);
+    expected_result.as.singleLine.uplinkFrequency.as.uint32 = 10;
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DD", 2);
+    const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(invalid_data, dont_care, expected_representation, expect_parser_fail);
+    invariant_test_parse_Easycomm1SingleLine(data, &expected_result, expected_representation, expect_parser_success);
 }
 
 void test_parse_unexpected_uplink_frequency()
@@ -233,8 +242,8 @@ void loop()
     RUN_TEST(test_parse_downlink_mode);
     RUN_TEST(test_parse_invalid_azimuth);
     RUN_TEST(test_parse_unexpected_elevation);
-    RUN_TEST(test_parse_invalid_uplink_mode);
-    RUN_TEST(test_parse_invalid_downlink_mode);
+    RUN_TEST(test_parse_trimmed_uplink_mode);
+    RUN_TEST(test_parse_short_downlink_mode);
     RUN_TEST(test_parse_unexpected_uplink_frequency);
     UNITY_END();
 
