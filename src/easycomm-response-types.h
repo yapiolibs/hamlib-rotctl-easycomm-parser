@@ -197,7 +197,7 @@ extern "C"
      */
     typedef struct EasycommResponseGetStatusRegister
     {
-        EasycommErrorRegister status;
+        EasycommStatusRegister status;
     } EasycommResponseGetStatusRegister;
 
     /**
@@ -206,7 +206,7 @@ extern "C"
      */
     typedef struct EasycommResponseGetErrorRegister
     {
-        EasycommStatusRegister status;
+        EasycommErrorRegister status;
     } EasycommResponseGetErrorRegister;
 
 
