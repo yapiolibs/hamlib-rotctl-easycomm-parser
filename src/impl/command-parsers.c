@@ -1,7 +1,7 @@
+#include "../easycomm-parser-types-ctors.h"
 #include "../easycomm-parser.h"
 #include <stdio.h>
 #include <string.h> // size_t
-
 
 static bool isCommandPattern(const char *buffer, size_t min_length, size_t max_length, char *prefix, size_t prefix_length)
 {

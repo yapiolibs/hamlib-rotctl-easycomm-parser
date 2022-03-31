@@ -8,7 +8,6 @@
 #include <string.h>
 #include <unity.h>
 
-
 void test_sscanf()
 {
     // may require: build_flags += -Wl,-u,vfscanf,-lscanf_flt,-u,vfprintf,-lprintf_flt
