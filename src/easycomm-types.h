@@ -112,13 +112,14 @@ extern "C"
         EasycommStopElevationMoveLength = 2,      // "SE"
         EasycommAcquisitionOfSignalLength = 2,    // "AO"  TODO: clarification needed
         EasycommLossOfSignalLength = 2,           // "LO"  TODO: clarification needed
-        EasycommSetOutputMinLength = 3,           // "OPn" TODO: high vs low or set vs clear?
-        EasycommSetOutputMaxLength = 5,           // "OPnnn"
+        EasycommSetOutputMinLength = 5,           // "OPn,b" TODO: high vs low or set vs clear?
+        EasycommSetOutputMaxLength = 7,           // "OPnnn,b"
         EasycommReadInputMinLength = 3,           // "IPn"
         EasycommReadInputMaxLength = 5,           // "IPnnn"
         EasycommReadAnalogueInputMinLength = 3,   // "An"
         EasycommReadAnalogueInputMaxLength = 5,   // "ANnnn"
-        EasycommSetTimeLength = 19,               // "STYY:MM:DD:HH:MM:SS"
+        EasycommSetTimeMinLength = 13,            // "STY:m:d:h:M:s"
+        EasycommSetTimeMaxLength = 19,            // "STYY:mm:dd:hh:MM:ss"
         EasycommRequestVersionLength = 2,         // "VE"
 
         EasycommResponseSingleLineLength = 47, // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
@@ -134,7 +135,7 @@ extern "C"
         EasycommResponseUplinkRadioNumberLength = 5,   // "URuuu"
         EasycommResponseAcquisitionOfSignalLength = 2, // "AO"  TODO: clarification needed
         EasycommResponseLossOfSignalLength = 2,        // "LO"  TODO: clarification needed
-        EasycommResponseSetOutputLength = 5,           // "OPnnn"
+        EasycommResponseSetOutputLength = 7,           // "OPnnn,b"
         EasycommResponseReadInputLength = 5,           // "IPnnn"
         EasycommResponseReadAnalogueInputLength = 5,   // "ANnnn"
         EasycommResponseSetTimeLength = 19,            // "STYY:MM:DD:HH:MM:SS"

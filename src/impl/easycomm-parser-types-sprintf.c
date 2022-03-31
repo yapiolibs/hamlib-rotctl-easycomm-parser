@@ -108,7 +108,7 @@ void easycommLossOfSignalSprintf(const EasycommLossOfSignal *from, char *to) { s
 
 void easycommSetOutputSprintf(const EasycommSetOutput *from, char *to)
 {
-    sprintf(to, "OP%u", from->number);
+    sprintf(to, "OP%u,%u", from->number, from->value);
 }
 
 

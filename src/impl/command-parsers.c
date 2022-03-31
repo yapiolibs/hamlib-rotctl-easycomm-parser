@@ -138,7 +138,7 @@ bool isEasycomm2AcquisitionOfSignal(const char *buffer)
 
 bool isEasycomm2LossOfSignal(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommLossOfSignalLength, "Lo", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommLossOfSignalLength, "LO", 2);
 }
 
 
@@ -165,7 +165,7 @@ bool isEasycomm2ReadAnalogueInput(const char *buffer)
 
 bool isEasycomm2SetTime(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommSetTimeLength, "ST", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetTimeMinLength, EasycommSetTimeMaxLength, "ST", 2);
 }
 
 
@@ -427,16 +427,18 @@ bool readEasycomm2LossOfSignal(const char *buffer, EasycommData *parsed)
 
 bool readEasycomm2SetOutput(const char *buffer, EasycommData *parsed)
 {
-    // buffer examples: "OPnnn","OPnn","OPn",
-    char c;
+    // buffer examples: "OPnnn,v", "OPnn,v", "OPn,v"
+    char c, value;
     easycommSetOutput(&parsed->as.setOutput);
-    return 3 == sscanf(buffer,
+    size_t items = sscanf(buffer,
 #ifdef ARDUINO_AVR_MEGA2560
-                       "%c%c%u",
+                          "%c%c%u%c%c",
 #else
-                       "%c%c%hu",
+                          "%c%c%hu%c%c",
 #endif
-                       &c, &c, &parsed->as.setOutput.number);
+                          &c, &c, &parsed->as.setOutput.number, &c, &value);
+    parsed->as.setOutput.value = (value == '0') ? false : true;
+    return 5 == items;
 }
 
 

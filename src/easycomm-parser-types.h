@@ -261,6 +261,7 @@ extern "C"
     {
         EasycommCommandId commandId;
         uint16_t number;
+        bool value;
     } EasycommSetOutput;
 
     /**
