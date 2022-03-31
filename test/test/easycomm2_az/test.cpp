@@ -21,7 +21,7 @@ void invariant_test_parse_azimuth_elevation(const char *data,
     {
         if(is_parsed)
         {
-            TEST_ASSERT_EQUAL(EasycommAzimuthId, parsed.commandId);
+            TEST_ASSERT_EQUAL(EasycommIdAzimuth, parsed.commandId);
 
             char parsed_to_string[EasycommAzimuthMaxLength + 1] = { 0 };
             easycommAzimuthSprintf(&parsed.as.azimuth, parsed_to_string);

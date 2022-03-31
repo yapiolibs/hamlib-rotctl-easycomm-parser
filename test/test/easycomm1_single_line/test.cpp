@@ -21,7 +21,7 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
     {
         if(is_parsed)
         {
-            TEST_ASSERT_EQUAL(EasycommSingleLineId, parsed.commandId);
+            TEST_ASSERT_EQUAL(EasycommIdSingleLine, parsed.commandId);
 
             char parsed_to_string[EasycommSingleLineMaxLength + 1] = { 0 };
             easycommSingleLineSprintf(&parsed.as.singleLine, parsed_to_string);
@@ -48,8 +48,8 @@ void test_parse_elevation_01()
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.azimuth = 123.4f;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -63,8 +63,8 @@ void test_parse_elevation_02()
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.azimuth = 0.1f;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -78,8 +78,8 @@ void test_parse_elevation()
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.elevation = 977.3f;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -92,9 +92,9 @@ void test_parse_uplink_frequency()
     const char *expected_representation = "AZ000.0 EL000.0 UP999999999 UUU DN000000000 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
-    expected_result.as.singleLine.uplink_frequency.as.uint32 = 999999999;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    expected_result.as.singleLine.uplinkFrequency.as.uint32 = 999999999;
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -108,9 +108,9 @@ void test_parse_downlink_frequency()
     const char *expected_representation = "AZ000.0 EL000.0 UP000000000 UUU DN999999999 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
-    expected_result.as.singleLine.downlink_frequency.as.uint32 = 999999999;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    expected_result.as.singleLine.downlinkFrequency.as.uint32 = 999999999;
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -124,8 +124,8 @@ void test_parse_uplink_mode()
     const char *expected_representation = "AZ000.0 EL000.0 UP000000000 ABC DN000000000 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
-    memcpy(&expected_result.as.singleLine.mode_up, "ABC", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    memcpy(&expected_result.as.singleLine.modeUp, "ABC", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -138,8 +138,8 @@ void test_parse_downlink_mode()
     const char *expected_representation = "AZ000.0 EL000.0 UP000000000 UUU DN000000000 DEF";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DEF", 3);
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DEF", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
@@ -163,8 +163,8 @@ void test_parse_unexpected_elevation()
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.elevation = 359;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(invalid_data, &expected_result,
@@ -197,9 +197,9 @@ void test_parse_unexpected_uplink_frequency()
     const char *expected_representation = "AZ000.0 EL000.0 UP000000010 UUU DN000000000 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
-    expected_result.as.singleLine.uplink_frequency.as.uint32 = 10;
-    memcpy(&expected_result.as.singleLine.mode_up, "UUU", 3);
-    memcpy(&expected_result.as.singleLine.mode_down, "DDD", 3);
+    expected_result.as.singleLine.uplinkFrequency.as.uint32 = 10;
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
     invariant_test_parse_Easycomm1SingleLine(invalid_data, &expected_result,
