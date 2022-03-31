@@ -74,23 +74,6 @@ extern "C"
     } EasycommElevation;
 
     /**
-     * command: AZ EL
-     * meaning: Azimuth and Elevation
-     * parameters: not fixed width with 1 decimal [deg]
-     * examples:
-     * - "AZaaa.a ELeee.e"
-     * - "AZaaa.a ELe.e"
-     * - "AZa.a ELe.e"
-     * Easycomm 2 standard
-     */
-    typedef struct EasycommAzimuthElevation
-    {
-        EasycommCommandId commandId;
-        float azimuth;
-        float elevation;
-    } EasycommAzimuthElevation;
-
-    /**
      * command:
      * meaning:
      * parameters:
@@ -448,7 +431,6 @@ extern "C"
         EasycommSingleLine singleLine;
         EasycommAzimuth azimuth;
         EasycommElevation elevation;
-        EasycommAzimuthElevation azimuthElevation;
         EasycommUplinkFrequency uplinkFrequency;
         EasycommDownlinkFrequency downlinkFrequency;
         EasycommUplinkMode uplinkMode;

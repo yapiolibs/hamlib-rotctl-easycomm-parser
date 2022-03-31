@@ -15,7 +15,6 @@ extern "C"
     bool easycommFrequencyEquals(const EasycommFrequency *a, const EasycommFrequency *b);
     bool easycommAzimuthEquals(const EasycommAzimuth *a, const EasycommAzimuth *b);
     bool easycommElevationEquals(const EasycommElevation *a, const EasycommElevation *b);
-    bool easycommAzimuthElevationEquals(const EasycommAzimuthElevation *a, const EasycommAzimuthElevation *b);
     bool easycommUplinkFrequencyEquals(const EasycommUplinkFrequency *a, const EasycommUplinkFrequency *b);
     bool easycommDownlinkFrequencyEquals(const EasycommDownlinkFrequency *a, const EasycommDownlinkFrequency *b);
     bool easycommUplinkModeEquals(const EasycommUplinkMode *a, const EasycommUplinkMode *b);
@@ -55,7 +54,6 @@ extern "C"
     void easycommFrequencyCopy(const EasycommFrequency *from, EasycommFrequency *to);
     void easycommAzimuthCopy(const EasycommAzimuth *from, EasycommAzimuth *to);
     void easycommElevationCopy(const EasycommElevation *from, EasycommElevation *to);
-    void easycommAzimuthElevationCopy(const EasycommAzimuthElevation *from, EasycommAzimuthElevation *to);
 
 
 #ifdef __cplusplus

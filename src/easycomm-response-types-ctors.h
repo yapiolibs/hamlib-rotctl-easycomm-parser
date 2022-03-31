@@ -10,7 +10,6 @@ extern "C"
     void easycommResponseSingleLine(EasycommResponseSingleLine *d);
     void easycommResponseAzimuth(EasycommResponseAzimuth *d);
     void easycommResponseElevation(EasycommResponseElevation *d);
-    void easycommResponseAzimuthElevation(EasycommResponseAzimuthElevation *d);
     void easycommResponseUplinkFrequency(EasycommResponseUplinkFrequency *d);
     void easycommResponseDownlinkFrequency(EasycommResponseDownlinkFrequency *d);
     void easycommResponseUplinkMode(EasycommResponseUplinkMode *d);

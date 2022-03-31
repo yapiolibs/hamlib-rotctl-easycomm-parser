@@ -14,7 +14,7 @@ typedef struct CommandParser
 
 bool easycommParse(const char *buffer, EasycommData *parsed)
 {
-    static CommandParser parsers[33] = {
+    static CommandParser parsers[31] = {
         { .isCommand = fallbackPredicate, .parseCommand = fallbackParser },
         { .isCommand = isEasycomm3GetErrorRegister, .parseCommand = readEasycomm3GetErrorRegister },
         { .isCommand = isEasycomm3GetStatusRegister, .parseCommand = readEasycomm3GetStatusRegister },
@@ -43,8 +43,6 @@ bool easycommParse(const char *buffer, EasycommData *parsed)
         { .isCommand = isEasycomm2UplinkMode, .parseCommand = readEasycomm2UplinkMode },
         { .isCommand = isEasycomm2DownlinkFrequency, .parseCommand = readEasycomm2DownlinkFrequency },
         { .isCommand = isEasycomm2UplinkFrequency, .parseCommand = readEasycomm2UplinkFrequency },
-        { .isCommand = isEasycomm2ElevationAzimuth, .parseCommand = readEasycomm2ElevationAzimuth },
-        { .isCommand = isEasycomm2AzimuthElevation, .parseCommand = readEasycomm2AzimuthElevation },
         { .isCommand = isEasycomm2Elevation, .parseCommand = readEasycomm2Elevation },
         { .isCommand = isEasycomm2Azimuth, .parseCommand = readEasycomm2Azimuth },
         { .isCommand = isEasycomm1SingleLine, .parseCommand = readEasycomm1SingleLine },

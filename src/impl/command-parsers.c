@@ -52,19 +52,6 @@ bool isEasycomm2Elevation(const char *buffer)
 }
 
 
-bool isEasycomm2AzimuthElevation(const char *buffer)
-{
-    return isDynamicLengthCommandPattern(buffer, EasycommAzimuthElevationMinLength,
-                                         EasycommAzimuthElevationMaxLength, "AZ", 2);
-}
-
-
-bool isEasycomm2ElevationAzimuth(const char *buffer)
-{
-    return isDynamicLengthCommandPattern(buffer, EasycommElevationAzimuthMinLength,
-                                         EasycommElevationAzimuthMaxLength, "EL", 2);
-}
-
 bool isEasycomm2UplinkFrequency(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommUplinkFrequencyMinLength,
@@ -293,30 +280,6 @@ bool readEasycomm2Elevation(const char *buffer, EasycommData *parsed)
     char c;
     easycommElevation(&parsed->as.elevation);
     return 3 == sscanf(buffer, "%c%c%f", &c, &c, &parsed->as.elevation.elevation);
-}
-
-
-bool readEasycomm2AzimuthElevation(const char *buffer, EasycommData *parsed)
-{
-    // buffer examples:
-    // - "AZeee.e ELaaa.a",
-    // - AZ/EL: "ddd.d", "dd.d", "d.d", ".d"
-    char c;
-    easycommAzimuthElevation(&parsed->as.azimuthElevation);
-    return 6 == sscanf(buffer, "%c%c%f %c%c%f", &c, &c, &parsed->as.azimuthElevation.azimuth, &c,
-                       &c, &parsed->as.azimuthElevation.elevation);
-}
-
-
-bool readEasycomm2ElevationAzimuth(const char *buffer, EasycommData *parsed)
-{
-    // buffer examples:
-    // - "ELeee.e AZaaa.a",
-    // - EL/AZ: "ddd.d", "dd.d", "d.d", ".d"
-    char c;
-    easycommAzimuthElevation(&parsed->as.azimuthElevation);
-    return 6 == sscanf(buffer, "%c%c%f %c%c%f", &c, &c, &parsed->as.azimuthElevation.elevation, &c,
-                       &c, &parsed->as.azimuthElevation.azimuth);
 }
 
 

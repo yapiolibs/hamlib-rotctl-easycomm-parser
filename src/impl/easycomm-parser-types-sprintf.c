@@ -29,11 +29,6 @@ void easycommElevationSprintf(const EasycommElevation *from, char *to)
 }
 
 
-void easycommAzimuthElevationSprintf(const EasycommAzimuthElevation *from, char *to)
-{
-    sprintf(to, "AZ%.1f EL%.1f", from->azimuth, from->elevation);
-}
-
 void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *to)
 {
 #ifdef ARDUINO_AVR_MEGA2560

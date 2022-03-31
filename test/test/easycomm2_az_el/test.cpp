@@ -86,88 +86,6 @@ void invariant_test_parse_elevation(const char *data,
 }
 
 
-void invariant_test_parse_azimuth_elevation(const char *data,
-                                            const EasycommData *expected,
-                                            const char *expected_representation,
-                                            bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
-    char data_as_string[EasycommAzimuthElevationMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdAzimuthElevation, parsed.commandId);
-            easycommAzimuthElevationSprintf(&parsed.as.azimuthElevation, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommAzimuthEquals(&parsed.as.azimuth, &expected->as.azimuth));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommAzimuthElevationSprintf(&parsed.as.azimuthElevation, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
-
-
-void test_parse_azimuth_elevation_01()
-{
-    const char *valid_data = "AZ213.4 EL123.4";
-    const char *expected_representation = "AZ213.4 EL123.4";
-    EasycommData expected_result;
-    easycommAzimuthElevation(&expected_result.as.azimuthElevation);
-    expected_result.as.azimuthElevation.azimuth = 213.4;
-    expected_result.as.azimuthElevation.elevation = 123.4;
-    const bool expect_parser_success = true;
-
-    invariant_test_parse_azimuth_elevation(valid_data, &expected_result, expected_representation,
-                                           expect_parser_success);
-}
-
-
-void test_parse_azimuth_elevation_02()
-{
-    const char *valid_data = "EL123.1 AZ1.1";
-    const char *expected_representation = "AZ1.1 EL123.1";
-    EasycommData expected_result;
-    easycommAzimuthElevation(&expected_result.as.azimuthElevation);
-    expected_result.as.azimuthElevation.azimuth = 1.1;
-    expected_result.as.azimuthElevation.elevation = 123.1;
-    const bool expect_parser_success = true;
-
-    invariant_test_parse_azimuth_elevation(valid_data, &expected_result, expected_representation,
-                                           expect_parser_success);
-}
-
-
-void test_parse_unexpected_azimuth_elevation()
-{
-    const char *valid_data = "AZ-0.4 EL0.0";
-    const char *expected_representation = "AZ-0.4 EL0.0";
-    EasycommData expected_result;
-    easycommAzimuthElevation(&expected_result.as.azimuthElevation);
-    expected_result.as.azimuthElevation.azimuth = -0.4;
-    expected_result.as.azimuthElevation.elevation = 0;
-    const bool expect_parser_success = true;
-
-    invariant_test_parse_azimuth_elevation(valid_data, &expected_result, expected_representation,
-                                           expect_parser_success);
-}
-
-
 void test_parse_azimuth_01()
 {
     const char *valid_data = "AZ213.4";
@@ -306,10 +224,6 @@ void loop()
     RUN_TEST(test_parse_elevation_02);
     RUN_TEST(test_parse_elevation_03);
     RUN_TEST(test_parse_unexpected_elevation);
-
-    RUN_TEST(test_parse_azimuth_elevation_01);
-    RUN_TEST(test_parse_azimuth_elevation_02);
-    RUN_TEST(test_parse_unexpected_azimuth_elevation);
 
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560

@@ -61,18 +61,6 @@ bool easycommElevationEquals(const EasycommElevation *a, const EasycommElevation
 }
 
 
-bool easycommAzimuthElevationEquals(const EasycommAzimuthElevation *a, const EasycommAzimuthElevation *b)
-{
-    if(a == NULL && b == NULL)
-        return false;
-
-    const float margin = 0.1;
-    return (a != NULL && b != NULL) &&
-           (a->azimuth <= b->azimuth + margin && a->azimuth >= b->azimuth - margin) &&
-           (a->elevation <= b->elevation + margin && a->elevation >= b->elevation - margin);
-}
-
-
 bool easycommUplinkFrequencyEquals(const EasycommUplinkFrequency *a, const EasycommUplinkFrequency *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommUplinkFrequency));
@@ -268,10 +256,4 @@ void easycommAzimuthCopy(const EasycommAzimuth *from, EasycommAzimuth *to)
 void easycommElevationCopy(const EasycommElevation *from, EasycommElevation *to)
 {
     memcpy(to, from, sizeof(EasycommElevation));
-}
-
-
-void easycommAzimuthElevationCopy(const EasycommAzimuthElevation *from, EasycommAzimuthElevation *to)
-{
-    memcpy(to, from, sizeof(EasycommAzimuthElevation));
 }
