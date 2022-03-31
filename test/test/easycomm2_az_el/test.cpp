@@ -6,7 +6,7 @@
 
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
-#include <easycomm-parser-types-ssprintf.h>
+#include <easycomm-parser-types-sprintf.h>
 #include <easycomm-parser.h>
 #include <stdio.h>
 #include <string.h>

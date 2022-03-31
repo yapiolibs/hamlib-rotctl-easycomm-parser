@@ -5,160 +5,19 @@ extern "C"
 {
 #endif
 /**
+ * Commandos are issued by the host to the controller.
+ *
  * Easycomm 1, 2 and 3 references:
  * - description https://github.com/Hamlib/Hamlib/blob/master/rotators/easycomm/easycomm.txt
  * - implementation details https://github.com/Hamlib/Hamlib/blob/master/rotators/easycomm/easycomm.c
  */
+#include "easycomm-types.h"
 #include <inttypes.h>
 #include <stdbool.h>
 
     /**
-     * Status mapping
-     */
-    typedef enum
-    {
-        EasycommStatusInvalid,
-        EasycommStatusIdle,
-        EasycommStatusMoving,
-        EasycommStatusPointing,
-        EasycommStatusError
-    } EasycommStatusRegister;
-
-    /**
-     * Error mapping
-     */
-    typedef enum
-    {
-        EasycommErrorInvalid,
-        EasycommErrorSensor,
-        EasycommErrorJam,
-        EasycommErrorHoming,
-    } EasycommErrorRegister;
-
-    /**
-     * Command Id
-     */
-    typedef enum
-    {
-        EasycommIdInvalid,
-        EasycommIdSingleLine,
-        EasycommIdAzimuth,
-        EasycommIdElevation,
-        EasycommIdAzimuthElevation,
-        EasycommIdUplinkFrequency,
-        EasycommIdDownlinkFrequency,
-        EasycommIdUplinkMode,
-        EasycommIdDownlinkMode,
-        EasycommIdUplinkRadioNumber,
-        EasycommIdDownlinkRadioNumber,
-        EasycommIdMoveLeft,
-        EasycommIdMoveRight,
-        EasycommIdMoveUp,
-        EasycommIdMoveDown,
-        EasycommIdStopAzimuthMove,
-        EasycommIdStopElevationMove,
-        EasycommIdAcquisitionOfSignal,
-        EasycommIdLossOfSignal,
-        EasycommIdSetOutput,
-        EasycommIdReadInput,
-        EasycommIdReadAnalogueInput,
-        EasycommIdSetTime,
-        EasycommIdRequestVersion,
-        EasycommIdVelocityLeft,
-        EasycommIdVelocityRight,
-        EasycommIdVelocityUp,
-        EasycommIdVelocityDown,
-        EasycommIdReadConfig,
-        EasycommIdWriteConfig,
-        EasycommIdGetStatusRegister,
-        EasycommIdGetErrorRegister,
-    } EasycommCommandId;
-
-    /**
-     * Command string length constraints (exclusive '\n')
-     */
-    typedef enum EasycommCommandLength
-    {
-        // standard 1
-        EasycommSingleLineMinLength = 31, // "AZa.a ELe.e UPuuu UUU DNddd DDD"
-
-        // standard 2
-        EasycommSingleLineMaxLength = 47,       // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
-        EasycommAzimuthMinLength = 5,           // "ACa.a"
-        EasycommAzimuthMaxLength = 7,           // "AZaaa.a"
-        EasycommElevationMinLength = 5,         // "ELe.e"
-        EasycommElevationMaxLength = 7,         // "ELeee.e"
-        EasycommAzimuthElevationMinLength = 11, // "AZa.a ELe.e"
-        EasycommAzimuthElevationMaxLength = 15, // "AZaaa.a ELeee.e"
-        EasycommElevationAzimuthMinLength = 11, // "ELe.e AZa.a"
-        EasycommElevationAzimuthMaxLength = 15, // "ELeee.e AZaaa.a"
-        EasycommUplinkFrequencyMinLength = 3,   // "UPu"
-        EasycommUplinkFrequencyMaxLength = 11,  // "UPuuuuuuuuu"
-        EasycommDownlinkFrequencyMinLength = 3, // "DNd"
-        EasycommDownlinkFrequencyMaxLength = 11,  // "DNddddddddd"
-        EasycommUplinkModeMinLength = 3,          // "UMa"
-        EasycommUplinkModeMaxLength = 5,          // "UMabc"
-        EasycommDownlinkModeMinLength = 3,        // "DMa"
-        EasycommDownlinkModeMaxLength = 5,        // "DMabc"
-        EasycommDownlinkRadioNumberMinLength = 3, // "DRd"
-        EasycommDownlinkRadioNumberMaxLength = 5, // "DRddd"
-        EasycommUplinkRadioNumberMinLength = 3,   // "URu"
-        EasycommUplinkRadioNumberMaxLength = 5,   // "URuuu"
-        EasycommMoveLeftLength = 2,               // "ML"
-        EasycommMoveRightLength = 2,              // "MR"
-        EasycommMoveUpLength = 2,                 // "MU"
-        EasycommMoveDownLength = 2,               // "MD"
-        EasycommStopAzimuthMoveMinLength = 2,     // "SA"
-        EasycommStopElevationMoveMinLength = 2,   // "SE"
-        EasycommAcquisitionOfSignalMinLength = 2, // "AO"
-        EasycommLossOfSignalMinLength = 2,        // "LO"
-        EasycommSetOutputMinLength = 3,           // "OPn" TODO: high vs low or set vs clear?
-        EasycommSetOutputMaxLength = 5,           // "OPnnn"
-        EasycommReadInputMinLength = 3,           // "IPn"
-        EasycommReadInputMaxLength = 5,           // "IPnnn"
-        EasycommReadAnalogueInputMinLength = 3,   // "An"
-        EasycommReadAnalogueInputMaxLength = 5,   // "ANnnn"
-        EasycommSetTimeLength = 19,               // "STYY:MM:DD:HH:MM:SS"
-        EasycommRequestVersionLength = 2,         // "VE"
-
-        // standard 3
-        EasycommVelocityLeftMinLength = 3,   // "VLv"
-        EasycommVelocityLeftMaxLength = 11,  // "VLvvvvvvvvv"
-        EasycommVelocityRightMinLength = 3,  // "VRv"
-        EasycommVelocityRightMaxLength = 11, // "VRvvvvvvvvv"
-        EasycommVelocityUpMinLength = 3,     // "VUv"
-        EasycommVelocityUpMaxLength = 11,    // "VUvvvvvvvvv"
-        EasycommVelocityDownMinLength = 3,   // "VDv"
-        EasycommVelocityDownMaxLength = 11,  // "VDvvvvvvvvv"
-        EasycommReadConfigMinLength = 3,     // "CRn"
-        EasycommReadConfigMaxLength = 5,     // "CRnnn"
-        EasycommWriteConfigMinLength = 3, // "CWn" // TODO: payload is not defined, see config hamlib config token
-        EasycommWriteConfigMaxLength = 5,    // "CWnnn"
-        EasycommGetStatusRegisterLength = 2, // "GS"
-        EasycommGetErrorRegisterLength = 2,  // "GE"
-
-        // TODO: VE IP OP AN are mentioned to be new in standard 3 but already defined in standard 2
-    } EasycommCommandLength;
-
-
-    typedef union EasycommFrequency
-    {
-        struct
-        {
-            uint32_t uint32;
-            uint8_t array[4];
-            struct
-            {
-                uint16_t low;
-                uint16_t high;
-            } dword;
-        } as;
-    } EasycommFrequency;
-
-    /**
      * command: single line
      * meaning: set/get AZ, EL, UP frequency, DN frequency, UP mode and DN mode
-     * issued by: host (set), controller (push state)
      * parameters:
      * - "AZaaa.a" not fixed width number with 1 decimal in [deg]
      * - "ELeee.e" not fixed width number with 1 decimal in [deg]
@@ -187,7 +46,6 @@ extern "C"
     /**
      * command: AZ
      * meaning: set/get Azimuth
-     * issued by: host (set), controller (push state)
      * parameters: not fixed width with 1 decimal [deg]
      * examples:
      * - "AZaaa.a"
@@ -203,7 +61,6 @@ extern "C"
     /**
      * command: EL
      * meaning: Elevation
-     * issued by: host (set), controller (push state)
      * parameters: not fixed width with 1 decimal [deg]
      * examples:
      * - "ELeee.e"
@@ -219,7 +76,6 @@ extern "C"
     /**
      * command: AZ EL
      * meaning: Azimuth and Elevation
-     * issued by: host (set), controller (push state)
      * parameters: not fixed width with 1 decimal [deg]
      * examples:
      * - "AZaaa.a ELeee.e"
@@ -237,7 +93,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -251,7 +106,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -265,7 +119,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -279,7 +132,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -293,7 +145,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -307,7 +158,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -323,7 +173,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -337,7 +186,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -350,7 +198,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -363,7 +210,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -376,7 +222,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -389,7 +234,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -402,7 +246,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -415,7 +258,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -428,7 +270,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -442,7 +283,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -456,7 +296,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -470,7 +309,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -489,7 +327,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 2
@@ -502,7 +339,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -516,7 +352,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -530,7 +365,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -544,7 +378,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -558,7 +391,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -572,7 +404,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -587,7 +418,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3
@@ -600,7 +430,6 @@ extern "C"
     /**
      * command:
      * meaning:
-     * issued by:
      * parameters:
      * examples:
      * standard: Easycomm 3

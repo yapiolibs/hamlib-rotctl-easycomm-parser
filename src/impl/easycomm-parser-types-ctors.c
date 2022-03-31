@@ -3,9 +3,6 @@
 #include <string.h>
 
 
-// ----- contructors
-
-
 void easycommData(EasycommData *d)
 {
     memset(d, 0, sizeof(EasycommData));

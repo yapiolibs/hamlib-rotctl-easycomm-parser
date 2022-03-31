@@ -4,11 +4,6 @@
 extern "C"
 {
 #endif
-/**
- * Easycomm 1, 2 and 3 references:
- * - description https://github.com/Hamlib/Hamlib/blob/master/rotators/easycomm/easycomm.txt
- * - implementation details https://github.com/Hamlib/Hamlib/blob/master/rotators/easycomm/easycomm.c
- */
 #include <inttypes.h>
 #include <stdbool.h>
 

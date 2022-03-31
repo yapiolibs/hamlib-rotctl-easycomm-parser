@@ -1,4 +1,4 @@
-#include "../easycomm-parser-types-ssprintf.h"
+#include "../easycomm-parser-types-sprintf.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -104,11 +104,11 @@ void easycommStopElevationMoveSprintf(const EasycommStopElevationMove *from, cha
 
 void easycommAcquisitionOfSignalSprintf(const EasycommAcquisitionOfSignal *from, char *to)
 {
-    sprintf(to, "AOS");
+    sprintf(to, "AO");
 }
 
 
-void easycommLossOfSignalSprintf(const EasycommLossOfSignal *from, char *to) { sprintf(to, "LOS"); }
+void easycommLossOfSignalSprintf(const EasycommLossOfSignal *from, char *to) { sprintf(to, "LO"); }
 
 
 void easycommSetOutputSprintf(const EasycommSetOutput *from, char *to)
