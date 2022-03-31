@@ -153,8 +153,8 @@ extern "C"
         EasycommVelocityDownMaxLength = 11,  // "VDvvvvvvvvv"
         EasycommReadConfigMinLength = 3,     // "CRn"
         EasycommReadConfigMaxLength = 5,     // "CRnnn"
-        EasycommWriteConfigMinLength = 3, // "CWn" // TODO: payload is not defined, see config hamlib config token
-        EasycommWriteConfigMaxLength = 5,    // "CWnnn"
+        EasycommWriteConfigMinLength = 5, // "CWn,v" // TODO: payload is not defined, see config hamlib config token
+        EasycommWriteConfigMaxLength = 15,   // "CWnnn,vvvvvvvvv"
         EasycommGetStatusRegisterLength = 2, // "GS"
         EasycommGetErrorRegisterLength = 2,  // "GE"
 
@@ -183,6 +183,21 @@ extern "C"
             } dwords;
         } as;
     } EasycommFrequency;
+
+    typedef struct EasycommConfigValue
+    {
+        union
+        {
+            uint8_t uint8;
+            int8_t int8;
+            uint16_t uint16;
+            int16_t int16;
+            uint32_t uint32;
+            int32_t int32;
+            uint8_t bytes[4];
+        } as;
+    } EasycommConfigValue;
+
 
 #ifdef __cplusplus
 }

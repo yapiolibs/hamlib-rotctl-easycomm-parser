@@ -10,26 +10,27 @@ extern "C"
 
 #include "easycomm-response-types.h"
 
-    void easycommSingleLineSprintf(const EasycommResponseSingleLine *from, char *to);
-    void easycommAzimuthSprintf(const EasycommResponseAzimuth *from, char *to);
-    void easycommElevationSprintf(const EasycommResponseElevation *from, char *to);
-    void easycommUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to);
-    void easycommDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to);
-    void easycommUplinkModeSprintf(const EasycommResponseUplinkMode *from, char *to);
-    void easycommDownlinkModeSprintf(const EasycommResponseDownlinkMode *from, char *to);
-    void easycommDownlinkRadioNumberSprintf(const EasycommResponseDownlinkRadioNumber *from, char *to);
-    void easycommUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioNumber *from, char *to);
-    void easycommReadInputSprintf(const EasycommResponseReadInput *from, char *to);
-    void easycommReadAnalogueInputSprintf(const EasycommResponseReadAnalogueInput *from, char *to);
-    void easycommRequestVersionSprintf(const EasycommResponseRequestVersion *from, char *to);
-    void easycommAlarmSprintf(const EasycommResponseAlarm *from, char *to);
-    void easycommVelocityLeftSprintf(const EasycommResponseVelocityLeft *from, char *to);
-    void easycommVelocityRightSprintf(const EasycommResponseVelocityRight *from, char *to);
-    void easycommVelocityUpSprintf(const EasycommResponseVelocityUp *from, char *to);
-    void easycommVelocityDownSprintf(const EasycommResponseVelocityDown *from, char *to);
-    void easycommReadConfigSprintf(const EasycommResponseReadConfig *from, char *to);
-    void easycommGetStatusRegisterSprintf(const EasycommResponseGetStatusRegister *from, char *to);
-    void easycommGetErrorRegisterSprintf(const EasycommResponseGetErrorRegister *from, char *to);
+    void easycommResponseSingleLineSprintf(const EasycommResponseSingleLine *from, char *to);
+    void easycommResponseAzimuthSprintf(const EasycommResponseAzimuth *from, char *to);
+    void easycommResponseElevationSprintf(const EasycommResponseElevation *from, char *to);
+    void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to);
+    void easycommResponseDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to);
+    void easycommResponseUplinkModeSprintf(const EasycommResponseUplinkMode *from, char *to);
+    void easycommResponseDownlinkModeSprintf(const EasycommResponseDownlinkMode *from, char *to);
+    void easycommResponseDownlinkRadioNumberSprintf(const EasycommResponseDownlinkRadioNumber *from, char *to);
+    void easycommResponseUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioNumber *from, char *to);
+    void easycommResponseReadInputSprintf(const EasycommResponseReadInput *from, char *to);
+    void easycommResponseReadAnalogueInputSprintf(const EasycommResponseReadAnalogueInput *from, char *to);
+    void easycommResponseRequestVersionSprintf(const EasycommResponseRequestVersion *from, char *to);
+    void easycommResponseAlarmSprintf(const EasycommResponseAlarm *from, char *to);
+    void easycommResponseVelocityLeftSprintf(const EasycommResponseVelocityLeft *from, char *to);
+    void easycommResponseVelocityRightSprintf(const EasycommResponseVelocityRight *from, char *to);
+    void easycommResponseVelocityUpSprintf(const EasycommResponseVelocityUp *from, char *to);
+    void easycommResponseVelocityDownSprintf(const EasycommResponseVelocityDown *from, char *to);
+    void easycommResponseReadConfigSprintf(const EasycommResponseReadConfig *from, char *to);
+    void easycommResponseWriteConfigSprintf(const EasycommResponseReadConfig *from, char *to);
+    void easycommResponseGetStatusRegisterSprintf(const EasycommResponseGetStatusRegister *from, char *to);
+    void easycommResponseGetErrorRegisterSprintf(const EasycommResponseGetErrorRegister *from, char *to);
 
 #ifdef __cplusplus
 }

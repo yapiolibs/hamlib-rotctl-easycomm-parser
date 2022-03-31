@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-void easycommSingleLineSprintf(const EasycommResponseSingleLine *from, char *to)
+void easycommResponseSingleLineSprintf(const EasycommResponseSingleLine *from, char *to)
 {
     sprintf(to,
 #ifdef ARDUINO_AVR_MEGA2560
@@ -17,25 +17,25 @@ void easycommSingleLineSprintf(const EasycommResponseSingleLine *from, char *to)
 }
 
 
-void easycommAzimuthSprintf(const EasycommResponseAzimuth *from, char *to)
+void easycommResponseAzimuthSprintf(const EasycommResponseAzimuth *from, char *to)
 {
     sprintf(to, "AZ%.1f", from->azimuth);
 }
 
 
-void easycommElevationSprintf(const EasycommResponseElevation *from, char *to)
+void easycommResponseElevationSprintf(const EasycommResponseElevation *from, char *to)
 {
     sprintf(to, "EL%.1f", from->elevation);
 }
 
 
-void easycommAzimuthElevationSprintf(const EasycommResponseAzimuthElevation *from, char *to)
+void easycommResponseAzimuthElevationSprintf(const EasycommResponseAzimuthElevation *from, char *to)
 {
     sprintf(to, "AZ%.1f EL%.1f", from->azimuth, from->elevation);
 }
 
 
-void easycommUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to)
+void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to)
 {
 #ifdef ARDUINO_AVR_MEGA2560
     sprintf(to, "UP%lu", from->frequency.as.uint32);
@@ -45,7 +45,7 @@ void easycommUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from,
 }
 
 
-void easycommDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to)
+void easycommResponseDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to)
 {
 #ifdef ARDUINO_AVR_MEGA2560
     sprintf(to, "DN%09ld", from->frequency.as.uint32);
@@ -55,90 +55,94 @@ void easycommDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *f
 }
 
 
-void easycommUplinkModeSprintf(const EasycommResponseUplinkMode *from, char *to)
+void easycommResponseUplinkModeSprintf(const EasycommResponseUplinkMode *from, char *to)
 {
     sprintf(to, "UM%c%c%c", from->mode[0], from->mode[1], from->mode[2]);
 }
 
 
-void easycommDownlinkModeSprintf(const EasycommResponseDownlinkMode *from, char *to)
+void easycommResponseDownlinkModeSprintf(const EasycommResponseDownlinkMode *from, char *to)
 {
     sprintf(to, "DM%c%c%c", from->mode[0], from->mode[1], from->mode[2]);
 }
 
 
-void easycommDownlinkRadioNumberSprintf(const EasycommResponseDownlinkRadioNumber *from, char *to)
+void easycommResponseDownlinkRadioNumberSprintf(const EasycommResponseDownlinkRadioNumber *from, char *to)
 {
     sprintf(to, "DR%u", from->number);
 }
 
 
-void easycommUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioNumber *from, char *to)
+void easycommResponseUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioNumber *from, char *to)
 {
     sprintf(to, "UR%u", from->number);
 }
 
 
-void easycommReadInputSprintf(const EasycommResponseReadInput *from, char *to)
+void easycommResponseReadInputSprintf(const EasycommResponseReadInput *from, char *to)
 {
     sprintf(to, "IP%u,%u", from->number, from->value);
 }
 
 
-void easycommReadAnalogueInputSprintf(const EasycommResponseReadAnalogueInput *from, char *to)
+void easycommResponseReadAnalogueInputSprintf(const EasycommResponseReadAnalogueInput *from, char *to)
 {
     sprintf(to, "AN%u,%u", from->number, from->value);
 }
 
 
-void easycommRequestVersionSprintf(const EasycommResponseRequestVersion *from, char *to)
+void easycommResponseRequestVersionSprintf(const EasycommResponseRequestVersion *from, char *to)
 {
     sprintf(to, "VE%u.%u", from->major, from->minor);
 }
 
 
-void easycommAlarmSprintf(const EasycommResponseAlarm *from, char *to)
+void easycommResponseAlarmSprintf(const EasycommResponseAlarm *from, char *to)
 {
     sprintf(to, "AL%s", from->message);
 }
 
 
-void easycommVelocityLeftSprintf(const EasycommResponseVelocityLeft *from, char *to)
+void easycommResponseVelocityLeftSprintf(const EasycommResponseVelocityLeft *from, char *to)
 {
     sprintf(to, "VL%u", from->milliDegSecond);
 }
 
 
-void easycommVelocityRightSprintf(const EasycommResponseVelocityRight *from, char *to)
+void easycommResponseVelocityRightSprintf(const EasycommResponseVelocityRight *from, char *to)
 {
     sprintf(to, "VR%u", from->milliDegSecond);
 }
 
 
-void easycommVelocityUpSprintf(const EasycommResponseVelocityUp *from, char *to)
+void easycommResponseVelocityUpSprintf(const EasycommResponseVelocityUp *from, char *to)
 {
     sprintf(to, "VU%u", from->milliDegSecond);
 }
 
-void easycommVelocityDownSprintf(const EasycommResponseVelocityDown *from, char *to)
+void easycommResponseVelocityDownSprintf(const EasycommResponseVelocityDown *from, char *to)
 {
     sprintf(to, "VD%u", from->milliDegSecond);
 }
 
 
-void easycommReadConfigSprintf(const EasycommResponseReadConfig *from, char *to)
+void easycommResponseReadConfigSprintf(const EasycommResponseReadConfig *from, char *to)
 {
-    sprintf(to, "XX%u,%s", from->registerNumber, from->registerValue);
+#ifdef ARDUINO_AVR_MEGA2560
+    sprintf(to, "CR%u,%ld", from->registerNumber, from->value.as.int32);
+#else
+    sprintf(to, "CR%u,%d", from->registerNumber, from->value.as.int32);
+#endif
 }
 
 
-void easycommGetStatusRegisterSprintf(const EasycommResponseGetStatusRegister *from, char *to)
+void easycommResponseGetStatusRegisterSprintf(const EasycommResponseGetStatusRegister *from, char *to)
 {
     sprintf(to, "GS%u", from->status);
 }
 
 
-void easycommGetErrorRegisterSprintf(const EasycommResponseGetErrorRegister *from, char *to)
+void easycommResponseGetErrorRegisterSprintf(const EasycommResponseGetErrorRegister *from, char *to)
 {
     sprintf(to, "GE%u", from->status);
 }

@@ -198,7 +198,7 @@ extern "C"
     typedef struct EasycommResponseReadConfig
     {
         uint16_t registerNumber;
-        char registerValue[33];
+        EasycommConfigValue value;
     } EasycommResponseReadConfig;
 
     /**

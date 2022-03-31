@@ -396,7 +396,7 @@ extern "C"
     {
         EasycommCommandId commandId;
         uint16_t registerNumber;
-        // TODO: paylod
+        EasycommConfigValue value;
     } EasycommWriteConfig;
 
     /**
