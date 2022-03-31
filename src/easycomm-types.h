@@ -179,7 +179,7 @@ extern "C"
             {
                 uint16_t low;
                 uint16_t high;
-            } dword;
+            } dwords;
         } as;
     } EasycommFrequency;
 

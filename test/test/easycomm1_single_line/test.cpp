@@ -19,16 +19,15 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
 {
     EasycommData parsed;
     bool is_parsed = easycommParse(data, &parsed);
+    char data_as_string[EasycommSingleLineMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
     {
         if(is_parsed)
         {
             TEST_ASSERT_EQUAL(EasycommIdSingleLine, parsed.commandId);
-
-            char parsed_to_string[EasycommSingleLineMaxLength + 1] = { 0 };
-            easycommSingleLineSprintf(&parsed.as.singleLine, parsed_to_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, parsed_to_string);
+            easycommSingleLineSprintf(&parsed.as.singleLine, data_as_string);
+            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
 
             TEST_ASSERT_TRUE(easycommSingleLineEquals(&parsed.as.singleLine, &expected->as.singleLine));
         }
@@ -39,6 +38,12 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
     }
     else
     {
+        if(is_parsed)
+        {
+            easycommSingleLineSprintf(&parsed.as.singleLine, data_as_string);
+            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
+        }
+        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
         TEST_ASSERT_FALSE(is_parsed);
     }
 }
@@ -47,7 +52,7 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
 void test_parse_elevation_01()
 {
     const char *valid_data = "AZ123.4 EL000.0 UP000000000 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ123.4 EL000.0 UP000000000 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ123.4 EL0.0 UP0 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.azimuth = 123.4f;
@@ -62,7 +67,7 @@ void test_parse_elevation_01()
 void test_parse_elevation_02()
 {
     const char *valid_data = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ0.1 EL0.0 UP0 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.azimuth = 0.1f;
@@ -77,7 +82,7 @@ void test_parse_elevation_02()
 void test_parse_elevation()
 {
     const char *valid_data = "AZ000.0 EL977.3 UP000000000 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ000.0 EL977.3 UP000000000 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ0.0 EL977.3 UP0 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.elevation = 977.3f;
@@ -92,7 +97,7 @@ void test_parse_elevation()
 void test_parse_uplink_frequency()
 {
     const char *valid_data = "AZ000.0 EL000.0 UP999999999 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ000.0 EL000.0 UP999999999 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP999999999 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.uplinkFrequency.as.uint32 = 999999999;
@@ -108,7 +113,7 @@ void test_parse_uplink_frequency()
 void test_parse_downlink_frequency()
 {
     const char *valid_data = "AZ000.0 EL000.0 UP000000000 UUU DN999999999 DDD";
-    const char *expected_representation = "AZ000.0 EL000.0 UP000000000 UUU DN999999999 DDD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP0 UUU DN999999999 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.downlinkFrequency.as.uint32 = 999999999;
@@ -124,7 +129,7 @@ void test_parse_downlink_frequency()
 void test_parse_uplink_mode()
 {
     const char *valid_data = "AZ000.0 EL000.0 UP000000000 ABC DN000000000 DDD";
-    const char *expected_representation = "AZ000.0 EL000.0 UP000000000 ABC DN000000000 DDD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP0 ABC DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     memcpy(&expected_result.as.singleLine.modeUp, "ABC", 3);
@@ -138,7 +143,7 @@ void test_parse_uplink_mode()
 void test_parse_downlink_mode()
 {
     const char *valid_data = "AZ000.0 EL000.0 UP000000000 UUU DN000000000 DEF";
-    const char *expected_representation = "AZ000.0 EL000.0 UP000000000 UUU DN000000000 DEF";
+    const char *expected_representation = "AZ0.0 EL0.0 UP0 UUU DN0 DEF";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
@@ -162,7 +167,7 @@ void test_parse_invalid_azimuth()
 void test_parse_unexpected_elevation()
 {
     const char *invalid_data = "AZ000.0 EL0359 UP000000000 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ000.0 EL359.0 UP000000000 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ0.0 EL359.0 UP0 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.elevation = 359;
@@ -177,7 +182,7 @@ void test_parse_unexpected_elevation()
 void test_parse_invalid_uplink_mode()
 {
     const char *invalid_data = "AZ000.0 EL000.0 UP10 UUUU DN000000000 DDD";
-    const char *expected_representation = "AZ000.0 EL000.0 UP10 UUUU DN000000000 DDD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP10 UUUU DN0 DDD";
     const EasycommData *dont_care = NULL;
     const bool expect_parser_fail = false;
 
@@ -197,7 +202,7 @@ void test_parse_invalid_downlink_mode()
 void test_parse_unexpected_uplink_frequency()
 {
     const char *invalid_data = "AZ000.0 EL000.0 UP10 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ000.0 EL000.0 UP000000010 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP10 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
     expected_result.as.singleLine.uplinkFrequency.as.uint32 = 10;

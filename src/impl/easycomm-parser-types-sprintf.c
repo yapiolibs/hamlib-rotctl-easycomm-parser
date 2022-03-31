@@ -7,9 +7,9 @@ void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to)
 {
     sprintf(to,
 #ifdef ARDUINO_AVR_MEGA2560
-            "AZ%05.1f EL%05.1f UP%09lu %c%c%c DN%09lu %c%c%c",
+            "AZ%.1f EL%.1f UP%lu %c%c%c DN%lu %c%c%c",
 #else
-            "AZ%05.1f EL%05.1f UP%09u %c%c%c DN%09u %c%c%c",
+            "AZ%.1f EL%.1f UP%u %c%c%c DN%u %c%c%c",
 #endif
             from->azimuth, from->elevation, from->uplinkFrequency.as.uint32, from->modeUp[0],
             from->modeUp[1], from->modeUp[2], from->downlinkFrequency.as.uint32, from->modeDown[0],
@@ -19,27 +19,27 @@ void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to)
 
 void easycommAzimuthSprintf(const EasycommAzimuth *from, char *to)
 {
-    sprintf(to, "AZ%05.1f", from->azimuth);
+    sprintf(to, "AZ%.1f", from->azimuth);
 }
 
 
 void easycommElevationSprintf(const EasycommElevation *from, char *to)
 {
-    sprintf(to, "EL%05.1f", from->elevation);
+    sprintf(to, "EL%.1f", from->elevation);
 }
 
 
 void easycommAzimuthElevationSprintf(const EasycommAzimuthElevation *from, char *to)
 {
-    sprintf(to, "AZ%05.1f EL%05.1f", from->azimuth, from->elevation);
+    sprintf(to, "AZ%.1f EL%.1f", from->azimuth, from->elevation);
 }
 
 void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *to)
 {
 #ifdef ARDUINO_AVR_MEGA2560
-    sprintf(to, "UP%09ld", from->frequency.as.uint32);
+    sprintf(to, "UP%lu", from->frequency.as.uint32);
 #else
-    sprintf(to, "UP%09d", from->frequency.as.uint32);
+    sprintf(to, "UP%u", from->frequency.as.uint32);
 #endif
 }
 
@@ -47,9 +47,9 @@ void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *t
 void easycommDownlinkFrequencySprintf(const EasycommDownlinkFrequency *from, char *to)
 {
 #ifdef ARDUINO_AVR_MEGA2560
-    sprintf(to, "DN%09ld", from->frequency.as.uint32);
+    sprintf(to, "DN%lu", from->frequency.as.uint32);
 #else
-    sprintf(to, "DN%09d", from->frequency.as.uint32);
+    sprintf(to, "DN%u", from->frequency.as.uint32);
 #endif
 }
 
@@ -68,13 +68,13 @@ void easycommDownlinkModeSprintf(const EasycommDownlinkMode *from, char *to)
 
 void easycommUplinkRadioNumberSprintf(const EasycommUplinkRadioNumber *from, char *to)
 {
-    sprintf(to, "UR%03d", from->number);
+    sprintf(to, "UR%u", from->number);
 }
 
 
 void easycommDownlinkRadioNumberSprintf(const EasycommDownlinkRadioNumber *from, char *to)
 {
-    sprintf(to, "DR%03d", from->number);
+    sprintf(to, "DR%u", from->number);
 }
 
 
@@ -113,25 +113,25 @@ void easycommLossOfSignalSprintf(const EasycommLossOfSignal *from, char *to) { s
 
 void easycommSetOutputSprintf(const EasycommSetOutput *from, char *to)
 {
-    sprintf(to, "OP%03d", from->number);
+    sprintf(to, "OP%u", from->number);
 }
 
 
 void easycommReadInputSprintf(const EasycommReadInput *from, char *to)
 {
-    sprintf(to, "IP%03d", from->number);
+    sprintf(to, "IP%u", from->number);
 }
 
 
 void easycommReadAnalogueInputSprintf(const EasycommReadAnalogueInput *from, char *to)
 {
-    sprintf(to, "AN%03d", from->number);
+    sprintf(to, "AN%u", from->number);
 }
 
 
 void easycommSetTimeSprintf(const EasycommSetTime *from, char *to)
 {
-    sprintf(to, "ST%02d:%02d:%02d:%02d:%02d:%02d", from->year, from->month, from->day, from->hour,
+    sprintf(to, "ST%02u:%02u:%02u:%02u:%02u:%02u", from->year, from->month, from->day, from->hour,
             from->minute, from->second);
 }
 
@@ -144,37 +144,37 @@ void easycommRequestVersionSprintf(const EasycommRequestVersion *from, char *to)
 
 void easycommVelocityLeftSprintf(const EasycommVelocityLeft *from, char *to)
 {
-    sprintf(to, "VL%09d", from->milliDegSecond);
+    sprintf(to, "VL%u", from->milliDegSecond);
 }
 
 
 void easycommVelocityRightSprintf(const EasycommVelocityRight *from, char *to)
 {
-    sprintf(to, "VR%09d", from->milliDegSecond);
+    sprintf(to, "VR%u", from->milliDegSecond);
 }
 
 
 void easycommVelocityUpSprintf(const EasycommVelocityUp *from, char *to)
 {
-    sprintf(to, "VU%09d", from->milliDegSecond);
+    sprintf(to, "VU%u", from->milliDegSecond);
 }
 
 
 void easycommVelocityDownSprintf(const EasycommVelocityDown *from, char *to)
 {
-    sprintf(to, "VD%09d", from->milliDegSecond);
+    sprintf(to, "VD%u", from->milliDegSecond);
 }
 
 
 void easycommReadConfigSprintf(const EasycommReadConfig *from, char *to)
 {
-    sprintf(to, "CR%03d", from->registerNumber);
+    sprintf(to, "CR%u", from->registerNumber);
 }
 
 
 void easycommWriteConfigSprintf(const EasycommWriteConfig *from, char *to)
 {
-    sprintf(to, "CW%03d", from->registerNumber);
+    sprintf(to, "CW%u", from->registerNumber);
 }
 
 

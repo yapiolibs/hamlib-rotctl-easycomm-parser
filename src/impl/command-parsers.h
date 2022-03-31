@@ -10,6 +10,7 @@ extern "C"
 
     // ----- predicates
 
+    bool fallbackPredicate(const char *buffer);
     bool isEasycomm1SingleLine(const char *buffer);
     bool isEasycomm2Azimuth(const char *buffer);
     bool isEasycomm2Elevation(const char *buffer);
@@ -46,6 +47,7 @@ extern "C"
 
     // ----- parsers
 
+    bool fallbackParser(const char *buffer, EasycommData *parsed);
     bool readEasycomm1SingleLine(const char *buffer, EasycommData *parsed);
     bool readEasycomm2Azimuth(const char *buffer, EasycommData *parsed);
     bool readEasycomm2Elevation(const char *buffer, EasycommData *parsed);
