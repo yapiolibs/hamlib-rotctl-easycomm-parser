@@ -120,25 +120,25 @@ bool isEasycomm2MoveDown(const char *buffer)
 
 bool isEasycomm2StopAzimuthMove(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommIdStopAzimuthMove, "SA", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommStopAzimuthMoveLength, "SA", 2);
 }
 
 
 bool isEasycomm2StopElevationMove(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommIdStopElevationMove, "SE", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommStopElevationMoveLength, "SE", 2);
 }
 
 
 bool isEasycomm2AcquisitionOfSignal(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommIdAcquisitionOfSignal, "AO", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommAcquisitionOfSignalLength, "AO", 2);
 }
 
 
 bool isEasycomm2LossOfSignal(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommIdLossOfSignal, "Lo", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommLossOfSignalLength, "Lo", 2);
 }
 
 

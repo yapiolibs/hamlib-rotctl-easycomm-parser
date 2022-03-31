@@ -160,6 +160,81 @@ void invariant_test_parse_move_down(const char *data,
 }
 
 
+void invariant_test_parse_stop_azimuth_move(const char *data,
+                                            const EasycommData *expected,
+                                            const char *expected_representation,
+                                            bool expect_parser_success)
+{
+    EasycommData parsed;
+    bool is_parsed = easycommParse(data, &parsed);
+    char data_as_string[EasycommStopAzimuthMoveLength + 1] = { 0 };
+
+    if(expect_parser_success)
+    {
+        if(is_parsed)
+        {
+            TEST_ASSERT_EQUAL(EasycommIdStopAzimuthMove, parsed.commandId);
+            easycommStopAzimuthMoveSprintf(&parsed.as.stopAzimuthMove, data_as_string);
+            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
+
+            TEST_ASSERT_TRUE(easycommStopAzimuthMoveEquals(&parsed.as.stopAzimuthMove, &expected->as.stopAzimuthMove));
+        }
+        else
+        {
+            TEST_FAIL_MESSAGE("failed to parse");
+        }
+    }
+    else
+    {
+        if(is_parsed)
+        {
+            easycommStopAzimuthMoveSprintf(&parsed.as.stopAzimuthMove, data_as_string);
+            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
+        }
+        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
+        TEST_ASSERT_FALSE(is_parsed);
+    }
+}
+
+
+void invariant_test_parse_stop_elevation_move(const char *data,
+                                              const EasycommData *expected,
+                                              const char *expected_representation,
+                                              bool expect_parser_success)
+{
+    EasycommData parsed;
+    bool is_parsed = easycommParse(data, &parsed);
+    char data_as_string[EasycommStopElevationMoveLength + 1] = { 0 };
+
+    if(expect_parser_success)
+    {
+        if(is_parsed)
+        {
+            TEST_ASSERT_EQUAL(EasycommIdStopElevationMove, parsed.commandId);
+            easycommStopElevationMoveSprintf(&parsed.as.stopElevationMove, data_as_string);
+            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
+
+            TEST_ASSERT_TRUE(easycommStopElevationMoveEquals(&parsed.as.stopElevationMove,
+                                                             &expected->as.stopElevationMove));
+        }
+        else
+        {
+            TEST_FAIL_MESSAGE("failed to parse");
+        }
+    }
+    else
+    {
+        if(is_parsed)
+        {
+            easycommStopElevationMoveSprintf(&parsed.as.stopElevationMove, data_as_string);
+            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
+        }
+        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
+        TEST_ASSERT_FALSE(is_parsed);
+    }
+}
+
+
 void test_parse_move_left()
 {
     const char *valid_data = "ML";
@@ -208,6 +283,32 @@ void test_parse_move_down()
 }
 
 
+void test_parse_stop_azimuth_move()
+{
+    const char *valid_data = "SA";
+    const char *expected_representation = "SA";
+    EasycommData expected_result;
+    easycommStopAzimuthMove(&expected_result.as.stopAzimuthMove);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_stop_azimuth_move(valid_data, &expected_result, expected_representation,
+                                           expect_parser_success);
+}
+
+
+void test_parse_stop_elevation_move()
+{
+    const char *valid_data = "SE";
+    const char *expected_representation = "SE";
+    EasycommData expected_result;
+    easycommStopElevationMove(&expected_result.as.stopElevationMove);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_stop_elevation_move(valid_data, &expected_result, expected_representation,
+                                             expect_parser_success);
+}
+
+
 #if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
 int main(int argc, char **argv)
 #else
@@ -223,6 +324,8 @@ void loop()
     RUN_TEST(test_parse_move_right);
     RUN_TEST(test_parse_move_up);
     RUN_TEST(test_parse_move_down);
+    RUN_TEST(test_parse_stop_azimuth_move);
+    RUN_TEST(test_parse_stop_elevation_move);
 
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560

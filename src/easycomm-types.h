@@ -108,8 +108,8 @@ extern "C"
         EasycommMoveRightLength = 2,              // "MR"
         EasycommMoveUpLength = 2,                 // "MU"
         EasycommMoveDownLength = 2,               // "MD"
-        EasycommStopAzimuthMoveMinLength = 2,     // "SA"
-        EasycommStopElevationMoveMinLength = 2,   // "SE"
+        EasycommStopAzimuthMoveLength = 2,        // "SA"
+        EasycommStopElevationMoveLength = 2,      // "SE"
         EasycommAcquisitionOfSignalLength = 2,    // "AO"  TODO: clarification needed
         EasycommLossOfSignalLength = 2,           // "LO"  TODO: clarification needed
         EasycommSetOutputMinLength = 3,           // "OPn" TODO: high vs low or set vs clear?
