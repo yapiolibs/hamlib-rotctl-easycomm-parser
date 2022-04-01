@@ -239,11 +239,11 @@ void test_response_velocity_down_01()
 
 void test_response_read_config_01()
 {
-    const char *expected_response = "CR1,123";
+    const char *expected_response = "CR1,#+!$abc";
     EasycommResponseReadConfig response;
     easycommResponseReadConfig(&response);
     response.registerNumber = 1;
-    response.value.as.int32 = 123;
+    memcpy(response.value.as.str, "#+!$abc", 8);
     char response_str[32];
     easycommResponseReadConfigSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);

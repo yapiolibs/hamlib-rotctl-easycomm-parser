@@ -17,19 +17,8 @@ extern "C"
 
     /**
      * command: single line
-     * meaning: set/get AZ, EL, UP frequency, DN frequency, UP mode and DN mode
-     * parameters:
-     * - "AZaaa.a" not fixed width number with 1 decimal in [deg]
-     * - "ELeee.e" not fixed width number with 1 decimal in [deg]
-     * - "UPuuuuuuuuu" or "UPuuu" in [Hz]
-     *   TODO: long version in doc. vs short version in code -> assume not fixed width
-     * - "UUU"  in [Hz]
-     * - "DNddddddddd" or "DNddd" in [Hz]
-     *   TODO: long version in doc. vs short version in code -> assume not fixed width
-     * - "DDD"
-     * examples:
-     * - "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
-     * - "AZaaa.a ELeee.e UPuuu UUU DNddd DDD"
+     * meaning: get AZ, EL, UP frequency, DN frequency, UP mode and DN mode
+     * example: "AZnnn.n ELnnn.n UPnnnnnnnnn UUU DNnnnnnnnnn DDD"
      * standard: Easycomm 1
      */
     typedef struct EasycommSingleLine
@@ -45,11 +34,8 @@ extern "C"
 
     /**
      * command: AZ
-     * meaning: set/get Azimuth
-     * parameters: not fixed width with 1 decimal [deg]
-     * examples:
-     * - "AZaaa.a"
-     * - "AZa.a"
+     * meaning: set azimuth in [deg]
+     * example: "AZnnn.n"
      * standard: Easycomm 2
      */
     typedef struct EassycommAzimuth
@@ -60,11 +46,8 @@ extern "C"
 
     /**
      * command: EL
-     * meaning: Elevation
-     * parameters: not fixed width with 1 decimal [deg]
-     * examples:
-     * - "ELeee.e"
-     * - "ELe.e"
+     * meaning: set elevation in [deg]
+     * example: "ELnnn.n"
      * standard: Easycomm 2
      */
     typedef struct EasycommElevation
@@ -74,10 +57,9 @@ extern "C"
     } EasycommElevation;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: UP
+     * meaning: set uplink frequency in [Hz]
+     * example: "UPnnnnnnnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommUplinkFrequency
@@ -87,10 +69,9 @@ extern "C"
     } EasycommUplinkFrequency;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: DN
+     * meaning: set downlink frequeny in [Hz]
+     * example: "DNnnnnnnnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommDownlinkFrequency
@@ -100,10 +81,9 @@ extern "C"
     } EasycommDownlinkFrequency;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: UM
+     * meaning: set uplink mode as string
+     * example: "UMccc"
      * standard: Easycomm 2
      */
     typedef struct EasycommUplinkMode
@@ -113,10 +93,9 @@ extern "C"
     } EasycommUplinkMode;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: DM
+     * meaning: set downlink mode as string
+     * examples: "DMccc"
      * standard: Easycomm 2
      */
     typedef struct EasycommDownlinkMode
@@ -126,10 +105,9 @@ extern "C"
     } EasycommDownlinkMode;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: DR
+     * meaning: set downlink radio number
+     * example: "DRnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommDownlinkRadioNumber
@@ -139,10 +117,9 @@ extern "C"
     } EasycommDownlinkRadioNumber;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: UR
+     * meaning: set uplink radio number
+     * example: "URnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommUplinkRadioNumber
@@ -154,10 +131,9 @@ extern "C"
 
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: ML
+     * meaning: move left
+     * example: "ML"
      * standard: Easycomm 2
      */
     typedef struct EasycommMoveLeft
@@ -167,10 +143,9 @@ extern "C"
 
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: MR
+     * meaning: move right
+     * example: "MR"
      * standard: Easycomm 2
      */
     typedef struct EasycommMoveRight
@@ -179,10 +154,9 @@ extern "C"
     } EasycommMoveRight;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: MU
+     * meaning: move up
+     * example: "MU"
      * standard: Easycomm 2
      */
     typedef struct EasycommMoveUp
@@ -191,10 +165,9 @@ extern "C"
     } EasycommMoveUp;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: MD
+     * meaning: move down
+     * example: "MD"
      * standard: Easycomm 2
      */
     typedef struct EasycommMoveDown
@@ -203,10 +176,9 @@ extern "C"
     } EasycommMoveDown;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: SA
+     * meaning: stop azimuth movement
+     * example: "SA"
      * standard: Easycomm 2
      */
     typedef struct EasycommStopAzimuthMove
@@ -215,10 +187,9 @@ extern "C"
     } EasycommStopAzimuthMove;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: SE
+     * meaning: stop elevation movement
+     * example: "SE"
      * standard: Easycomm 2
      */
     typedef struct EasycommStopElevationMove
@@ -227,10 +198,9 @@ extern "C"
     } EasycommStopElevationMove;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: AO
+     * meaning: acquisition of signal (AOS, TODO: bearing, elevation, signal or time?)
+     * example: "AO"
      * standard: Easycomm 2
      */
     typedef struct EasycommAcquisitionOfSignal
@@ -239,10 +209,9 @@ extern "C"
     } EasycommAcquisitionOfSignal;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: LO
+     * meaning: acquisition of signal (LOS, TODO: bearing, elevation, signal or time?)
+     * example: "LO"
      * standard: Easycomm 2
      */
     typedef struct EasycommLossOfSignal
@@ -251,10 +220,9 @@ extern "C"
     } EasycommLossOfSignal;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: OP
+     * meaning: set digital output [0|1]
+     * example: "OPnnn,b"
      * standard: Easycomm 2
      */
     typedef struct EasycommSetOutput
@@ -265,10 +233,9 @@ extern "C"
     } EasycommSetOutput;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: IP
+     * meaning: read digital input, [0|1]
+     * example: "IPnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommReadInput
@@ -278,10 +245,9 @@ extern "C"
     } EasycommReadInput;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: AN
+     * meaning: read analogue input, raw value [0-n]
+     * example: "ANnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommReadAnalogueInput
@@ -291,10 +257,9 @@ extern "C"
     } EasycommReadAnalogueInput;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: ST
+     * meaning: set current time [y]{1,2}:[m]{1,2}:[d]{1,2}:[M]{1,2}:[h]{1,2}:[s]{1,2}
+     * example: "STyy:mm:dd:hh:MM:ss"
      * standard: Easycomm 2
      */
     typedef struct EasycommSetTime
@@ -309,10 +274,9 @@ extern "C"
     } EasycommSetTime;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: VE
+     * meaning: request version
+     * example: "VE"
      * standard: Easycomm 2
      */
     typedef struct EasycommRequestVersion
@@ -321,10 +285,9 @@ extern "C"
     } EasycommRequestVersion;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: VL
+     * meaning: set velocity for left movement [deg*10^-3/sec]
+     * example: "VLnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommVelocityLeft
@@ -334,10 +297,9 @@ extern "C"
     } EasycommVelocityLeft;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: VR
+     * meaning: set velocity for right movement [deg*10^-3/sec]
+     * example: "VRnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommVelocityRight
@@ -347,10 +309,9 @@ extern "C"
     } EasycommVelocityRight;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: VU
+     * meaning: set velocity for up movement [deg*10^-3/sec]
+     * example: "VUnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommVelocityUp
@@ -360,10 +321,9 @@ extern "C"
     } EasycommVelocityUp;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: VD
+     * meaning: set velocity for down movement [deg*10^-3/sec]
+     * example: "VDnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommVelocityDown
@@ -373,10 +333,9 @@ extern "C"
     } EasycommVelocityDown;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: CR
+     * meaning: read configuration value from register
+     * example: "CRnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommReadConfig
@@ -386,10 +345,9 @@ extern "C"
     } EasycommReadConfig;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: CW
+     * meaning: write configuration value to register
+     * example: "CWnnn,nnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommWriteConfig
@@ -400,10 +358,9 @@ extern "C"
     } EasycommWriteConfig;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: GS
+     * meaning: get status register
+     * example: "GS"
      * standard: Easycomm 3
      */
     typedef struct EasycommGetStatusRegister
@@ -412,10 +369,9 @@ extern "C"
     } EasycommGetStatusRegister;
 
     /**
-     * command:
-     * meaning:
-     * parameters:
-     * examples:
+     * command: GE
+     * meaning: get error register
+     * example: "GE"
      * standard: Easycomm 3
      */
     typedef struct EasycommGetErrorRegister

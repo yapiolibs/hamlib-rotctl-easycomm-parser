@@ -176,11 +176,11 @@ void test_parse_read_config()
 void test_parse_write_config()
 {
     const char *valid_data = "CW123,0815";
-    const char *expected_representation = "CW123,815";
+    const char *expected_representation = "CW123,0815";
     EasycommData expected_result;
     easycommWriteConfig(&expected_result.as.writeConfig);
     expected_result.as.writeConfig.registerNumber = 123;
-    expected_result.as.writeConfig.value.as.int32 = 815;
+    memcpy(expected_result.as.writeConfig.value.as.str, "0815", 4);
     const bool expect_parser_success = true;
 
     invariant_test_parse_write_config(valid_data, &expected_result, expected_representation, expect_parser_success);

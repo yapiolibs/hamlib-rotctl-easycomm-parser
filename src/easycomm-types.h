@@ -194,7 +194,8 @@ extern "C"
             int16_t int16;
             uint32_t uint32;
             int32_t int32;
-            uint8_t bytes[4];
+            uint8_t bytes[16];
+            char str[16];
         } as;
     } EasycommConfigValue;
 

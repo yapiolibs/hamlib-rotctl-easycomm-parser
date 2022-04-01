@@ -52,7 +52,7 @@ extern "C"
     } EasycommResponseElevation;
 
     /**
-     * example:
+     * example: "UPfff"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseUplinkFrequency
@@ -61,7 +61,7 @@ extern "C"
     } EasycommResponseUplinkFrequency;
 
     /**
-     * example:
+     * example: "DNfff"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseDownlinkFrequency
@@ -70,7 +70,7 @@ extern "C"
     } EasycommResponseDownlinkFrequency;
 
     /**
-     * example:
+     * example: "UMmmm"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseUplinkMode
@@ -79,7 +79,7 @@ extern "C"
     } EasycommResponseUplinkMode;
 
     /**
-     * example:
+     * example: "DMmmm"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseDownlinkMode
@@ -88,7 +88,7 @@ extern "C"
     } EasycommResponseDownlinkMode;
 
     /**
-     * example:
+     * example: "DRnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseDownlinkRadioNumber
@@ -97,7 +97,7 @@ extern "C"
     } EasycommResponseDownlinkRadioNumber;
 
     /**
-     * example:
+     * example: "URnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseUplinkRadioNumber
@@ -106,7 +106,7 @@ extern "C"
     } EasycommResponseUplinkRadioNumber;
 
     /**
-     * example:
+     * example: "IPnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseReadInput
@@ -116,7 +116,7 @@ extern "C"
     } EasycommResponseReadInput;
 
     /**
-     * example:
+     * example: "ANnnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseReadAnalogueInput
@@ -127,7 +127,7 @@ extern "C"
 
 
     /**
-     * example:
+     * example: "VEnnn.nnn"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseRequestVersion
@@ -137,7 +137,7 @@ extern "C"
     } EasycommResponseRequestVersion;
 
     /**
-     * example:
+     * example: "ALtextnospaces"
      * standard: Easycomm 2
      */
     typedef struct EasycommResponseAlarm
@@ -146,7 +146,7 @@ extern "C"
     } EasycommResponseAlarm;
 
     /**
-     * example:
+     * example: "VLnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseVelocityLeft
@@ -155,7 +155,7 @@ extern "C"
     } EasycommResponseVelocityLeft;
 
     /**
-     * example:
+     * example: "VRnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseVelocityRight
@@ -164,7 +164,7 @@ extern "C"
     } EasycommResponseVelocityRight;
 
     /**
-     * example:
+     * example: "VUnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseVelocityUp
@@ -173,7 +173,7 @@ extern "C"
     } EasycommResponseVelocityUp;
 
     /**
-     * example:
+     * example: "VDnnn"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseVelocityDown
@@ -182,7 +182,7 @@ extern "C"
     } EasycommResponseVelocityDown;
 
     /**
-     * example:
+     * example: "CRnnn,vvv"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseReadConfig
@@ -192,7 +192,7 @@ extern "C"
     } EasycommResponseReadConfig;
 
     /**
-     * example:
+     * example: "GSn"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseGetStatusRegister
@@ -201,7 +201,7 @@ extern "C"
     } EasycommResponseGetStatusRegister;
 
     /**
-     * example:
+     * example: "GEn"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseGetErrorRegister

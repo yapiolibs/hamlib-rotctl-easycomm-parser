@@ -124,7 +124,7 @@ void easycommResponseReadConfigSprintf(const EasycommResponseReadConfig *from, c
 #ifdef ARDUINO_AVR_MEGA2560
     sprintf(to, "CR%u,%ld", from->registerNumber, from->value.as.int32);
 #else
-    sprintf(to, "CR%u,%d", from->registerNumber, from->value.as.int32);
+    sprintf(to, "CR%u,%s", from->registerNumber, from->value.as.str);
 #endif
 }
 

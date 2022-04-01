@@ -573,12 +573,12 @@ bool readEasycomm3WriteConfig(const char *buffer, EasycommData *parsed)
     easycommWriteConfig(&parsed->as.writeConfig);
     return 4 == sscanf(buffer,
 #ifdef ARDUINO_AVR_MEGA2560
-                       "%c%c%u,%ld",
+                       "%c%c%u,%s",
 #else
-                       "%c%c%hu,%d",
+                       "%c%c%hu,%s",
 #endif
                        &c, &c, &parsed->as.writeConfig.registerNumber,
-                       &parsed->as.writeConfig.value.as.int32);
+                       parsed->as.writeConfig.value.as.str);
 }
 
 

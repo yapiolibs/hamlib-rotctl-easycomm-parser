@@ -107,3 +107,5 @@ References:
     * has no fixed width
     * is not padded
     * has one decimal digit
+  * strings
+    * are not fixed length

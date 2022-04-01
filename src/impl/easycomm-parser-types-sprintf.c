@@ -172,7 +172,7 @@ void easycommWriteConfigSprintf(const EasycommWriteConfig *from, char *to)
 #ifdef ARDUINO_AVR_MEGA2560
     sprintf(to, "CW%u,%ld", from->registerNumber, from->value.as.int32);
 #else
-    sprintf(to, "CW%u,%d", from->registerNumber, from->value.as.int32);
+    sprintf(to, "CW%u,%s", from->registerNumber, from->value.as.str);
 #endif
 }
 
