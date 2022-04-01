@@ -14,9 +14,8 @@
         "maintainer" : "true"
     }
   ],
-  "dependencies": [],
   "version": "0.1",
   "frameworks": ["native", "arduino"],
-  "platforms": ["atmelavr", "espressiv8266", "espressif32"]
+  "platforms": ["native", "atmelavr", "espressiv8266", "espressif32"]
 }
 
