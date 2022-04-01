@@ -37,6 +37,7 @@ extern "C"
 
     /**
      * Command Id
+     * note: do not assign values to enum items
      */
     typedef enum
     {
@@ -44,7 +45,6 @@ extern "C"
         EasycommIdSingleLine,
         EasycommIdAzimuth,
         EasycommIdElevation,
-        EasycommIdAzimuthElevation,
         EasycommIdUplinkFrequency,
         EasycommIdDownlinkFrequency,
         EasycommIdUplinkMode,
@@ -72,6 +72,7 @@ extern "C"
         EasycommIdWriteConfig,
         EasycommIdGetStatusRegister,
         EasycommIdGetErrorRegister,
+        EasycommIdsCount
     } EasycommCommandId;
 
     /**
@@ -80,7 +81,7 @@ extern "C"
     typedef enum EasycommCommandLength
     {
         // standard 1
-        EasycommSingleLineMinLength = 31, // "AZa.a ELe.e UPuuu UUU DNddd DDD"
+        EasycommSingleLineMinLength = 27, // "AZa.a ELe.e UPuuu UUU DNddd DDD"
 
         // standard 2
         EasycommSingleLineMaxLength = 47,       // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"

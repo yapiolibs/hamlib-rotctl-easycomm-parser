@@ -51,11 +51,10 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
 
 void test_parse_elevation_01()
 {
-    const char *valid_data = "AZ123.4 EL000.0 UP000000000 UUU DN000000000 DDD";
-    const char *expected_representation = "AZ123.4 EL0.0 UP0 UUU DN0 DDD";
+    const char *valid_data = "AZ0.0 EL0.0 UP0 UUU DN0 DDD";
+    const char *expected_representation = "AZ0.0 EL0.0 UP0 UUU DN0 DDD";
     EasycommData expected_result;
     easycommSingleLine(&expected_result.as.singleLine);
-    expected_result.as.singleLine.azimuth = 123.4f;
     memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
@@ -79,6 +78,20 @@ void test_parse_elevation_02()
                                              expect_parser_success);
 }
 
+void test_parse_elevation_03()
+{
+    const char *valid_data = "AZ123.4 EL000.0 UP000000000 UUU DN000000000 DDD";
+    const char *expected_representation = "AZ123.4 EL0.0 UP0 UUU DN0 DDD";
+    EasycommData expected_result;
+    easycommSingleLine(&expected_result.as.singleLine);
+    expected_result.as.singleLine.azimuth = 123.4f;
+    memcpy(&expected_result.as.singleLine.modeUp, "UUU", 3);
+    memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
+                                             expect_parser_success);
+}
 void test_parse_elevation()
 {
     const char *valid_data = "AZ000.0 EL977.3 UP000000000 UUU DN000000000 DDD";
@@ -235,6 +248,7 @@ void loop()
     UNITY_BEGIN();
     RUN_TEST(test_parse_elevation_01);
     RUN_TEST(test_parse_elevation_02);
+    RUN_TEST(test_parse_elevation_03);
     RUN_TEST(test_parse_elevation);
     RUN_TEST(test_parse_uplink_frequency);
     RUN_TEST(test_parse_downlink_frequency);

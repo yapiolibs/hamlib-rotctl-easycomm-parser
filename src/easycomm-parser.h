@@ -8,9 +8,13 @@ extern "C"
 #include "easycomm-parser-types.h"
 #include <stdbool.h>
 
+    /**
+     * notes: do not
+     * - change enum order
+     * - assign values to enum items
+     */
     typedef enum EasycommParserStandard
     {
-        // Note: do not change enum order
         EasycommParserStandard1,   // standard 1 only
         EasycommParserStandard12,  // standard 1 and 2
         EasycommParserStandard2,   // standard 2 only, 1 excluded
