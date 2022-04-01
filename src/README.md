@@ -4,7 +4,7 @@ References:
 1. [examples](../test/test/)
 2. [Hamlib/rotators/easycomm](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm)
 3. [Hamlib protocol description (easycomm.txt)](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.txt)
-4. [Hamlib protocol source (easycomm.c)](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.txt)
+4. [Hamlib protocol source (easycomm.c)](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.c)
 
 ## Supported Commands
 
