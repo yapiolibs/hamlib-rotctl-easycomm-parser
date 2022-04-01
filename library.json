@@ -16,7 +16,7 @@
   ],
   "dependencies": [],
   "version": "0.1",
-  "frameworks": ["arduino"],
+  "frameworks": ["native", "arduino"],
   "platforms": ["atmelavr", "espressiv8266", "espressif32"]
 }
 

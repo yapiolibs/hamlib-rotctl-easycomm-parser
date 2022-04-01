@@ -38,7 +38,7 @@ bool custom_data = false;
 easycommHandleCommand(command, &cb_handler, EasycommParserStandard1, &custom_data);
 ```
 
-More examples
+More examples:
 * [main.cpp](./test/src/main.cpp)
-* [unit tests](./test/test/).
+* [unit tests](./test/test/)
 
