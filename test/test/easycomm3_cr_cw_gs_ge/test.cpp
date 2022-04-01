@@ -18,7 +18,7 @@ void invariant_test_parse_read_config(const char *data,
                                       bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommReadConfigMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -54,7 +54,7 @@ void invariant_test_parse_write_config(const char *data,
                                        bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommWriteConfigMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -90,7 +90,7 @@ void invariant_test_parse_get_status_register(const char *data,
                                               bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommGetStatusRegisterLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -128,7 +128,7 @@ void invariant_test_parse_get_error_register(const char *data,
                                              bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommGetErrorRegisterLength + 1] = { 0 };
 
     if(expect_parser_success)

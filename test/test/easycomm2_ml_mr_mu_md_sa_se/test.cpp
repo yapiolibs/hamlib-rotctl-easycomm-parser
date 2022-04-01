@@ -18,7 +18,7 @@ void invariant_test_parse_move_left(const char *data,
                                     bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommMoveLeftLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -55,7 +55,7 @@ void invariant_test_parse_move_right(const char *data,
                                      bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommMoveRightLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -92,7 +92,7 @@ void invariant_test_parse_move_up(const char *data,
                                   bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommMoveUpLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -129,7 +129,7 @@ void invariant_test_parse_move_down(const char *data,
                                     bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommMoveDownLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -166,7 +166,7 @@ void invariant_test_parse_stop_azimuth_move(const char *data,
                                             bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommStopAzimuthMoveLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -203,7 +203,7 @@ void invariant_test_parse_stop_elevation_move(const char *data,
                                               bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommStopElevationMoveLength + 1] = { 0 };
 
     if(expect_parser_success)

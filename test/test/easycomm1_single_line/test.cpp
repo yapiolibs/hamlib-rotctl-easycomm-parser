@@ -18,7 +18,7 @@ void invariant_test_parse_Easycomm1SingleLine(const char *data,
                                               bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard1);
     char data_as_string[EasycommSingleLineMaxLength + 1] = { 0 };
 
     if(expect_parser_success)

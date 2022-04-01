@@ -18,7 +18,7 @@ void invariant_test_parse_azimuth(const char *data,
                                   bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommAzimuthMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -55,7 +55,7 @@ void invariant_test_parse_elevation(const char *data,
                                     bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommElevationMaxLength + 1] = { 0 };
 
     if(expect_parser_success)

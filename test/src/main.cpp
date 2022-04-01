@@ -12,7 +12,7 @@ bool parse()
 {
     const char *data = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
     EasycommData result;
-    return easycommParse(data, &result);
+    return easycommParse(data, &result, EasycommParserStandard1);
 }
 
 #ifdef ENV_NATIVE

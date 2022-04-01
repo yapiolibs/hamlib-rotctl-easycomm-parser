@@ -18,7 +18,7 @@ void invariant_test_parse_velocity_left(const char *data,
                                         bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommVelocityLeftMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -55,7 +55,7 @@ void invariant_test_parse_velocity_right(const char *data,
                                          bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommVelocityRightMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -92,7 +92,7 @@ void invariant_test_parse_velocity_up(const char *data,
                                       bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommVelocityUpMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -129,7 +129,7 @@ void invariant_test_parse_velocity_down(const char *data,
                                         bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
     char data_as_string[EasycommVelocityDownMaxLength + 1] = { 0 };
 
     if(expect_parser_success)

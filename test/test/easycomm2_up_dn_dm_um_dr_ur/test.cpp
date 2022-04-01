@@ -18,7 +18,7 @@ void invariant_test_parse_uplink_frequency(const char *data,
                                            bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommUplinkFrequencyMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -55,7 +55,7 @@ void invariant_test_parse_downlink_frequency(const char *data,
                                              bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommDownlinkFrequencyMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -93,7 +93,7 @@ void invariant_test_parse_uplink_mode(const char *data,
                                       bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommUplinkModeMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -130,7 +130,7 @@ void invariant_test_parse_downlink_mode(const char *data,
                                         bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommDownlinkModeMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -167,7 +167,7 @@ void invariant_test_parse_uplink_radio(const char *data,
                                        bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommUplinkRadioNumberMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -204,7 +204,7 @@ void invariant_test_parse_downlink_radio(const char *data,
                                          bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommDownlinkRadioNumberMaxLength + 1] = { 0 };
 
     if(expect_parser_success)

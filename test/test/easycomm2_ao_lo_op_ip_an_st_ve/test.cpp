@@ -18,7 +18,7 @@ void invariant_test_parse_acquition_of_signal(const char *data,
                                               bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommAcquisitionOfSignalLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -56,7 +56,7 @@ void invariant_test_parse_loss_of_signal(const char *data,
                                          bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommLossOfSignalLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -93,7 +93,7 @@ void invariant_test_parse_set_output(const char *data,
                                      bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommSetOutputMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -130,7 +130,7 @@ void invariant_test_parse_read_input(const char *data,
                                      bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommReadInputMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -167,7 +167,7 @@ void invariant_test_parse_read_analogue_input(const char *data,
                                               bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommReadAnalogueInputMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -205,7 +205,7 @@ void invariant_test_parse_set_time(const char *data,
                                    bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommSetTimeMaxLength + 1] = { 0 };
 
     if(expect_parser_success)
@@ -242,7 +242,7 @@ void invariant_test_parse_request_version(const char *data,
                                           bool expect_parser_success)
 {
     EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed);
+    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
     char data_as_string[EasycommRequestVersionLength + 1] = { 0 };
 
     if(expect_parser_success)
