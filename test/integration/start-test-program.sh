@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
+PROGRAM="${SCRIPT_DIR}/../.pio/build/native_integration_test/program"
+ENDPOINT="${SCRIPT_DIR}/../easycomm-endpoint-test-program"
+
 # start test program and listen to virtual device
-${SCRIPT_DIR}/../.pio/build/native/program  /tmp/easycomm-controller-side
+$PROGRAM "$ENDPOINT"

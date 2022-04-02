@@ -3,3 +3,5 @@ CMakeListsPrivate.txt
 CMakeLists.txt
 cmake-build-*
 tmp_pio_test_transport.cpp
+__pycache__
+easycomm-endpoint-*

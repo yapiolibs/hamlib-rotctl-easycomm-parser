@@ -1,17 +1,17 @@
-# Usnittests
+# Testing
 
 ```bash
 cd hamlib-rotctl-easycomm-parser/test
 pio init
 
-# test on desktop
+# unit test on desktop
 pio test -e native
 
-# test on micro controllers
+# unit test on micro controllers
 pio test -e megaatmega2560
 pio test -e d1_mini
 pio test -e esp_wroom_32
 
-# build all supported platforms
-pio run
+# integration test on desktop (requires rotctl/hamlib installed)
+pio run -e native_integration_test
 ```
