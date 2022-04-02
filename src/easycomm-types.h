@@ -44,7 +44,10 @@ extern "C"
         EasycommIdInvalid,
         EasycommIdSingleLine,
         EasycommIdAzimuth,
+        EasycommIdGetAzimuth,
         EasycommIdElevation,
+        EasycommIdGetElevation,
+        EasycommIdGetAzimuthElevation,
         EasycommIdUplinkFrequency,
         EasycommIdDownlinkFrequency,
         EasycommIdUplinkMode,
@@ -65,13 +68,19 @@ extern "C"
         EasycommIdSetTime,
         EasycommIdRequestVersion,
         EasycommIdVelocityLeft,
+        EasycommIdGetVelocityLeft,
         EasycommIdVelocityRight,
+        EasycommIdGetVelocityRight,
         EasycommIdVelocityUp,
+        EasycommIdGetVelocityUp,
         EasycommIdVelocityDown,
+        EasycommIdGetVelocityDown,
         EasycommIdReadConfig,
         EasycommIdWriteConfig,
         EasycommIdGetStatusRegister,
         EasycommIdGetErrorRegister,
+        EasycommIdReset,
+        EasycommIdPark,
         EasycommIdsCount
     } EasycommCommandId;
 
@@ -87,10 +96,14 @@ extern "C"
         EasycommSingleLineMaxLength = 47,       // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
         EasycommAzimuthMinLength = 5,           // "ACa.a"
         EasycommAzimuthMaxLength = 7,           // "AZaaa.a"
+        EasycommGetAzimuthLength = 2,           // "AZ"
         EasycommElevationMinLength = 5,         // "ELe.e"
         EasycommElevationMaxLength = 7,         // "ELeee.e"
-        EasycommAzimuthElevationMinLength = 11, // "AZa.a ELe.e"
-        EasycommAzimuthElevationMaxLength = 15, // "AZaaa.a ELeee.e"
+        EasycommGetElevationLength = 2,         // "EL"
+        EasycommGetAzimuthElevationLength = 5,  // "AZ EL" TODO workaround:
+                                                //           AZ EL cannot be responded as documented
+                                                //           with "AZxxx\nELxxx\n" because
+                                                //           first '\n' terminates the response
         EasycommElevationAzimuthMinLength = 11, // "ELe.e AZa.a"
         EasycommElevationAzimuthMaxLength = 15, // "ELeee.e AZaaa.a"
         EasycommUplinkFrequencyMinLength = 3,   // "UPu"
@@ -146,18 +159,24 @@ extern "C"
         // standard 3
         EasycommVelocityLeftMinLength = 3,   // "VLv"
         EasycommVelocityLeftMaxLength = 11,  // "VLvvvvvvvvv"
+        EasycommGetVelocityLeftLength = 2,   // "VL"
         EasycommVelocityRightMinLength = 3,  // "VRv"
         EasycommVelocityRightMaxLength = 11, // "VRvvvvvvvvv"
+        EasycommGetVelocityRightLength = 2,  // "VR"
         EasycommVelocityUpMinLength = 3,     // "VUv"
         EasycommVelocityUpMaxLength = 11,    // "VUvvvvvvvvv"
+        EasycommGetVelocityUpLength = 2,     // "VU"
         EasycommVelocityDownMinLength = 3,   // "VDv"
         EasycommVelocityDownMaxLength = 11,  // "VDvvvvvvvvv"
+        EasycommGetVelocityDownLength = 2,   // "VD"
         EasycommReadConfigMinLength = 3,     // "CRn"
         EasycommReadConfigMaxLength = 5,     // "CRnnn"
         EasycommWriteConfigMinLength = 5, // "CWn,v" // TODO: payload is not defined, see config hamlib config token
         EasycommWriteConfigMaxLength = 15,   // "CWnnn,vvvvvvvvv"
         EasycommGetStatusRegisterLength = 2, // "GS"
         EasycommGetErrorRegisterLength = 2,  // "GE"
+        EasycommResetLength = 5,             // "RESET"
+        EasycommParkLength = 4,              // "PARK"
 
         EasycommResponseVelocityLeftLength = 11,     // "VLvvvvvvvvv"
         EasycommResponseVelocityRightLength = 11,    // "VRvvvvvvvvv"
@@ -195,8 +214,8 @@ extern "C"
             int16_t int16;
             uint32_t uint32;
             int32_t int32;
-            uint8_t bytes[16];
-            char str[16];
+            uint8_t bytes[28]; // response example "CRx,[a-zA-Z]{0,26}"
+            char str[28];      // response_host_buffer == 32 -> 32-len("CRx,") = 30-4 = 28
         } as;
     } EasycommConfigValue;
 

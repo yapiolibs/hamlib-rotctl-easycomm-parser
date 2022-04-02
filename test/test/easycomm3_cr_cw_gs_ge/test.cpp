@@ -12,152 +12,38 @@
 #include <string.h>
 #include <unity.h>
 
-void invariant_test_parse_read_config(const char *data,
-                                      const EasycommData *expected,
-                                      const char *expected_representation,
-                                      bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommReadConfigMaxLength + 1] = { 0 };
+#include "../common.h"
 
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdReadConfig, parsed.commandId);
-            easycommReadConfigSprintf(&parsed.as.readConfig, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-            TEST_ASSERT_TRUE(easycommReadConfigEquals(&parsed.as.readConfig, &expected->as.readConfig));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommReadConfigSprintf(&parsed.as.readConfig, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_config,
+                                      EasycommReadConfigMaxLength,
+                                      EasycommParserStandard3,
+                                      easycommReadConfig,
+                                      EasycommIdReadConfig,
+                                      readConfig)
 
 
-void invariant_test_parse_write_config(const char *data,
-                                       const EasycommData *expected,
-                                       const char *expected_representation,
-                                       bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommWriteConfigMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdWriteConfig, parsed.commandId);
-            easycommWriteConfigSprintf(&parsed.as.writeConfig, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-            TEST_ASSERT_TRUE(easycommWriteConfigEquals(&parsed.as.writeConfig, &expected->as.writeConfig));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommWriteConfigSprintf(&parsed.as.writeConfig, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_write_config,
+                                      EasycommWriteConfigMaxLength,
+                                      EasycommParserStandard3,
+                                      easycommWriteConfig,
+                                      EasycommIdWriteConfig,
+                                      writeConfig)
 
 
-void invariant_test_parse_get_status_register(const char *data,
-                                              const EasycommData *expected,
-                                              const char *expected_representation,
-                                              bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommGetStatusRegisterLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdGetStatusRegister, parsed.commandId);
-            easycommGetStatusRegisterSprintf(&parsed.as.getStatusRegister, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommGetStatusRegisterEquals(&parsed.as.getStatusRegister,
-                                                             &expected->as.getStatusRegister));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommGetStatusRegisterSprintf(&parsed.as.getStatusRegister, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_status_register,
+                                      EasycommGetStatusRegisterLength,
+                                      EasycommParserStandard3,
+                                      easycommGetStatusRegister,
+                                      EasycommIdGetStatusRegister,
+                                      getStatusRegister)
 
 
-void invariant_test_parse_get_error_register(const char *data,
-                                             const EasycommData *expected,
-                                             const char *expected_representation,
-                                             bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommGetErrorRegisterLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdGetErrorRegister, parsed.commandId);
-            easycommGetErrorRegisterSprintf(&parsed.as.getErrorRegister, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommGetErrorRegisterEquals(&parsed.as.getErrorRegister,
-                                                            &expected->as.getErrorRegister));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommGetErrorRegisterSprintf(&parsed.as.getErrorRegister, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_error_register,
+                                      EasycommGetErrorRegisterLength,
+                                      EasycommParserStandard3,
+                                      easycommGetErrorRegister,
+                                      EasycommIdGetErrorRegister,
+                                      getErrorRegister)
 
 
 void test_parse_read_config()

@@ -4,6 +4,7 @@
 
 #endif
 
+#include "../common.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -12,227 +13,52 @@
 #include <string.h>
 #include <unity.h>
 
-void invariant_test_parse_move_left(const char *data,
-                                    const EasycommData *expected,
-                                    const char *expected_representation,
-                                    bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommMoveLeftLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdMoveLeft, parsed.commandId);
-            easycommMoveLeftSprintf(&parsed.as.moveLeft, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommMoveLeftEquals(&parsed.as.moveLeft, &expected->as.moveLeft));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommMoveLeftSprintf(&parsed.as.moveLeft, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_left,
+                                      EasycommMoveLeftLength,
+                                      EasycommParserStandard2,
+                                      easycommMoveLeft,
+                                      EasycommIdMoveLeft,
+                                      moveLeft)
 
 
-void invariant_test_parse_move_right(const char *data,
-                                     const EasycommData *expected,
-                                     const char *expected_representation,
-                                     bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommMoveRightLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdMoveRight, parsed.commandId);
-            easycommMoveRightSprintf(&parsed.as.moveRight, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommMoveRightEquals(&parsed.as.moveRight, &expected->as.moveRight));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommMoveRightSprintf(&parsed.as.moveRight, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_right,
+                                      EasycommMoveRightLength,
+                                      EasycommParserStandard2,
+                                      easycommMoveRight,
+                                      EasycommIdMoveRight,
+                                      moveRight)
 
 
-void invariant_test_parse_move_up(const char *data,
-                                  const EasycommData *expected,
-                                  const char *expected_representation,
-                                  bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommMoveUpLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdMoveUp, parsed.commandId);
-            easycommMoveUpSprintf(&parsed.as.moveUp, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommMoveUpEquals(&parsed.as.moveUp, &expected->as.moveUp));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommMoveUpSprintf(&parsed.as.moveUp, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_up,
+                                      EasycommMoveUpLength,
+                                      EasycommParserStandard2,
+                                      easycommMoveUp,
+                                      EasycommIdMoveUp,
+                                      moveUp)
 
 
-void invariant_test_parse_move_down(const char *data,
-                                    const EasycommData *expected,
-                                    const char *expected_representation,
-                                    bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommMoveDownLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdMoveDown, parsed.commandId);
-            easycommMoveDownSprintf(&parsed.as.moveDown, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommMoveDownEquals(&parsed.as.moveDown, &expected->as.moveDown));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommMoveDownSprintf(&parsed.as.moveDown, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_down,
+                                      EasycommMoveDownLength,
+                                      EasycommParserStandard2,
+                                      easycommMoveDown,
+                                      EasycommIdMoveDown,
+                                      moveDown)
 
 
-void invariant_test_parse_stop_azimuth_move(const char *data,
-                                            const EasycommData *expected,
-                                            const char *expected_representation,
-                                            bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommStopAzimuthMoveLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdStopAzimuthMove, parsed.commandId);
-            easycommStopAzimuthMoveSprintf(&parsed.as.stopAzimuthMove, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommStopAzimuthMoveEquals(&parsed.as.stopAzimuthMove, &expected->as.stopAzimuthMove));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommStopAzimuthMoveSprintf(&parsed.as.stopAzimuthMove, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_stop_azimuth_move,
+                                      EasycommStopAzimuthMoveLength,
+                                      EasycommParserStandard2,
+                                      easycommStopAzimuthMove,
+                                      EasycommIdStopAzimuthMove,
+                                      stopAzimuthMove)
 
 
-void invariant_test_parse_stop_elevation_move(const char *data,
-                                              const EasycommData *expected,
-                                              const char *expected_representation,
-                                              bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommStopElevationMoveLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdStopElevationMove, parsed.commandId);
-            easycommStopElevationMoveSprintf(&parsed.as.stopElevationMove, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommStopElevationMoveEquals(&parsed.as.stopElevationMove,
-                                                             &expected->as.stopElevationMove));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommStopElevationMoveSprintf(&parsed.as.stopElevationMove, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_stop_elevation_move,
+                                      EasycommStopElevationMoveLength,
+                                      EasycommParserStandard2,
+                                      easycommStopElevationMove,
+                                      EasycommIdStopElevationMove,
+                                      stopElevationMove)
 
 
 void test_parse_move_left()

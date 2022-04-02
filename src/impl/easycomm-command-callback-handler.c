@@ -9,58 +9,75 @@ void defaultCallback(const EasycommData *command, void *custom_data) {}
 
 void easycommCommandsCallback(EasycommCommandsCallback *callbacks, EasycommParserStandard parser_standard)
 {
+    easycommCommandsCallbackCustomDefaultCb(callbacks, parser_standard, defaultCallback);
+}
+
+
+void easycommCommandsCallbackCustomDefaultCb(EasycommCommandsCallback *callbacks,
+                                             EasycommParserStandard parser_standard,
+                                             EasycommCommandCallback custom_default_cb)
+{
     if(NULL == callbacks)
         return;
 
     for(size_t i = 0; i < EasycommIdsCount; i++)
         callbacks->registry[i] = NULL;
 
-    callbacks->registry[EasycommIdInvalid] = defaultCallback;
+    callbacks->registry[EasycommIdInvalid] = custom_default_cb;
 
     if(EasycommParserStandard1 == parser_standard || EasycommParserStandard12 == parser_standard ||
        EasycommParserStandard123 == parser_standard)
     {
-        callbacks->registry[EasycommIdSingleLine] = defaultCallback;
+        callbacks->registry[EasycommIdSingleLine] = custom_default_cb;
+        callbacks->registry[EasycommIdReset] = custom_default_cb;
+        callbacks->registry[EasycommIdPark] = custom_default_cb;
     }
 
     if(EasycommParserStandard12 == parser_standard || EasycommParserStandard2 == parser_standard ||
        EasycommParserStandard23 == parser_standard || EasycommParserStandard123 == parser_standard)
     {
-        callbacks->registry[EasycommIdSingleLine] = defaultCallback;
-        callbacks->registry[EasycommIdAzimuth] = defaultCallback;
-        callbacks->registry[EasycommIdElevation] = defaultCallback;
-        callbacks->registry[EasycommIdUplinkFrequency] = defaultCallback;
-        callbacks->registry[EasycommIdDownlinkFrequency] = defaultCallback;
-        callbacks->registry[EasycommIdUplinkMode] = defaultCallback;
-        callbacks->registry[EasycommIdDownlinkMode] = defaultCallback;
-        callbacks->registry[EasycommIdUplinkRadioNumber] = defaultCallback;
-        callbacks->registry[EasycommIdDownlinkRadioNumber] = defaultCallback;
-        callbacks->registry[EasycommIdMoveLeft] = defaultCallback;
-        callbacks->registry[EasycommIdMoveRight] = defaultCallback;
-        callbacks->registry[EasycommIdMoveUp] = defaultCallback;
-        callbacks->registry[EasycommIdMoveDown] = defaultCallback;
-        callbacks->registry[EasycommIdStopAzimuthMove] = defaultCallback;
-        callbacks->registry[EasycommIdStopElevationMove] = defaultCallback;
-        callbacks->registry[EasycommIdAcquisitionOfSignal] = defaultCallback;
-        callbacks->registry[EasycommIdLossOfSignal] = defaultCallback;
-        callbacks->registry[EasycommIdSetOutput] = defaultCallback;
-        callbacks->registry[EasycommIdReadInput] = defaultCallback;
-        callbacks->registry[EasycommIdReadAnalogueInput] = defaultCallback;
-        callbacks->registry[EasycommIdSetTime] = defaultCallback;
-        callbacks->registry[EasycommIdRequestVersion] = defaultCallback;
+        callbacks->registry[EasycommIdSingleLine] = custom_default_cb;
+        callbacks->registry[EasycommIdGetAzimuth] = custom_default_cb;
+        callbacks->registry[EasycommIdAzimuth] = custom_default_cb;
+        callbacks->registry[EasycommIdElevation] = custom_default_cb;
+        callbacks->registry[EasycommIdGetElevation] = custom_default_cb;
+        callbacks->registry[EasycommIdGetAzimuthElevation] = custom_default_cb;
+        callbacks->registry[EasycommIdUplinkFrequency] = custom_default_cb;
+        callbacks->registry[EasycommIdDownlinkFrequency] = custom_default_cb;
+        callbacks->registry[EasycommIdUplinkMode] = custom_default_cb;
+        callbacks->registry[EasycommIdDownlinkMode] = custom_default_cb;
+        callbacks->registry[EasycommIdUplinkRadioNumber] = custom_default_cb;
+        callbacks->registry[EasycommIdDownlinkRadioNumber] = custom_default_cb;
+        callbacks->registry[EasycommIdMoveLeft] = custom_default_cb;
+        callbacks->registry[EasycommIdMoveRight] = custom_default_cb;
+        callbacks->registry[EasycommIdMoveUp] = custom_default_cb;
+        callbacks->registry[EasycommIdMoveDown] = custom_default_cb;
+        callbacks->registry[EasycommIdStopAzimuthMove] = custom_default_cb;
+        callbacks->registry[EasycommIdStopElevationMove] = custom_default_cb;
+        callbacks->registry[EasycommIdAcquisitionOfSignal] = custom_default_cb;
+        callbacks->registry[EasycommIdLossOfSignal] = custom_default_cb;
+        callbacks->registry[EasycommIdSetOutput] = custom_default_cb;
+        callbacks->registry[EasycommIdReadInput] = custom_default_cb;
+        callbacks->registry[EasycommIdReadAnalogueInput] = custom_default_cb;
+        callbacks->registry[EasycommIdSetTime] = custom_default_cb;
+        callbacks->registry[EasycommIdRequestVersion] = custom_default_cb;
     }
 
     if(EasycommParserStandard23 == parser_standard || EasycommParserStandard3 == parser_standard ||
        EasycommParserStandard123 == parser_standard)
     {
-        callbacks->registry[EasycommIdVelocityLeft] = defaultCallback;
-        callbacks->registry[EasycommIdVelocityRight] = defaultCallback;
-        callbacks->registry[EasycommIdVelocityUp] = defaultCallback;
-        callbacks->registry[EasycommIdVelocityDown] = defaultCallback;
-        callbacks->registry[EasycommIdReadConfig] = defaultCallback;
-        callbacks->registry[EasycommIdWriteConfig] = defaultCallback;
-        callbacks->registry[EasycommIdGetStatusRegister] = defaultCallback;
-        callbacks->registry[EasycommIdGetErrorRegister] = defaultCallback;
+        callbacks->registry[EasycommIdVelocityLeft] = custom_default_cb;
+        callbacks->registry[EasycommIdGetVelocityLeft] = custom_default_cb;
+        callbacks->registry[EasycommIdVelocityRight] = custom_default_cb;
+        callbacks->registry[EasycommIdGetVelocityRight] = custom_default_cb;
+        callbacks->registry[EasycommIdVelocityUp] = custom_default_cb;
+        callbacks->registry[EasycommIdGetVelocityUp] = custom_default_cb;
+        callbacks->registry[EasycommIdVelocityDown] = custom_default_cb;
+        callbacks->registry[EasycommIdGetVelocityDown] = custom_default_cb;
+        callbacks->registry[EasycommIdReadConfig] = custom_default_cb;
+        callbacks->registry[EasycommIdWriteConfig] = custom_default_cb;
+        callbacks->registry[EasycommIdGetStatusRegister] = custom_default_cb;
+        callbacks->registry[EasycommIdGetErrorRegister] = custom_default_cb;
     }
 }
 
@@ -73,6 +90,9 @@ bool easycommHandleCommand(const char *buffer,
     EasycommData command;
     if(easycommParse(buffer, &command, parser_standard))
     {
+        if(NULL == registry)
+            return false;
+
         EasycommCommandCallback callback = registry->registry[command.commandId];
         if(NULL != callback)
         {

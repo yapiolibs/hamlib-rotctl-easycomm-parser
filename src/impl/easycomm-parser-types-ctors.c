@@ -33,11 +33,31 @@ void easycommAzimuth(EasycommAzimuth *d)
     d->commandId = EasycommIdAzimuth;
 }
 
+void easycommGetAzimuth(EasycommGetAzimuth *d)
+{
+    memset(d, 0, sizeof(EasycommGetAzimuth));
+    d->commandId = EasycommIdGetAzimuth;
+}
+
 
 void easycommElevation(EasycommElevation *d)
 {
     memset(d, 0, sizeof(EasycommElevation));
     d->commandId = EasycommIdElevation;
+}
+
+
+void easycommGetElevation(EasycommGetElevation *d)
+{
+    memset(d, 0, sizeof(EasycommGetElevation));
+    d->commandId = EasycommIdGetElevation;
+}
+
+
+void easycommGetAzimuthElevation(EasycommGetAzimuthElevation *d)
+{
+    memset(d, 0, sizeof(EasycommGetAzimuthElevation));
+    d->commandId = EasycommIdGetAzimuthElevation;
 }
 
 
@@ -180,11 +200,24 @@ void easycommVelocityLeft(EasycommVelocityLeft *d)
     d->commandId = EasycommIdVelocityLeft;
 }
 
+void easycommGetVelocityLeft(EasycommGetVelocityLeft *d)
+{
+    memset(d, 0, sizeof(EasycommGetVelocityLeft));
+    d->commandId = EasycommIdGetVelocityLeft;
+}
+
 
 void easycommVelocityRight(EasycommVelocityRight *d)
 {
     memset(d, 0, sizeof(EasycommVelocityRight));
     d->commandId = EasycommIdVelocityRight;
+}
+
+
+void easycommGetVelocityRight(EasycommGetVelocityRight *d)
+{
+    memset(d, 0, sizeof(EasycommGetVelocityRight));
+    d->commandId = EasycommIdGetVelocityRight;
 }
 
 
@@ -195,10 +228,24 @@ void easycommVelocityUp(EasycommVelocityUp *d)
 }
 
 
+void easycommGetVelocityUp(EasycommGetVelocityUp *d)
+{
+    memset(d, 0, sizeof(EasycommGetVelocityUp));
+    d->commandId = EasycommIdGetVelocityUp;
+}
+
+
 void easycommVelocityDown(EasycommVelocityDown *d)
 {
     memset(d, 0, sizeof(EasycommVelocityDown));
     d->commandId = EasycommIdVelocityDown;
+}
+
+
+void easycommGetVelocityDown(EasycommGetVelocityDown *d)
+{
+    memset(d, 0, sizeof(EasycommGetVelocityDown));
+    d->commandId = EasycommIdGetVelocityDown;
 }
 
 
@@ -227,4 +274,18 @@ void easycommGetErrorRegister(EasycommGetErrorRegister *d)
 {
     memset(d, 0, sizeof(EasycommGetErrorRegister));
     d->commandId = EasycommIdGetErrorRegister;
+}
+
+
+void easycommReset(EasycommReset *d)
+{
+    memset(d, 0, sizeof(EasycommReset));
+    d->commandId = EasycommIdReset;
+}
+
+
+void easycommPark(EasycommPark *d)
+{
+    memset(d, 0, sizeof(EasycommPark));
+    d->commandId = EasycommIdPark;
 }

@@ -4,6 +4,7 @@
 
 #endif
 
+#include "../common.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -12,78 +13,45 @@
 #include <string.h>
 #include <unity.h>
 
-void invariant_test_parse_azimuth(const char *data,
-                                  const EasycommData *expected,
-                                  const char *expected_representation,
-                                  bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommAzimuthMaxLength + 1] = { 0 };
 
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdAzimuth, parsed.commandId);
-            easycommAzimuthSprintf(&parsed.as.azimuth, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommAzimuthEquals(&parsed.as.azimuth, &expected->as.azimuth));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommAzimuthSprintf(&parsed.as.azimuth, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_azimuth,
+                                      EasycommAzimuthMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommAzimuth,
+                                      EasycommIdAzimuth,
+                                      azimuth)
 
 
-void invariant_test_parse_elevation(const char *data,
-                                    const EasycommData *expected,
-                                    const char *expected_representation,
-                                    bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommElevationMaxLength + 1] = { 0 };
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_elevation,
+                                      EasycommElevationMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommElevation,
+                                      EasycommIdElevation,
+                                      elevation)
 
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdElevation, parsed.commandId);
-            easycommElevationSprintf(&parsed.as.elevation, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
 
-            TEST_ASSERT_TRUE(easycommElevationEquals(&parsed.as.elevation, &expected->as.elevation));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommElevationSprintf(&parsed.as.elevation, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_azimuth,
+                                      EasycommGetAzimuthLength,
+                                      EasycommParserStandard2,
+                                      easycommGetAzimuth,
+                                      EasycommIdGetAzimuth,
+                                      getAzimuth)
+
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_elevation,
+                                      EasycommGetElevationLength,
+                                      EasycommParserStandard2,
+                                      easycommGetElevation,
+                                      EasycommIdGetElevation,
+                                      getElevation)
+
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_azimuth_elevation,
+                                      EasycommGetAzimuthElevationLength,
+                                      EasycommParserStandard2,
+                                      easycommGetAzimuthElevation,
+                                      EasycommIdGetAzimuthElevation,
+                                      getAzimuthElevation)
 
 
 void test_parse_azimuth_01()
@@ -203,6 +171,43 @@ void test_parse_unexpected_elevation()
 }
 
 
+void test_parse_get_azimuth_01()
+{
+    const char *valid_data = "AZ";
+    const char *expected_representation = "AZ";
+    EasycommData expected_result;
+    easycommGetAzimuth(&expected_result.as.getAzimuth);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_azimuth(valid_data, &expected_result, expected_representation, expect_parser_success);
+}
+
+
+void test_parse_get_elevation_01()
+{
+    const char *valid_data = "EL";
+    const char *expected_representation = "EL";
+    EasycommData expected_result;
+    easycommGetElevation(&expected_result.as.getElevation);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_elevation(valid_data, &expected_result, expected_representation, expect_parser_success);
+}
+
+
+void test_parse_get_azimuth_elevation_01()
+{
+    const char *valid_data = "AZ EL";
+    const char *expected_representation = "AZ EL";
+    EasycommData expected_result;
+    easycommGetAzimuthElevation(&expected_result.as.getAzimuthElevation);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_azimuth_elevation(valid_data, &expected_result,
+                                               expected_representation, expect_parser_success);
+}
+
+
 #if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
 int main(int argc, char **argv)
 #else
@@ -213,18 +218,18 @@ void loop()
 #endif
 {
     UNITY_BEGIN();
-
     RUN_TEST(test_parse_azimuth_01);
     RUN_TEST(test_parse_azimuth_02);
     RUN_TEST(test_parse_azimuth_03);
     RUN_TEST(test_parse_azimuth_04);
     RUN_TEST(test_parse_unexpected_azimuth);
-
     RUN_TEST(test_parse_elevation_01);
     RUN_TEST(test_parse_elevation_02);
     RUN_TEST(test_parse_elevation_03);
     RUN_TEST(test_parse_unexpected_elevation);
-
+    RUN_TEST(test_parse_get_azimuth_01);
+    RUN_TEST(test_parse_get_elevation_01);
+    RUN_TEST(test_parse_get_azimuth_elevation_01);
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560
     return 0;

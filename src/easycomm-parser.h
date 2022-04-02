@@ -16,11 +16,14 @@ extern "C"
     typedef enum EasycommParserStandard
     {
         EasycommParserStandard1,   // standard 1 only
+                                   // - compatible with #201 Hamlib Model: EasycommI
         EasycommParserStandard12,  // standard 1 and 2
-        EasycommParserStandard2,   // standard 2 only, 1 excluded
-        EasycommParserStandard23,  // standard 2 and 3, 1 excluded
-        EasycommParserStandard3,   // standard 3 only, 1 and 2 excluded
         EasycommParserStandard123, // standard 1, 2 and 3
+        EasycommParserStandard2,   // standard 2 only, 1 excluded
+                                   // - compatible with #202 Hamlib Model: EasycommII
+        EasycommParserStandard23,  // standard 2 and 3, 1 excluded
+                                   // - compatible with #204 Hamlib Model: EasycommIII
+        EasycommParserStandard3,   // standard 3 only, 1 and 2 excluded
     } EasycommParserStandard;
 
     /**

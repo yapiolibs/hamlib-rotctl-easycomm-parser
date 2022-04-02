@@ -28,6 +28,12 @@ void easycommResponseElevationSprintf(const EasycommResponseElevation *from, cha
 }
 
 
+void easycommResponseAzimuthElevationSprintf(const EasycommResponseAzimuthElevation *from, char *to)
+{
+    sprintf(to, "AZ%.1f EL%.1f", from->azimuth, from->elevation);
+}
+
+
 void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to)
 {
 #ifdef ARDUINO_AVR_MEGA2560

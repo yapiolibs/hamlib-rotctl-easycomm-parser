@@ -26,6 +26,16 @@ extern "C"
     void easycommCommandsCallback(EasycommCommandsCallback *registry, EasycommParserStandard parser_standard);
 
     /**
+     * Same as \see easycommCommandsCallback(EasycommCommandsCallback *, EasycommParserStandard) but with custom default callback.
+     * @param registry \see easycommCommandsCallback(EasycommCommandsCallback *, EasycommParserStandard )
+     * @param parser_standard \see easycommCommandsCallback(EasycommCommandsCallback *, EasycommParserStandard )
+     * @param custom_default_cb custom default callback
+     */
+    void easycommCommandsCallbackCustomDefaultCb(EasycommCommandsCallback *registry,
+                                                 EasycommParserStandard parser_standard,
+                                                 EasycommCommandCallback custom_default_cb);
+
+    /**
      * Invokes the parser and the resulting callback.
      * If the parser fails the EasycommIdInvalid-callback is invoked.
      * @param buffer data to parse from (null terminated string)

@@ -45,6 +45,17 @@ extern "C"
     } EasycommAzimuth;
 
     /**
+     * command: AZ
+     * meaning: get azimuth in [deg]
+     * example: "AZ"
+     * standard: Easycomm 2
+     */
+    typedef struct EassycommGetAzimuth
+    {
+        EasycommCommandId commandId;
+    } EasycommGetAzimuth;
+
+    /**
      * command: EL
      * meaning: set elevation in [deg]
      * example: "ELnnn.n"
@@ -55,6 +66,29 @@ extern "C"
         EasycommCommandId commandId;
         float elevation;
     } EasycommElevation;
+
+    /**
+     * command: EL
+     * meaning: get elevation in [deg]
+     * example: "EL"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetElevation
+    {
+        EasycommCommandId commandId;
+        float elevation;
+    } EasycommGetElevation;
+
+    /**
+     * command: AZ EL
+     * meaning: get azimuth and elevation in [deg]
+     * example: "AZ EL"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetAzimuthElevation
+    {
+        EasycommCommandId commandId;
+    } EasycommGetAzimuthElevation;
 
     /**
      * command: UP
@@ -274,6 +308,17 @@ extern "C"
     } EasycommSetTime;
 
     /**
+     * command: ST
+     * meaning: Get current time [y]{1,2}:[m]{1,2}:[d]{1,2}:[M]{1,2}:[h]{1,2}:[s]{1,2}
+     * example: "ST"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetTime
+    {
+        EasycommCommandId commandId;
+    } EasycommGetTime;
+
+    /**
      * command: VE
      * meaning: request version
      * example: "VE"
@@ -297,6 +342,17 @@ extern "C"
     } EasycommVelocityLeft;
 
     /**
+     * command: VL
+     * meaning: get velocity for left movement [deg*10^-3/sec]
+     * example: "VL"
+     * standard: Easycomm 3
+     */
+    typedef struct EasycommGetVelocityLeft
+    {
+        EasycommCommandId commandId;
+    } EasycommGetVelocityLeft;
+
+    /**
      * command: VR
      * meaning: set velocity for right movement [deg*10^-3/sec]
      * example: "VRnnn"
@@ -307,6 +363,17 @@ extern "C"
         EasycommCommandId commandId;
         uint16_t milliDegSecond;
     } EasycommVelocityRight;
+
+    /**
+     * command: VR
+     * meaning: get velocity for right movement [deg*10^-3/sec]
+     * example: "VR"
+     * standard: Easycomm 3
+     */
+    typedef struct EasycommGetVelocityRight
+    {
+        EasycommCommandId commandId;
+    } EasycommGetVelocityRight;
 
     /**
      * command: VU
@@ -321,6 +388,17 @@ extern "C"
     } EasycommVelocityUp;
 
     /**
+     * command: VU
+     * meaning: get velocity for up movement [deg*10^-3/sec]
+     * example: "VU"
+     * standard: Easycomm 3
+     */
+    typedef struct EasycommGetVelocityUp
+    {
+        EasycommCommandId commandId;
+    } EasycommGetVelocityUp;
+
+    /**
      * command: VD
      * meaning: set velocity for down movement [deg*10^-3/sec]
      * example: "VDnnn"
@@ -331,6 +409,18 @@ extern "C"
         EasycommCommandId commandId;
         uint16_t milliDegSecond;
     } EasycommVelocityDown;
+
+    /**
+     * command: VD
+     * meaning: set velocity for down movement [deg*10^-3/sec]
+     * example: "VDnnn"
+     * standard: Easycomm 3
+     */
+    typedef struct EasycommGetVelocityDown
+    {
+        EasycommCommandId commandId;
+    } EasycommGetVelocityDown;
+
 
     /**
      * command: CR
@@ -379,6 +469,28 @@ extern "C"
         EasycommCommandId commandId;
     } EasycommGetErrorRegister;
 
+    /**
+     * command: RESET
+     * meaning: reset
+     * example: "RESET"
+     * standard: Easycomm ?
+     */
+    typedef struct EasycommReset
+    {
+        EasycommCommandId commandId;
+    } EasycommReset;
+
+    /**
+     * command: PARK
+     * meaning: park
+     * example: "PARK"
+     * standard: Easycomm ?
+     */
+    typedef struct EasycommPark
+    {
+        EasycommCommandId commandId;
+    } EasycommPark;
+
     /*!
      * Convenience union for cast in between message types.
      */
@@ -387,7 +499,10 @@ extern "C"
         EasycommCommandId commandId;
         EasycommSingleLine singleLine;
         EasycommAzimuth azimuth;
+        EasycommGetAzimuth getAzimuth;
         EasycommElevation elevation;
+        EasycommGetElevation getElevation;
+        EasycommGetAzimuthElevation getAzimuthElevation;
         EasycommUplinkFrequency uplinkFrequency;
         EasycommDownlinkFrequency downlinkFrequency;
         EasycommUplinkMode uplinkMode;
@@ -408,13 +523,19 @@ extern "C"
         EasycommSetTime setTime;
         EasycommRequestVersion requestVersion;
         EasycommVelocityLeft velocityLeft;
+        EasycommGetVelocityLeft getVelocityLeft;
         EasycommVelocityRight velocityRight;
+        EasycommGetVelocityRight getVelocityRight;
         EasycommVelocityUp velocityUp;
+        EasycommGetVelocityUp getVelocityUp;
         EasycommVelocityDown velocityDown;
+        EasycommGetVelocityDown getVelocityDown;
         EasycommReadConfig readConfig;
         EasycommWriteConfig writeConfig;
         EasycommGetStatusRegister getStatusRegister;
         EasycommGetErrorRegister getErrorRegister;
+        EasycommReset reset;
+        EasycommPark park;
     } EasycommPayload;
 
 

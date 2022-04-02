@@ -4,6 +4,7 @@
 
 #endif
 
+#include "../common.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -12,42 +13,29 @@
 #include <string.h>
 #include <unity.h>
 
-void invariant_test_parse_Easycomm1SingleLine(const char *data,
-                                              const EasycommData *expected,
-                                              const char *expected_representation,
-                                              bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard1);
-    char data_as_string[EasycommSingleLineMaxLength + 1] = { 0 };
 
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdSingleLine, parsed.commandId);
-            easycommSingleLineSprintf(&parsed.as.singleLine, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_single_line,
+                                      EasycommSingleLineMaxLength,
+                                      EasycommParserStandard1,
+                                      easycommSingleLine,
+                                      EasycommIdSingleLine,
+                                      singleLine)
 
-            TEST_ASSERT_TRUE(easycommSingleLineEquals(&parsed.as.singleLine, &expected->as.singleLine));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommSingleLineSprintf(&parsed.as.singleLine, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
 
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_reset,
+                                      EasycommResetLength,
+                                      EasycommParserStandard1,
+                                      easycommReset,
+                                      EasycommIdReset,
+                                      reset)
+
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_park,
+                                      EasycommParkLength,
+                                      EasycommParserStandard1,
+                                      easycommPark,
+                                      EasycommIdPark,
+                                      park)
 
 void test_parse_elevation_01()
 {
@@ -59,9 +47,9 @@ void test_parse_elevation_01()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_elevation_02()
 {
@@ -74,9 +62,9 @@ void test_parse_elevation_02()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_elevation_03()
 {
@@ -89,9 +77,10 @@ void test_parse_elevation_03()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
+
 void test_parse_elevation()
 {
     const char *valid_data = "AZ000.0 EL977.3 UP000000000 UUU DN000000000 DDD";
@@ -103,8 +92,7 @@ void test_parse_elevation()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
 void test_parse_uplink_frequency()
@@ -118,8 +106,7 @@ void test_parse_uplink_frequency()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
 
@@ -134,8 +121,7 @@ void test_parse_downlink_frequency()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
 
@@ -149,9 +135,9 @@ void test_parse_uplink_mode()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_downlink_mode()
 {
@@ -163,9 +149,9 @@ void test_parse_downlink_mode()
     memcpy(&expected_result.as.singleLine.modeDown, "DEF", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_single_line(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_invalid_azimuth()
 {
@@ -174,8 +160,9 @@ void test_parse_invalid_azimuth()
     const EasycommData *dont_care = NULL;
     const bool expect_parser_fail = false;
 
-    invariant_test_parse_Easycomm1SingleLine(invalid_data, dont_care, expected_representation, expect_parser_fail);
+    invariant_test_parse_single_line(invalid_data, dont_care, expected_representation, expect_parser_fail);
 }
+
 
 void test_parse_unexpected_elevation()
 {
@@ -188,9 +175,9 @@ void test_parse_unexpected_elevation()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(invalid_data, &expected_result,
-                                             expected_representation, expect_parser_success);
+    invariant_test_parse_single_line(invalid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_trimmed_uplink_mode()
 {
@@ -203,9 +190,9 @@ void test_parse_trimmed_uplink_mode()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(invalid_data, &expected_result,
-                                             expected_representation, expect_parser_success);
+    invariant_test_parse_single_line(invalid_data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_short_downlink_mode()
 {
@@ -218,8 +205,9 @@ void test_parse_short_downlink_mode()
     memcpy(&expected_result.as.singleLine.modeDown, "DD", 2);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(data, &expected_result, expected_representation, expect_parser_success);
+    invariant_test_parse_single_line(data, &expected_result, expected_representation, expect_parser_success);
 }
+
 
 void test_parse_unexpected_uplink_frequency()
 {
@@ -232,8 +220,31 @@ void test_parse_unexpected_uplink_frequency()
     memcpy(&expected_result.as.singleLine.modeDown, "DDD", 3);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_Easycomm1SingleLine(invalid_data, &expected_result,
-                                             expected_representation, expect_parser_success);
+    invariant_test_parse_single_line(invalid_data, &expected_result, expected_representation, expect_parser_success);
+}
+
+
+void test_parse_reset()
+{
+    const char *valid_data = "RESET";
+    const char *expected_representation = "RESET";
+    EasycommData expected_result;
+    easycommReset(&expected_result.as.reset);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_reset(valid_data, &expected_result, expected_representation, expect_parser_success);
+}
+
+
+void test_parse_park()
+{
+    const char *valid_data = "PARK";
+    const char *expected_representation = "PARK";
+    EasycommData expected_result;
+    easycommPark(&expected_result.as.park);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_park(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
 #if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
@@ -259,6 +270,8 @@ void loop()
     RUN_TEST(test_parse_trimmed_uplink_mode);
     RUN_TEST(test_parse_short_downlink_mode);
     RUN_TEST(test_parse_unexpected_uplink_frequency);
+    RUN_TEST(test_parse_reset);
+    RUN_TEST(test_parse_park);
     UNITY_END();
 
 #ifdef ARDUINO_AVR_MEGA2560

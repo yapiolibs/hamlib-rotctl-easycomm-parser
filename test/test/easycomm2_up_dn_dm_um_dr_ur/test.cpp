@@ -4,6 +4,7 @@
 
 #endif
 
+#include "../common.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -12,228 +13,52 @@
 #include <string.h>
 #include <unity.h>
 
-void invariant_test_parse_uplink_frequency(const char *data,
-                                           const EasycommData *expected,
-                                           const char *expected_representation,
-                                           bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommUplinkFrequencyMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdUplinkFrequency, parsed.commandId);
-            easycommUplinkFrequencySprintf(&parsed.as.uplinkFrequency, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommUplinkFrequencyEquals(&parsed.as.uplinkFrequency, &expected->as.uplinkFrequency));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommUplinkFrequencySprintf(&parsed.as.uplinkFrequency, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_uplink_frequency,
+                                      EasycommUplinkFrequencyMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommUplinkFrequency,
+                                      EasycommIdUplinkFrequency,
+                                      uplinkFrequency)
 
 
-void invariant_test_parse_downlink_frequency(const char *data,
-                                             const EasycommData *expected,
-                                             const char *expected_representation,
-                                             bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommDownlinkFrequencyMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdDownlinkFrequency, parsed.commandId);
-            easycommDownlinkFrequencySprintf(&parsed.as.downlinkFrequency, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommDownlinkFrequencyEquals(&parsed.as.downlinkFrequency,
-                                                             &expected->as.downlinkFrequency));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommDownlinkFrequencySprintf(&parsed.as.downlinkFrequency, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_downlink_frequency,
+                                      EasycommDownlinkFrequencyMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommDownlinkFrequency,
+                                      EasycommIdDownlinkFrequency,
+                                      downlinkFrequency)
 
 
-void invariant_test_parse_uplink_mode(const char *data,
-                                      const EasycommData *expected,
-                                      const char *expected_representation,
-                                      bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommUplinkModeMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdUplinkMode, parsed.commandId);
-            easycommUplinkModeSprintf(&parsed.as.uplinkMode, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommUplinkModeEquals(&parsed.as.uplinkMode, &expected->as.uplinkMode));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommUplinkModeSprintf(&parsed.as.uplinkMode, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_uplink_mode,
+                                      EasycommUplinkModeMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommUplinkMode,
+                                      EasycommIdUplinkMode,
+                                      uplinkMode)
 
 
-void invariant_test_parse_downlink_mode(const char *data,
-                                        const EasycommData *expected,
-                                        const char *expected_representation,
-                                        bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommDownlinkModeMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdDownlinkMode, parsed.commandId);
-            easycommDownlinkModeSprintf(&parsed.as.downlinkMode, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommDownlinkModeEquals(&parsed.as.downlinkMode, &expected->as.downlinkMode));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommDownlinkModeSprintf(&parsed.as.downlinkMode, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_downlink_mode,
+                                      EasycommDownlinkModeMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommDownlinkMode,
+                                      EasycommIdDownlinkMode,
+                                      downlinkMode)
 
 
-void invariant_test_parse_uplink_radio(const char *data,
-                                       const EasycommData *expected,
-                                       const char *expected_representation,
-                                       bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommUplinkRadioNumberMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdUplinkRadioNumber, parsed.commandId);
-            easycommUplinkRadioNumberSprintf(&parsed.as.uplinkRadio, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommUplinkRadioNumberEquals(&parsed.as.uplinkRadio, &expected->as.uplinkRadio));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommUplinkRadioNumberSprintf(&parsed.as.uplinkRadio, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_uplink_radio,
+                                      EasycommUplinkRadioNumberMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommUplinkRadioNumber,
+                                      EasycommIdUplinkRadioNumber,
+                                      uplinkRadio)
 
 
-void invariant_test_parse_downlink_radio(const char *data,
-                                         const EasycommData *expected,
-                                         const char *expected_representation,
-                                         bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard2);
-    char data_as_string[EasycommDownlinkRadioNumberMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdDownlinkRadioNumber, parsed.commandId);
-            easycommDownlinkRadioNumberSprintf(&parsed.as.downlinkRadio, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommDownlinkRadioNumberEquals(&parsed.as.downlinkRadio,
-                                                               &expected->as.downlinkRadio));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommDownlinkRadioNumberSprintf(&parsed.as.downlinkRadio, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_downlink_radio,
+                                      EasycommDownlinkRadioNumberMaxLength,
+                                      EasycommParserStandard2,
+                                      easycommDownlinkRadioNumber,
+                                      EasycommIdDownlinkRadioNumber,
+                                      downlinkRadio)
 
 
 void test_parse_uplink_frequency_01()

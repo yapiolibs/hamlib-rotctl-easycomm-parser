@@ -50,6 +50,12 @@ bool easycommAzimuthEquals(const EasycommAzimuth *a, const EasycommAzimuth *b)
 }
 
 
+bool easycommGetAzimuthEquals(const EasycommGetAzimuth *a, const EasycommGetAzimuth *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetAzimuth));
+}
+
+
 bool easycommElevationEquals(const EasycommElevation *a, const EasycommElevation *b)
 {
     if(a == NULL && b == NULL)
@@ -60,6 +66,17 @@ bool easycommElevationEquals(const EasycommElevation *a, const EasycommElevation
            (a->elevation <= b->elevation + margin && a->elevation >= b->elevation - margin);
 }
 
+
+bool easycommGetElevationEquals(const EasycommGetElevation *a, const EasycommGetElevation *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetElevation));
+}
+
+
+bool easycommGetAzimuthElevationEquals(const EasycommGetAzimuthElevation *a, const EasycommGetAzimuthElevation *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetAzimuthElevation));
+}
 
 bool easycommUplinkFrequencyEquals(const EasycommUplinkFrequency *a, const EasycommUplinkFrequency *b)
 {
@@ -181,9 +198,21 @@ bool easycommVelocityLeftEquals(const EasycommVelocityLeft *a, const EasycommVel
 }
 
 
+bool easycommGetVelocityLeftEquals(const EasycommGetVelocityLeft *a, const EasycommGetVelocityLeft *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetVelocityLeft));
+}
+
+
 bool easycommVelocityRightEquals(const EasycommVelocityRight *a, const EasycommVelocityRight *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommVelocityRight));
+}
+
+
+bool easycommGetVelocityRightEquals(const EasycommGetVelocityRight *a, const EasycommGetVelocityRight *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetVelocityRight));
 }
 
 
@@ -193,9 +222,21 @@ bool easycommVelocityUpEquals(const EasycommVelocityUp *a, const EasycommVelocit
 }
 
 
+bool easycommGetVelocityUpEquals(const EasycommGetVelocityUp *a, const EasycommGetVelocityUp *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetVelocityUp));
+}
+
+
 bool easycommVelocityDownEquals(const EasycommVelocityDown *a, const EasycommVelocityDown *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommVelocityDown));
+}
+
+
+bool easycommGetVelocityDownEquals(const EasycommGetVelocityDown *a, const EasycommGetVelocityDown *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetVelocityDown));
 }
 
 
@@ -220,6 +261,18 @@ bool easycommGetStatusRegisterEquals(const EasycommGetStatusRegister *a, const E
 bool easycommGetErrorRegisterEquals(const EasycommGetErrorRegister *a, const EasycommGetErrorRegister *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommGetErrorRegister));
+}
+
+
+bool easycommResetEquals(const EasycommReset *a, const EasycommReset *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommReset));
+}
+
+
+bool easycommParkEquals(const EasycommPark *a, const EasycommPark *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommPark));
 }
 
 

@@ -4,6 +4,7 @@
 
 #endif
 
+#include "../common.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -12,153 +13,69 @@
 #include <string.h>
 #include <unity.h>
 
-void invariant_test_parse_velocity_left(const char *data,
-                                        const EasycommData *expected,
-                                        const char *expected_representation,
-                                        bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommVelocityLeftMaxLength + 1] = { 0 };
 
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdVelocityLeft, parsed.commandId);
-            easycommVelocityLeftSprintf(&parsed.as.velocityLeft, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommVelocityLeftEquals(&parsed.as.velocityLeft, &expected->as.velocityLeft));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommVelocityLeftSprintf(&parsed.as.velocityLeft, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_left,
+                                      EasycommVelocityLeftMaxLength,
+                                      EasycommParserStandard3,
+                                      easycommVelocityLeft,
+                                      EasycommIdVelocityLeft,
+                                      velocityLeft)
 
 
-void invariant_test_parse_velocity_right(const char *data,
-                                         const EasycommData *expected,
-                                         const char *expected_representation,
-                                         bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommVelocityRightMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdVelocityRight, parsed.commandId);
-            easycommVelocityRightSprintf(&parsed.as.velocityRight, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommVelocityRightEquals(&parsed.as.velocityRight, &expected->as.velocityRight));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommVelocityRightSprintf(&parsed.as.velocityRight, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_right,
+                                      EasycommVelocityRightMaxLength,
+                                      EasycommParserStandard3,
+                                      easycommVelocityRight,
+                                      EasycommIdVelocityRight,
+                                      velocityRight)
 
 
-void invariant_test_parse_velocity_up(const char *data,
-                                      const EasycommData *expected,
-                                      const char *expected_representation,
-                                      bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommVelocityUpMaxLength + 1] = { 0 };
-
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdVelocityUp, parsed.commandId);
-            easycommVelocityUpSprintf(&parsed.as.velocityUp, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-
-            TEST_ASSERT_TRUE(easycommVelocityUpEquals(&parsed.as.velocityUp, &expected->as.velocityUp));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommVelocityUpSprintf(&parsed.as.velocityUp, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_up,
+                                      EasycommVelocityUpMaxLength,
+                                      EasycommParserStandard3,
+                                      easycommVelocityUp,
+                                      EasycommIdVelocityUp,
+                                      velocityUp)
 
 
-void invariant_test_parse_velocity_down(const char *data,
-                                        const EasycommData *expected,
-                                        const char *expected_representation,
-                                        bool expect_parser_success)
-{
-    EasycommData parsed;
-    bool is_parsed = easycommParse(data, &parsed, EasycommParserStandard3);
-    char data_as_string[EasycommVelocityDownMaxLength + 1] = { 0 };
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_down,
+                                      EasycommVelocityDownMaxLength,
+                                      EasycommParserStandard3,
+                                      easycommVelocityDown,
+                                      EasycommIdVelocityDown,
+                                      velocityDown)
 
-    if(expect_parser_success)
-    {
-        if(is_parsed)
-        {
-            TEST_ASSERT_EQUAL(EasycommIdVelocityDown, parsed.commandId);
-            easycommVelocityDownSprintf(&parsed.as.velocityDown, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
 
-            TEST_ASSERT_TRUE(easycommVelocityDownEquals(&parsed.as.velocityDown, &expected->as.velocityDown));
-        }
-        else
-        {
-            TEST_FAIL_MESSAGE("failed to parse");
-        }
-    }
-    else
-    {
-        if(is_parsed)
-        {
-            easycommVelocityDownSprintf(&parsed.as.velocityDown, data_as_string);
-            TEST_ASSERT_EQUAL_STRING(expected_representation, data_as_string);
-        }
-        TEST_ASSERT_EQUAL(EasycommIdInvalid, parsed.commandId);
-        TEST_ASSERT_FALSE(is_parsed);
-    }
-}
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_velocity_left,
+                                      EasycommGetVelocityLeftLength,
+                                      EasycommParserStandard3,
+                                      easycommGetVelocityLeft,
+                                      EasycommIdGetVelocityLeft,
+                                      getVelocityLeft)
 
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_velocity_right,
+                                      EasycommGetVelocityRightLength,
+                                      EasycommParserStandard3,
+                                      easycommGetVelocityRight,
+                                      EasycommIdGetVelocityRight,
+                                      getVelocityRight)
+
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_velocity_up,
+                                      EasycommGetVelocityUpLength,
+                                      EasycommParserStandard3,
+                                      easycommGetVelocityUp,
+                                      EasycommIdGetVelocityUp,
+                                      getVelocityUp)
+
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_velocity_down,
+                                      EasycommGetVelocityDownLength,
+                                      EasycommParserStandard3,
+                                      easycommGetVelocityDown,
+                                      EasycommIdGetVelocityDown,
+                                      getVelocityDown)
 
 void test_parse_velocity_left()
 {
@@ -211,6 +128,56 @@ void test_parse_velocity_down()
 }
 
 
+void test_parse_get_velocity_left()
+{
+    const char *valid_data = "VL";
+    const char *expected_representation = "VL";
+    EasycommData expected_result;
+    easycommGetVelocityLeft(&expected_result.as.getVelocityLeft);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_velocity_left(valid_data, &expected_result, expected_representation,
+                                           expect_parser_success);
+}
+
+void test_parse_get_velocity_right()
+{
+    const char *valid_data = "VR";
+    const char *expected_representation = "VR";
+    EasycommData expected_result;
+    easycommGetVelocityRight(&expected_result.as.getVelocityRight);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_velocity_right(valid_data, &expected_result, expected_representation,
+                                            expect_parser_success);
+}
+
+
+void test_parse_get_velocity_up()
+{
+    const char *valid_data = "VU";
+    const char *expected_representation = "VU";
+    EasycommData expected_result;
+    easycommGetVelocityUp(&expected_result.as.getVelocityUp);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_velocity_up(valid_data, &expected_result, expected_representation, expect_parser_success);
+}
+
+
+void test_parse_get_velocity_down()
+{
+    const char *valid_data = "VD";
+    const char *expected_representation = "VD";
+    EasycommData expected_result;
+    easycommGetVelocityDown(&expected_result.as.getVelocityDown);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_velocity_down(valid_data, &expected_result, expected_representation,
+                                           expect_parser_success);
+}
+
+
 #if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
 int main(int argc, char **argv)
 #else
@@ -221,12 +188,14 @@ void loop()
 #endif
 {
     UNITY_BEGIN();
-
     RUN_TEST(test_parse_velocity_left);
     RUN_TEST(test_parse_velocity_right);
     RUN_TEST(test_parse_velocity_up);
     RUN_TEST(test_parse_velocity_down);
-
+    RUN_TEST(test_parse_get_velocity_left);
+    RUN_TEST(test_parse_get_velocity_right);
+    RUN_TEST(test_parse_get_velocity_up);
+    RUN_TEST(test_parse_get_velocity_down);
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560
     return 0;

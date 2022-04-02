@@ -45,10 +45,28 @@ bool isEasycomm2Azimuth(const char *buffer)
 }
 
 
+bool isEasycomm2GetAzimuth(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetAzimuthLength, "AZ", 2);
+}
+
+
 bool isEasycomm2Elevation(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommElevationMinLength,
                                          EasycommElevationMaxLength, "EL", 2);
+}
+
+
+bool isEasycomm2GetElevation(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetElevationLength, "EL", 2);
+}
+
+
+bool isEasycomm2GetAzimuthElevation(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetAzimuthElevationLength, "AZ EL", 5);
 }
 
 
@@ -182,10 +200,22 @@ bool isEasycomm3VelocityLeft(const char *buffer)
 }
 
 
+bool isEasycomm3GetVelocityLeft(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetVelocityLeftLength, "VL", 2);
+}
+
+
 bool isEasycomm3VelocityRight(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommVelocityRightMinLength,
                                          EasycommVelocityRightMaxLength, "VR", 2);
+}
+
+
+bool isEasycomm3GetVelocityRight(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetVelocityRightLength, "VR", 2);
 }
 
 
@@ -196,10 +226,22 @@ bool isEasycomm3VelocityUp(const char *buffer)
 }
 
 
+bool isEasycomm3GetVelocityUp(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetVelocityUpLength, "VU", 2);
+}
+
+
 bool isEasycomm3VelocityDown(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommVelocityDownMinLength,
                                          EasycommVelocityDownMaxLength, "VD", 2);
+}
+
+
+bool isEasycomm3GetVelocityDown(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetVelocityDownLength, "VD", 2);
 }
 
 
@@ -226,6 +268,18 @@ bool isEasycomm3GetStatusRegister(const char *buffer)
 bool isEasycomm3GetErrorRegister(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommGetErrorRegisterLength, "GE", 2);
+}
+
+
+bool isEasycommReset(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommResetLength, "RESET", 5);
+}
+
+
+bool isEasycommPark(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommParkLength, "PARK", 4);
 }
 
 
@@ -271,12 +325,36 @@ bool readEasycomm2Azimuth(const char *buffer, EasycommData *parsed)
 }
 
 
+bool readEasycomm2GetAzimuth(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "AZ"
+    easycommGetAzimuth(&parsed->as.getAzimuth);
+    return true;
+}
+
+
 bool readEasycomm2Elevation(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "ELeee.e", "ELee.e", "ELe.e", "EL.e"
     char c;
     easycommElevation(&parsed->as.elevation);
     return 3 == sscanf(buffer, "%c%c%f", &c, &c, &parsed->as.elevation.elevation);
+}
+
+
+bool readEasycomm2GetElevation(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "EL"
+    easycommGetElevation(&parsed->as.getElevation);
+    return true;
+}
+
+
+bool readEasycomm2GetAzimuthElevation(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "AZ EL"
+    easycommGetAzimuthElevation(&parsed->as.getAzimuthElevation);
+    return true;
 }
 
 
@@ -506,6 +584,14 @@ bool readEasycomm3VelocityLeft(const char *buffer, EasycommData *parsed)
 }
 
 
+bool readEasycomm3GetVelocityLeft(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "VL"
+    easycommGetVelocityLeft(&parsed->as.getVelocityLeft);
+    return true;
+}
+
+
 bool readEasycomm3VelocityRight(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VRddd", "VRdd", "VRd"
@@ -518,6 +604,14 @@ bool readEasycomm3VelocityRight(const char *buffer, EasycommData *parsed)
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.velocityRight.milliDegSecond);
+}
+
+
+bool readEasycomm3GetVelocityRight(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "VR"
+    easycommGetVelocityRight(&parsed->as.getVelocityRight);
+    return true;
 }
 
 
@@ -536,6 +630,14 @@ bool readEasycomm3VelocityUp(const char *buffer, EasycommData *parsed)
 }
 
 
+bool readEasycomm3GetVelocityUp(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "VU"
+    easycommGetVelocityUp(&parsed->as.getVelocityUp);
+    return true;
+}
+
+
 bool readEasycomm3VelocityDown(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VDddd", "VDdd", "VDd"
@@ -548,6 +650,14 @@ bool readEasycomm3VelocityDown(const char *buffer, EasycommData *parsed)
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.velocityDown.milliDegSecond);
+}
+
+
+bool readEasycomm3GetVelocityDown(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "VD"
+    easycommGetVelocityDown(&parsed->as.getVelocityDown);
+    return true;
 }
 
 
@@ -594,5 +704,19 @@ bool readEasycomm3GetErrorRegister(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "GE"
     easycommGetErrorRegister(&parsed->as.getErrorRegister);
+    return true;
+}
+
+bool readEasycommReset(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "RESET"
+    easycommReset(&parsed->as.reset);
+    return true;
+}
+
+bool readEasycommPark(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "PARK"
+    easycommPark(&parsed->as.park);
     return true;
 }
