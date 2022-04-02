@@ -25,5 +25,6 @@ jobs:
         sudo apt install -y libhamlib-utils
     - name: Run integration tests on native platform
       run: |
+        cd test
         platformio test -e native_integration_test
 
