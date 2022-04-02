@@ -26,5 +26,4 @@ jobs:
     - name: Run integration tests on native platform
       run: |
         cd test
-        platformio test -e native_integration_test
-
+        platformio run -e native_integration_test
