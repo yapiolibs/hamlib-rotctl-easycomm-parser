@@ -22,7 +22,7 @@ jobs:
         platformio test -e native
     - name: install libhamlib-utils
       run: |
-        sudo apt install -y libhamlib-utils
+        sudo apt install -y libhamlib-utils socat
     - name: Run integration tests on native platform
       run: |
         cd test
