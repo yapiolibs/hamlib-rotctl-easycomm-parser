@@ -18,6 +18,12 @@ jobs:
         pip install platformio
     - name: Run tests on the native platform
       run: |
-        cd test 
+        cd test
         platformio test -e native
+    - name: install libhamlib-utils
+      run: |
+        apt install -y libhamlib-utils
+    - name: Run integration tests on native platform
+      run: |
+        platformio test -e native_integration_test
 
