@@ -9,7 +9,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 DEVICE_FILE="--rot-file=${SCRIPT_DIR}/../easycomm-endpoint-rotctl"
 MODEL="--model=204"
-VERBOSITY="-vvvvv"
+VERBOSITY=""
 OPTIONAL_COMMANDS="$1"
 
 if [ -n "$OPTIONAL_COMMANDS" ]; then
