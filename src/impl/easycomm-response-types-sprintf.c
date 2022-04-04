@@ -6,9 +6,11 @@
 void easycommResponseSingleLineSprintf(const EasycommResponseSingleLine *from, char *to)
 {
     sprintf(to,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
             "AZ%.1f EL%.1f UP%lu %s DN%lu %s",
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+            "AZ%.1f EL%.1f UP%u %s DN%u %s",
+#else // assume native platform
             "AZ%.1f EL%.1f UP%u %s DN%u %s",
 #endif
             from->azimuth, from->elevation, from->uplinkFrequency.as.uint32, from->modeUp,
@@ -36,9 +38,11 @@ void easycommResponseAzimuthElevationSprintf(const EasycommResponseAzimuthElevat
 
 void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to)
 {
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
     sprintf(to, "UP%lu", from->frequency.as.uint32);
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+    sprintf(to, "UP%u", from->frequency.as.uint32);
+#else // assume native platform
     sprintf(to, "UP%u", from->frequency.as.uint32);
 #endif
 }
@@ -46,9 +50,11 @@ void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequenc
 
 void easycommResponseDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to)
 {
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
     sprintf(to, "DN%ld", from->frequency.as.uint32);
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+    sprintf(to, "DN%u", from->frequency.as.uint32);
+#else // assume native platform
     sprintf(to, "DN%u", from->frequency.as.uint32);
 #endif
 }

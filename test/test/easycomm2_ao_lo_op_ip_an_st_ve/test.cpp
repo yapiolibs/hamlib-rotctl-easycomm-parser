@@ -1,7 +1,5 @@
-#ifndef ENV_NATIVE
-
+#if !defined(ENV_NATIVE)
 #include <Arduino.h>
-
 #endif
 
 #include "../common.h"

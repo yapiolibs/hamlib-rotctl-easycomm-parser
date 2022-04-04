@@ -303,16 +303,20 @@ bool readEasycomm1SingleLine(const char *buffer, EasycommData *parsed)
     // - "DDD", "DD", "D"
     char c;
     easycommSingleLine(&parsed->as.singleLine);
-    return 14 ==
-           sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
-                  "%c%c%f %c%c%f %c%c%lu %s %c%c%lu %s", // TODO limit mode %s to max 3 letters %3s
-#else
-                  "%c%c%f %c%c%f %c%c%u %s %c%c%u %s", // TODO limit mode %s to max 3 letters %3s
+    return 14 == sscanf(buffer,
+
+// TODO limit mode %s to max 3 letters %3s
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
+                        "%c%c%f %c%c%f %c%c%lu %s %c%c%lu %s",
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                        "%c%c%f %c%c%f %c%c%u %s %c%c%u %s",
+#else // assume native platform
+                        "%c%c%f %c%c%f %c%c%u %s %c%c%u %s",
 #endif
-                  &c, &c, &parsed->as.singleLine.azimuth, &c, &c, &parsed->as.singleLine.elevation, &c,
-                  &c, &parsed->as.singleLine.uplinkFrequency.as.uint32, parsed->as.singleLine.modeUp,
-                  &c, &c, &parsed->as.singleLine.downlinkFrequency.as.uint32, parsed->as.singleLine.modeDown);
+                        &c, &c, &parsed->as.singleLine.azimuth, &c, &c, &parsed->as.singleLine.elevation,
+                        &c, &c, &parsed->as.singleLine.uplinkFrequency.as.uint32,
+                        parsed->as.singleLine.modeUp, &c, &c,
+                        &parsed->as.singleLine.downlinkFrequency.as.uint32, parsed->as.singleLine.modeDown);
 }
 
 
@@ -364,9 +368,12 @@ bool readEasycomm2UplinkFrequency(const char *buffer, EasycommData *parsed)
     char c;
     easycommUplinkFrequency(&parsed->as.uplinkFrequency);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
                        "%c%c%lu",
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%u",
+#else // assume native platform
                        "%c%c%u",
 #endif
                        &c, &c, &parsed->as.uplinkFrequency.frequency.as.uint32);
@@ -379,9 +386,12 @@ bool readEasycomm2DownlinkFrequency(const char *buffer, EasycommData *parsed)
     char c;
     easycommDownlinkFrequency(&parsed->as.downlinkFrequency);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
                        "%c%c%lu",
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%u",
+#else // assume native platform
                        "%c%c%u",
 #endif
                        &c, &c, &parsed->as.downlinkFrequency.frequency.as.uint32);
@@ -414,9 +424,11 @@ bool readEasycomm2UplinkRadioNumber(const char *buffer, EasycommData *parsed)
     char c;
     easycommUplinkRadioNumber(&parsed->as.uplinkRadio);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.uplinkRadio.number);
@@ -429,9 +441,11 @@ bool readEasycomm2DownlinkRadioNumber(const char *buffer, EasycommData *parsed)
     char c;
     easycommDownlinkRadioNumber(&parsed->as.downlinkRadio);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.downlinkRadio.number);
@@ -508,9 +522,11 @@ bool readEasycomm2SetOutput(const char *buffer, EasycommData *parsed)
     char c, value;
     easycommSetOutput(&parsed->as.setOutput);
     size_t items = sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                           "%c%c%u%c%c",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                          "%c%c%hu%c%c",
+#else // assume native platform
                           "%c%c%hu%c%c",
 #endif
                           &c, &c, &parsed->as.setOutput.number, &c, &value);
@@ -525,9 +541,11 @@ bool readEasycomm2ReadInput(const char *buffer, EasycommData *parsed)
     char c;
     easycommReadInput(&parsed->as.readInput);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.readInput.number);
@@ -540,9 +558,11 @@ bool readEasycomm2ReadAnalogueInput(const char *buffer, EasycommData *parsed)
     char c;
     easycommReadAnalogueInput(&parsed->as.readAnalogueInput);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.readAnalogueInput.number);
@@ -574,10 +594,11 @@ bool readEasycomm3VelocityLeft(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityLeft(&parsed->as.velocityLeft);
     return 3 == sscanf(buffer,
-
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.velocityLeft.milliDegSecond);
@@ -598,9 +619,11 @@ bool readEasycomm3VelocityRight(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityRight(&parsed->as.velocityRight);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.velocityRight.milliDegSecond);
@@ -621,9 +644,11 @@ bool readEasycomm3VelocityUp(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityUp(&parsed->as.velocityUp);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.velocityUp.milliDegSecond);
@@ -644,9 +669,11 @@ bool readEasycomm3VelocityDown(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityDown(&parsed->as.velocityDown);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.velocityDown.milliDegSecond);
@@ -667,9 +694,11 @@ bool readEasycomm3ReadConfig(const char *buffer, EasycommData *parsed)
     char c;
     easycommReadConfig(&parsed->as.readConfig);
     return 3 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu",
+#else // assume native platform
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.readConfig.registerNumber);
@@ -682,9 +711,11 @@ bool readEasycomm3WriteConfig(const char *buffer, EasycommData *parsed)
     char c;
     easycommWriteConfig(&parsed->as.writeConfig);
     return 4 == sscanf(buffer,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
                        "%c%c%u,%s",
-#else
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hu,%s",
+#else // assume native platform
                        "%c%c%hu,%s",
 #endif
                        &c, &c, &parsed->as.writeConfig.registerNumber,

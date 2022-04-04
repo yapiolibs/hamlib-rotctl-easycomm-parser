@@ -1,4 +1,4 @@
-#ifndef ENV_NATIVE
+#if !defined(ENV_NATIVE)
 #include <Arduino.h>
 #endif
 #include <easycomm-command-callback-handler.h>
@@ -30,7 +30,7 @@ bool callback_example()
 }
 
 
-#ifdef ENV_NATIVE
+#if defined(ENV_NATIVE)
 
 #include <easycomm-command-callback-handler.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
     int serial_fd = open(device_path, O_RDWR);
     if(serial_fd < 0)
     {
-        printf("faild to open device: error %d from %s", errno, strerror(errno));
+        printf("failed to open device: %s (error %d)", strerror(errno), errno);
         return 1;
     }
 

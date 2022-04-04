@@ -7,9 +7,11 @@ void easycommInvalidSprintf(const EasycommData *from, char *to) { sprintf(to, "<
 void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to)
 {
     sprintf(to,
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
             "AZ%.1f EL%.1f UP%lu %c%c%c DN%lu %c%c%c",
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+            "AZ%.1f EL%.1f UP%u %c%c%c DN%u %c%c%c",
+#else // assume native platform
             "AZ%.1f EL%.1f UP%u %c%c%c DN%u %c%c%c",
 #endif
             from->azimuth, from->elevation, from->uplinkFrequency.as.uint32, from->modeUp[0],
@@ -44,9 +46,11 @@ void easycommGetAzimuthElevationSprintf(const EasycommGetAzimuthElevation *from,
 
 void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *to)
 {
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
     sprintf(to, "UP%lu", from->frequency.as.uint32);
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+    sprintf(to, "UP%u", from->frequency.as.uint32);
+#else // assume native platform
     sprintf(to, "UP%u", from->frequency.as.uint32);
 #endif
 }
@@ -54,9 +58,11 @@ void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *t
 
 void easycommDownlinkFrequencySprintf(const EasycommDownlinkFrequency *from, char *to)
 {
-#ifdef ARDUINO_AVR_MEGA2560
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
     sprintf(to, "DN%lu", from->frequency.as.uint32);
-#else
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+    sprintf(to, "DN%u", from->frequency.as.uint32);
+#else // assume native platform
     sprintf(to, "DN%u", from->frequency.as.uint32);
 #endif
 }

@@ -16,6 +16,5 @@
   ],
   "version": "0.1",
   "frameworks": ["native", "arduino"],
-  "platforms": ["native", "atmelavr", "espressiv8266", "espressif32"]
+  "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"]
 }
-
