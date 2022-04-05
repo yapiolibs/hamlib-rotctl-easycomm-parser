@@ -227,7 +227,7 @@ class TestRunner:
 
         print("test: {} passed, {} failed, {} ignored in {:.2f}s".format(passed, failed, ignored, total_duration))
 
-        if failed > 0:
+        if failed > 0 or passed <= 0:
             return 1
         else:
             return 0

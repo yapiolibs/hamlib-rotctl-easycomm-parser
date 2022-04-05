@@ -1,7 +1,7 @@
 from test_base import TestSet, TestData
 
-ROTCTL_VERSION_3 = r"rotctl\(d\), Hamlib 3.0"
-ROTCTL_VERSION_4 = r"rotctl\(d\), Hamlib 4.0"
+ROTCTL_VERSION_3 = r"rotctl\(d\), Hamlib 3.\d"
+ROTCTL_VERSION_4 = r"rotctl\(d\), Hamlib 4.\d"
 
 ROTCTL_VERSION_3OR4 = r"({})|({})".format(ROTCTL_VERSION_3, ROTCTL_VERSION_4)
 PAUSE_COMMAND = "pause 0.2"  # rotctl need a short break in between commands
