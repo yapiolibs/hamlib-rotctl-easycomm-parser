@@ -3,8 +3,7 @@ on: [push, pull_request]
 
 jobs:
   install:
-    call-install-workflow:
-      uses: ./.github/workflows/install.yaml@v1
+    uses: ./.github/workflows/install.yaml@v1
   integration-tests:
     steps:
     - name: install libhamlib-utils
