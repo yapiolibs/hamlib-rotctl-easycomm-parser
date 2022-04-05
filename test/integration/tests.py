@@ -47,7 +47,7 @@ class Easycomm2sIntegrationTests(TestSet):
     easycomm2 = "--model=202"
 
     @staticmethod
-    def _test_easycomm2_get_pos_v3() -> TestData:
+    def _test_easycomm2_rotctl_v3_get_pos() -> TestData:
         return TestData(
             description="v3   get_pos: AZ EL",
             rotctl_commands="get_pos {}".format(EXIT_SEQUENCE),
@@ -62,14 +62,14 @@ class Easycomm2sIntegrationTests(TestSet):
                 r"12.0\d*",
                 r"",
                 r"{} ".format(PAUSE_COMMAND),
-                r"{}.*".format(EXIT_COMMAND)],  # lesser restrictive; see issue #1
-            allowed_rotctl_return_codes=[0, 2],  # lesser restrictive; see issue #1
+                r"{} reset 0 reset: error = Communication timed out".format(EXIT_COMMAND)],  # see issue #1
+            allowed_rotctl_return_codes=[0, 2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
         )
 
     @staticmethod
-    def _test_easycomm2_get_pos_v4() -> TestData:
+    def _test_easycomm2_rotctl_v4_get_pos() -> TestData:
         return TestData(
             description="v4   get_pos: AZ EL",
             rotctl_commands="get_pos {}".format(EXIT_SEQUENCE),
@@ -84,33 +84,14 @@ class Easycomm2sIntegrationTests(TestSet):
                 r"12.0\d*",
                 r"",
                 r"{} ".format(PAUSE_COMMAND),
-                r"{}".format(EXIT_COMMAND)],  # lesser restrictive; see issue #1
-            allowed_rotctl_return_codes=[0],  # lesser restrictive; see issue #1
+                r"{}".format(EXIT_COMMAND)],
+            allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_4,
         )
 
     @staticmethod
-    def _test_easycomm2_set_pos_v4() -> TestData:
-        return TestData(
-            description="v4   set_pos: AZ11.1 EL12.2",
-            rotctl_commands="set_pos 11.1 12.2 {}".format(EXIT_SEQUENCE),
-            expected_test_program_stdout_lines=[
-                r"received: >AZ11.1\d*<",
-                r"received: >EL12.2\d*<",
-                r"received: >RESET<"],
-            allowed_test_program_return_codes=[0],
-            expected_rotctl_stdout_lines=[
-                r"set_pos 11.1\d* 12.2\d* ",
-                r"{} ".format(PAUSE_COMMAND),
-                r"{}.*".format(EXIT_COMMAND)],  # lesser restrictive; see issue #1
-            allowed_rotctl_return_codes=[0, 2],  # lesser restrictive; see issue #1
-            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_4,
-        )
-
-    @staticmethod
-    def _test_easycomm2_set_pos_v3() -> TestData:
+    def _test_easycomm2_rotctl_v3_set_pos() -> TestData:
         return TestData(
             description="v3   set_pos: AZ11.1 EL12.2",
             rotctl_commands="set_pos 11.1 12.2 {}".format(EXIT_SEQUENCE),
@@ -124,10 +105,29 @@ class Easycomm2sIntegrationTests(TestSet):
             expected_rotctl_stdout_lines=[
                 r"set_pos 11.1\d* 12.2\d* ",
                 r"{} ".format(PAUSE_COMMAND),
-                r"{}".format(EXIT_COMMAND)],
+                r"{} reset: error = Communication timed out".format(EXIT_COMMAND)],
             allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v4_set_pos() -> TestData:
+        return TestData(
+            description="v4   set_pos: AZ11.1 EL12.2",
+            rotctl_commands="set_pos 11.1 12.2 {}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >AZ11.1\d*<",
+                r"received: >EL12.2\d*<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"set_pos 11.1\d* 12.2\d* ",
+                r"{} ".format(PAUSE_COMMAND),
+                r"{}".format(EXIT_COMMAND)],
+            allowed_rotctl_return_codes=[0, 2],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4,
         )
 
     @staticmethod

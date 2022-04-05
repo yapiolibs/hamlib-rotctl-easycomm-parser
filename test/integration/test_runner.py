@@ -57,37 +57,43 @@ class Test:
 
     def run(self, test_data: TestData) -> Tuple[TestResult, float]:
         self.timestamp_start = time.time()
-        print("test: -------------------- test start --------------------")
-        print("test: run test \"{}\" ({})".format(test_data.description, test_data.rotctl_commands.join(" ")))
-        print("test: found rotctl version \"{}\" applicable version \"{}\""
-              .format(self.rotctl_version, test_data.allowed_rotctl_versions))
+        print("test: -------------------- test start ({}) --------------------".format(test_data.description))
+
         if re.fullmatch(test_data.allowed_rotctl_versions, self.rotctl_version) is None:
+            print("test: found rotctl version \"{}\" version but applicable is \"{}\""
+                  .format(self.rotctl_version, test_data.allowed_rotctl_versions))
             print("test: ignore test: rotctl version not accepted")
-            duration = time.time() - self.timestamp_start
-            return TestResult.IGNORED, duration
-        self._set_up()
+            test_result = TestResult.IGNORED
+        else:
+            print("test: found applicable rotctl version \"{}\" version, applicable is \"{}\""
+                  .format(self.rotctl_version, test_data.allowed_rotctl_versions))
+            self._set_up()
 
-        self.rotctl2_cmd.extend(test_data.rotctl_extra_program_cli_args)
-        self.rotctl2_cmd.append("-")
-        print("test: send command(s) \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl2_cmd)))
-        self.rotctl = subprocess.Popen(self.rotctl2_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                       stderr=subprocess.PIPE, text=True)
+            self.rotctl2_cmd.extend(test_data.rotctl_extra_program_cli_args)
+            self.rotctl2_cmd.append("-")
+            print(
+                "test: send command(s) \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl2_cmd)))
+            self.rotctl = subprocess.Popen(self.rotctl2_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                           stderr=subprocess.PIPE, text=True)
 
-        test_program_transaction, rotctl_transaction = self._test_transaction("{}\n".format(test_data.rotctl_commands))
-        result = Test.verify_process_output(
-            "test program",
-            test_data.expected_test_program_stdout_lines,
-            test_data.allowed_test_program_return_codes,
-            *test_program_transaction) and Test.verify_process_output(
-            "rotctl",
-            test_data.expected_rotctl_stdout_lines,
-            test_data.allowed_rotctl_return_codes,
-            *rotctl_transaction)
+            test_program_transaction, rotctl_transaction = self._test_transaction(
+                "{}\n".format(test_data.rotctl_commands))
+            test_result = TestResult.PASSED if Test.verify_process_output(
+                "test program",
+                test_data.expected_test_program_stdout_lines,
+                test_data.allowed_test_program_return_codes,
+                *test_program_transaction) and Test.verify_process_output(
+                "rotctl",
+                test_data.expected_rotctl_stdout_lines,
+                test_data.allowed_rotctl_return_codes,
+                *rotctl_transaction) else TestResult.FAILED
 
-        self._tear_down()
+            self._tear_down()
+
         duration = time.time() - self.timestamp_start
-        print("test: ---------------------- test {} ---------------------".format("SUCCEEDED" if result else "FAILED"))
-        return TestResult.PASSED if result else TestResult.FAILED, duration
+        print("test: ---------------------- test {} ({}) ---------------------"
+              .format(test_result.name, test_data.description))
+        return test_result, duration
 
     def _set_up(self) -> None:
         print("test: setup ...")

@@ -36,6 +36,12 @@ class TestData(object):
 
 
 class TestSet(object):
+    """
+    Methods of derived classes starting with "_test_" are considered as test methods.
+    Test methods returning None are ignored.
+    In order to register the tests of a derived class it must instantiate exactly once.
+    """
+
     _tests: List[TestData] = []
 
     def __init__(self):
