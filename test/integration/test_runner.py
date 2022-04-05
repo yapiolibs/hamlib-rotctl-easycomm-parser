@@ -53,11 +53,18 @@ class Test:
         self.timestamp_start = None
         self.timestamp_end = None
         self.runs_on_github_ci = runs_on_github_ci
+        self.rotctl_version = self._get_rotctl_version()
 
     def run(self, test_data: TestData) -> Tuple[TestResult, float]:
         self.timestamp_start = time.time()
         print("test: -------------------- test start --------------------")
         print("test: run test \"{}\" ({})".format(test_data.description, test_data.rotctl_commands.join(" ")))
+        print("test: found rotctl version \"{}\" applicable version \"{}\""
+              .format(self.rotctl_version, test_data.allowed_rotctl_versions))
+        if re.fullmatch(test_data.allowed_rotctl_versions, self.rotctl_version) is None:
+            print("test: ignore test: rotctl version not accepted")
+            duration = time.time() - self.timestamp_start
+            return TestResult.IGNORED, duration
         self._set_up()
 
         self.rotctl2_cmd.extend(test_data.rotctl_extra_program_cli_args)
@@ -78,9 +85,9 @@ class Test:
             *rotctl_transaction)
 
         self._tear_down()
-        timespan = time.time() - self.timestamp_start
+        duration = time.time() - self.timestamp_start
         print("test: ---------------------- test {} ---------------------".format("SUCCEEDED" if result else "FAILED"))
-        return TestResult.PASSED if result else TestResult.FAILED, timespan
+        return TestResult.PASSED if result else TestResult.FAILED, duration
 
     def _set_up(self) -> None:
         print("test: setup ...")
@@ -163,18 +170,33 @@ class Test:
             test_program_stdout, test_program_stderr = self.test_program.communicate()
             test_program_ret_code = self.test_program.returncode
 
-        def lines_from_stream(lines_as_byte_array):
-            if lines_as_byte_array is None:
-                return []
-            else:
-                return str(lines_as_byte_array.strip()).split('\n') if len(lines_as_byte_array) > 0 else []
-
-        return (lines_from_stream(test_program_stdout),
-                lines_from_stream(test_program_stderr),
+        return (self._lines_from_stream(test_program_stdout),
+                self._lines_from_stream(test_program_stderr),
                 test_program_ret_code), \
-               (lines_from_stream(rotctl_stdout),
-                lines_from_stream(rotctl_stderr),
+               (self._lines_from_stream(rotctl_stdout),
+                self._lines_from_stream(rotctl_stderr),
                 rotctl_ret_code)
+
+    @staticmethod
+    def _lines_from_stream(lines_as_byte_array):
+        if lines_as_byte_array is None:
+            return []
+        else:
+            return str(lines_as_byte_array.strip()).split('\n') if len(lines_as_byte_array) > 0 else []
+
+    def _get_rotctl_version(self) -> str:
+        rotctl = subprocess.Popen(["/usr/bin/rotctl", "--version"],
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            stdout, _stderr = rotctl.communicate(timeout=1)
+        except subprocess.TimeoutExpired:
+            rotctl.kill()
+            stdout, _stderr = rotctl.communicate()
+
+        lines = self._lines_from_stream(stdout)
+        if len(lines) > 0:
+            return lines[0]
+        return ""
 
 
 class TestRunner:
