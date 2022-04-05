@@ -10,6 +10,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 DEVICE_FILE="--rot-file=${SCRIPT_DIR}/../easycomm-endpoint-rotctl"
 MODEL="--model=204"
 VERBOSITY=""
+CONFIG="--set-conf=timeout=500"
 OPTIONAL_COMMANDS="$1"
 
 if [ -n "$OPTIONAL_COMMANDS" ]; then
@@ -17,5 +18,5 @@ if [ -n "$OPTIONAL_COMMANDS" ]; then
   echo "$OPTIONAL_COMMANDS" | rotctl $DEVICE_FILE $MODEL $VERBOSITY -
 else
   # interactive
-  rotctl $DEVICE_FILE $MODEL $VERBOSITY
+  rotctl $DEVICE_FILE $MODEL $VERBOSITY $CONFIG
 fi
