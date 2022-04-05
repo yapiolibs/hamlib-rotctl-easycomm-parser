@@ -69,7 +69,7 @@ class Test:
         print("test: setup ...")
         print("test: prepare virtual device: \"{}\"".format(" ".join(self.virtual_device_cmd)))
         self.virtual_dev = subprocess.Popen(self.virtual_device_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        time.sleep(1)
+        time.sleep(2)
         print("test: start test program: \"{}\"".format(" ".join(self.test_program_cmd)))
         self.test_program = subprocess.Popen(self.test_program_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
