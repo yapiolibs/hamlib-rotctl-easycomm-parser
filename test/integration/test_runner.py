@@ -155,7 +155,7 @@ class Test:
         rotctl_stdout, rotctl_stderr, rotctl_ret_code = None, None, None
 
         try:
-            rotctl_stdout, rotctl_stderr = self.rotctl.communicate(rotctl_commands, timeout=1)
+            rotctl_stdout, rotctl_stderr = self.rotctl.communicate(rotctl_commands, timeout=3)
             rotctl_ret_code = self.rotctl.returncode
         except subprocess.TimeoutExpired:  # OK if process already finished
             self.rotctl.kill()
@@ -163,7 +163,7 @@ class Test:
             rotctl_ret_code = self.rotctl.returncode
 
         try:
-            test_program_stdout, test_program_stderr = self.test_program.communicate(timeout=1)
+            test_program_stdout, test_program_stderr = self.test_program.communicate(timeout=3)
             test_program_ret_code = self.test_program.returncode
         except subprocess.TimeoutExpired:  # OK if process already finished
             self.test_program.kill()
@@ -188,7 +188,7 @@ class Test:
         rotctl = subprocess.Popen(["/usr/bin/rotctl", "--version"],
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
-            stdout, _stderr = rotctl.communicate(timeout=1)
+            stdout, _stderr = rotctl.communicate(timeout=3)
         except subprocess.TimeoutExpired:
             rotctl.kill()
             stdout, _stderr = rotctl.communicate()
