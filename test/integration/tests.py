@@ -57,7 +57,7 @@ class IntegrationTests(TestSet):
             r"12.0\d*",
             "",
             "{} ".format(IntegrationTests.pause_command),
-            IntegrationTests.exit_command]
+            "{}.*".format(IntegrationTests.exit_command)]  # less restrictive response, see issue #1
         expected_rotctl_return_code = 0
 
         return description, rotctl_commands, expected_test_program_lines, expected_test_program_return_code, \

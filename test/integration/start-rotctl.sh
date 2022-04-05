@@ -9,7 +9,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 DEVICE_FILE="--rot-file=${SCRIPT_DIR}/../easycomm-endpoint-rotctl"
 MODEL="--model=204"
-VERBOSITY="-vvvvv"
+VERBOSITY=""
 CONFIG="--set-conf=timeout=900,post_write_delay=100,write_delay=0"
 OPTIONAL_COMMANDS="$1"
 
