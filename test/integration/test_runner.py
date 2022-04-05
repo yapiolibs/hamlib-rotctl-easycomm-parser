@@ -57,7 +57,6 @@ class Test:
         self.rotctl2_cmd.extend(rotctl_extra_program_cli_args)
         self.rotctl2_cmd.append("-")
         print("test: send command(s) \"{}\" to \"{}\"".format(rotctl_commands, " ".join(self.rotctl2_cmd)))
-        print("test: rotctl : \"{}\"".format(" ".join(self.rotctl2_cmd)))
         self.rotctl = subprocess.Popen(self.rotctl2_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE, text=True)
 
@@ -140,8 +139,7 @@ class Test:
         try:
             rotctl_stdout, rotctl_stderr = self.rotctl.communicate(rotctl_commands, timeout=1)
             rotctl_ret_code = self.rotctl.returncode
-        except subprocess.TimeoutExpired:
-            print("test: failed to wait for {}".format(self.rotctl2_cmd))
+        except subprocess.TimeoutExpired:  # OK if process already finished
             self.rotctl.kill()
             rotctl_stdout, rotctl_stderr = self.rotctl.communicate()
             rotctl_ret_code = self.rotctl.returncode
@@ -149,8 +147,7 @@ class Test:
         try:
             test_program_stdout, test_program_stderr = self.test_program.communicate(timeout=1)
             test_program_ret_code = self.test_program.returncode
-        except subprocess.TimeoutExpired:
-            print("test: failed to wait for {}".format(self.test_program_cmd))
+        except subprocess.TimeoutExpired:  # OK if process already finished
             self.test_program.kill()
             test_program_stdout, test_program_stderr = self.test_program.communicate()
             test_program_ret_code = self.test_program.returncode
@@ -158,7 +155,8 @@ class Test:
         def lines_from_stream(lines_as_byte_array):
             if lines_as_byte_array is None:
                 return []
-            return str(lines_as_byte_array.strip()).split('\n') if len(lines_as_byte_array) > 0 else []
+            else:
+                return str(lines_as_byte_array.strip()).split('\n') if len(lines_as_byte_array) > 0 else []
 
         return (lines_from_stream(test_program_stdout),
                 lines_from_stream(test_program_stderr),
