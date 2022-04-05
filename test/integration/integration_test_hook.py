@@ -13,8 +13,13 @@ for bt in BUILD_TARGETS:
 
 def run_integration_tests(source, target, env):
     project_dir = env["PROJECT_DIR"]
-    sys.exit(TestRunner(project_dir).run())
+    return TestRunner(project_dir).run()
 
 
-# env.AddPostAction("$BUILD_DIR/${PROGNAME}", run_integration_tests)
+def run_integration_tests_ci(source, target, env):
+    project_dir = env["PROJECT_DIR"]
+    return TestRunner(project_dir, runs_on_github_ci=True).run()
+
+
 env.AddCustomTarget("integration", "$BUILD_DIR/${PROGNAME}", run_integration_tests)
+env.AddCustomTarget("integrationci", "$BUILD_DIR/${PROGNAME}", run_integration_tests_ci)
