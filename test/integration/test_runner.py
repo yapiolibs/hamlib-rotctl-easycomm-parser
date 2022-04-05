@@ -47,9 +47,9 @@ class Test:
             expected_rotctl_lines,
             expected_rotctl_ret_code):  # type: (str, str, List[str], int, List[str], int) -> Tuple[bool, float]
         self.timestamp_start = time.time()
-        print("test: run test \"{}\" ({})".format(description, rotctl_commands))
+        print("test: run test \"{}\" ({})".format(description, rotctl_commands.join(" ")))
         self._set_up()
-        print("test: send command(s) \"{}\"".format(rotctl_commands))
+        print("test: send command(s) \"{}\" ({})".format(rotctl_commands, self.rotctl_cmd))
         self.rotctl = subprocess.Popen([self.rotctl_cmd, rotctl_commands], stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
 
@@ -67,7 +67,10 @@ class Test:
 
     def _set_up(self):
         print("test: setup ...")
+        print("test: prepare virtual device: \"{}\"".format(" ".join(self.virtual_device_cmd)))
         self.virtual_dev = subprocess.Popen(self.virtual_device_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(2)
+        print("test: start test program: \"{}\"".format(" ".join(self.test_program_cmd)))
         self.test_program = subprocess.Popen(self.test_program_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def _tear_down(self):

@@ -15,5 +15,5 @@ pio test -e espressif8266        # requires d1_mini board
 pio test -e espressif32          # requies esp32doit-devkit-v1 board
 
 # integration test on desktop
-pio run -e native -t integration # requires hamlib_utils installed
+pio run -e native -t integration # requires libhamlib-utils installed
 ```
