@@ -6,9 +6,13 @@
 #include <easycomm-response-types.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <string>
 #include <sys/select.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 /**
@@ -33,12 +37,19 @@
 
 typedef struct CallbackData
 {
+    std::string retained_response;
+    size_t num_commands_pending;
     int serial_fd;
 } CallbackData;
 
 static void printCommandCallback(const EasycommData *command, void *custom_data)
 {
     CallbackData *data = (CallbackData *)custom_data;
+    if(data->num_commands_pending-- <= 0)
+    {
+        printf("unexpected number of commands");
+        exit(1);
+    }
 
     char string_buffer[128] = { 0 };
 
@@ -120,9 +131,20 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     else
         return;
 
-    printf("response: >%s<\n", string_buffer);
-    write(data->serial_fd, string_buffer, strlen(string_buffer)); // rotctl expects response
-    write(data->serial_fd, "\n", 1);
+
+    if(data->num_commands_pending <= 0)
+    {
+        data->retained_response.append(string_buffer);
+        printf("response: >%s<\n", data->retained_response.c_str());
+        (void)write(data->serial_fd, data->retained_response.c_str(), data->retained_response.length());
+        (void)write(data->serial_fd, "\n", 1);
+        data->retained_response.clear();
+    }
+    else
+    {
+        data->retained_response.append(string_buffer);
+        data->retained_response.append(" ");
+    }
 }
 
 
@@ -133,15 +155,13 @@ int main(int argc, char **argv)
 
     char *device_path = argv[1];
 
-
     int serial_fd = open(device_path, O_RDWR);
     if(serial_fd < 0)
     {
-        printf("failed to open device: %s (error %d)", strerror(errno), errno);
+        printf("failed to open device %s: %s (error %d)", device_path, strerror(errno), errno);
         return 1;
     }
 
-    char line_buffer[256] = { 0 };
     fd_set read_fds;
     fd_set exception_fds;
 
@@ -152,7 +172,7 @@ int main(int argc, char **argv)
 
     while(true)
     {
-        memset(line_buffer, 0, sizeof(line_buffer));
+        char line_buffer[256] = { 0 };
         FD_SET(serial_fd, &read_fds);
         FD_SET(serial_fd, &exception_fds);
 
@@ -162,9 +182,13 @@ int main(int argc, char **argv)
             return 1;
         }
 
+        // assume line buffered read: a read will include '\n'
         if(0 < read(serial_fd, &line_buffer, sizeof(line_buffer)))
         {
-            // cleanup and trim trailing '\r' '\n' and ' '
+            // assume each command is space separated or ends with newline
+            // assume rotctl expects exactly one answer for all commands in each line (due to timout)
+
+            // cleanup and trim trailing '\r' '\n' and ' ' from rotctl
             *strchrnul(line_buffer, '\r') = 0;
             *strchrnul(line_buffer, '\n') = 0;
             for(char *c = line_buffer + strlen(line_buffer) - 1; c != line_buffer; c--)
@@ -175,24 +199,19 @@ int main(int argc, char **argv)
                     break;
             }
 
-            // TODO workaround messy responses from rotctl:
-            //   - "AZ EL " expects the response in one line "AZxxx Elxxx\n"
-            //     not as documented "AZxxx\n" and "ELxxx\n" so it cannot be handled as two
-            //     separate commands "AZ" "EL". it must be one "AZ EL" command.
-            //   - "SA SE " can be handled as two ' ' separated commands but this contradicts
-            //     "AZ EL " above
-            //  idea:
-            //    - read until '\n'
-            //    - tokenize N-commands
-            //    - try handle all N
-            //    - retain transmission until last N is handled or an error occurs
-            // char *token = strtok(line_buffer, " ");
-            // while(nullptr != token)
+            // remember how many responses are to be retained; last response sends '\n'
+            cb_data.num_commands_pending = 1;
+            for(char *c = line_buffer; *c != 0; c++)
             {
-                // printf("xxx %s\n", token);
-                // easycommHandleCommand(token, &cb_handler, EasycommParserStandard123, &cb_data);
-                easycommHandleCommand(line_buffer, &cb_handler, EasycommParserStandard123, &cb_data);
-                // token = strtok(nullptr, " ");
+                if(*c == ' ')
+                    cb_data.num_commands_pending++;
+            }
+
+            char *token = strtok(line_buffer, " ");
+            while(nullptr != token)
+            {
+                easycommHandleCommand(token, &cb_handler, EasycommParserStandard123, &cb_data);
+                token = strtok(nullptr, " ");
             }
         }
     }

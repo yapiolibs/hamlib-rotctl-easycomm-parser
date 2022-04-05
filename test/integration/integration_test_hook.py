@@ -3,7 +3,6 @@ from SCons.Script import COMMAND_LINE_TARGETS
 import sys
 from test_runner import TestRunner
 
-
 if "idedata" in COMMAND_LINE_TARGETS:
     env.Exit(0)
 
@@ -17,4 +16,5 @@ def run_integration_tests(source, target, env):
     sys.exit(TestRunner(project_dir).run())
 
 
-env.AddPostAction("$BUILD_DIR/${PROGNAME}", run_integration_tests)
+# env.AddPostAction("$BUILD_DIR/${PROGNAME}", run_integration_tests)
+env.AddCustomTarget("integration", "$BUILD_DIR/${PROGNAME}", run_integration_tests)

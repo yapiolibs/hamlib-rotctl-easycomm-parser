@@ -29,22 +29,27 @@ class Test:
     """
 
     def __init__(self, project_dir):
-        self.virtual_device_cmd = "{}/integration/activate-virtual-device.sh".format(project_dir)
+        self.pipe_endpoint_a = "{}/easycomm-endpoint-rotctl".format(project_dir)
+        self.pipe_endpoint_b = "{}/easycomm-endpoint-test-program".format(project_dir)
+        self.virtual_device_cmd = ["/usr/bin/socat", "-d", "-d",
+                                   "pty,raw,echo=0,link={}".format(self.pipe_endpoint_a),
+                                   "pty,raw,echo=0,link={}".format(self.pipe_endpoint_b)]
         self.rotctl_cmd = "{}/integration/start-rotctl.sh".format(project_dir)
-        self.test_program_cmd = "{}/integration/start-test-program.sh".format(project_dir)
+        self.test_program_cmd = ["{}/.pio/build/native/program".format(project_dir), self.pipe_endpoint_b]
         self.virtual_dev = None
         self.test_program = None
         self.rotctl = None
         self.timestamp_start = None
         self.timestamp_end = None
 
-    def run(self, description, rotctl_command, expected_test_program_lines, expected_test_program_ret_code,
+    def run(self, description, rotctl_commands, expected_test_program_lines, expected_test_program_ret_code,
             expected_rotctl_lines,
             expected_rotctl_ret_code):  # type: (str, str, List[str], int, List[str], int) -> Tuple[bool, float]
         self.timestamp_start = time.time()
-        print("test: run test \"{}\" ({})".format(description, rotctl_command))
+        print("test: run test \"{}\" ({})".format(description, rotctl_commands))
         self._set_up()
-        self.rotctl = subprocess.Popen([self.rotctl_cmd, rotctl_command], stdout=subprocess.PIPE,
+        print("test: send command(s) \"{}\"".format(rotctl_commands))
+        self.rotctl = subprocess.Popen([self.rotctl_cmd, rotctl_commands], stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
 
         test_program_transaction, rotctl_transaction = self._test_transaction()
@@ -129,6 +134,8 @@ class Test:
             self.rotctl.kill()
 
         def lines_from_bytes(lines_as_byte_array):
+            if lines_as_byte_array is None:
+                return []
             return str(lines_as_byte_array.strip().decode("ascii")).split('\n') if len(lines_as_byte_array) > 0 else []
 
         return (lines_from_bytes(test_program_stdout), lines_from_bytes(test_program_stderr), test_program_ret_code), \

@@ -45,14 +45,15 @@ class IntegrationTests(TestSet):
         rotctl_commands = "get_pos {}".format(IntegrationTests.postfix)
 
         expected_test_program_lines = [
-            "received: >AZ EL<",
-            "response: >AZ2.0 EL1.0<",
+            "received: >AZ<",
+            "received: >EL<",
+            "response: >AZ123.4 EL-12.3<",
             "received: >RESET<"]
         expected_test_program_return_code = 0
 
         expected_rotctl_lines = [
-            "get_pos 2.00",
-            "1.00",
+            "get_pos 123.40",
+            "-12.30",
             "",
             "{} ".format(IntegrationTests.pause_command),
             IntegrationTests.exit_command]
