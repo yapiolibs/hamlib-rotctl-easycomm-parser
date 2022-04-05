@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 import subprocess
 import time
+import re
 from tests import IntegrationTests
 
 
@@ -96,7 +97,7 @@ class Test:
             print("test: failed: expected {} of stdout lines but found {}".format(len_expected, len_actual))
         else:
             for expected_line, actual_line in zip(expected_lines, stdout_lines):
-                if expected_line != actual_line:
+                if re.fullmatch(expected_line, actual_line) is None:
                     has_passed = False
                     print("test: failed: expected line does not match: expected=\"{}\" vs. actual=\"{}\""
                           .format(expected_line, actual_line))
@@ -122,7 +123,7 @@ class Test:
             test_program_stdout, test_program_stderr = self.test_program.communicate(timeout=1)
             test_program_ret_code = self.test_program.returncode
         except subprocess.TimeoutExpired:
-            print("test: failed to wait for test program")
+            print("test: failed to wait for {}".format(self.test_program_cmd))
             self.test_program.kill()
 
         try:
@@ -130,7 +131,7 @@ class Test:
             rotctl_stdout, rotctl_stderr = self.rotctl.communicate(timeout=1)
             rotctl_ret_code = self.rotctl.returncode
         except subprocess.TimeoutExpired:
-            print("test: failed to wait for rotctl")
+            print("test: failed to wait for {}".format(self.test_program_cmd))
             self.rotctl.kill()
 
         def lines_from_bytes(lines_as_byte_array):
