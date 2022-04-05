@@ -4,7 +4,7 @@ from typing import List, Tuple
 class TestSet(object):
 
     def __init__(self):
-        self._tests = []  # type: List[Tuple[str, str, List[str], int, List[str], int]]
+        self._tests = []  # type: List[Tuple[str, str, List[str], List[int], List[str], List[int]]]
 
         for method_name in dir(self):
             if method_name.startswith('_test_'):
@@ -49,7 +49,7 @@ class IntegrationTests(TestSet):
             "received: >EL<",
             r"response: >AZ11.0\d* EL12.0\d*<",
             "received: >RESET<"]
-        expected_test_program_return_code = 0
+        allowed_test_program_return_codes = [0]
 
         expected_rotctl_lines = [
             "{} ".format(IntegrationTests.pause_command),
@@ -57,11 +57,11 @@ class IntegrationTests(TestSet):
             r"12.0\d*",
             "",
             "{} ".format(IntegrationTests.pause_command),
-            "{}.*".format(IntegrationTests.exit_command)]  # less restrictive response, see issue #1
-        expected_rotctl_return_code = 0
+            "{}.*".format(IntegrationTests.exit_command)]  # less restrictive; see issue #1
+        allowed_rotctl_return_codes = [0, 2]  # less restrictive; see issue #1
 
-        return description, rotctl_commands, expected_test_program_lines, expected_test_program_return_code, \
-               expected_rotctl_lines, expected_rotctl_return_code
+        return description, rotctl_commands, expected_test_program_lines, allowed_test_program_return_codes, \
+            expected_rotctl_lines, allowed_rotctl_return_codes
 
     @staticmethod
     def _test_set_pos():

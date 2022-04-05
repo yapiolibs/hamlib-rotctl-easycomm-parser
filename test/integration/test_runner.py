@@ -43,9 +43,9 @@ class Test:
         self.timestamp_start = None
         self.timestamp_end = None
 
-    def run(self, description, rotctl_commands, expected_test_program_lines, expected_test_program_ret_code,
-            expected_rotctl_lines,
-            expected_rotctl_ret_code):  # type: (str, str, List[str], int, List[str], int) -> Tuple[bool, float]
+    def run(self, description: str, rotctl_commands: str,
+            expected_test_program_lines: List[str], allowed_test_program_ret_codes: List[int],
+            expected_rotctl_lines: List[str], allowed_rotctl_ret_codes: List[int]) -> Tuple[bool, float]:
         self.timestamp_start = time.time()
         print("test: run test \"{}\" ({})".format(description, rotctl_commands.join(" ")))
         self._set_up()
@@ -55,10 +55,10 @@ class Test:
 
         test_program_transaction, rotctl_transaction = self._test_transaction()
         result = Test.verify_process_output("test program", expected_test_program_lines,
-                                            expected_test_program_ret_code,
+                                            allowed_test_program_ret_codes,
                                             *test_program_transaction) and \
                  Test.verify_process_output("rotctl", expected_rotctl_lines,
-                                            expected_rotctl_ret_code,
+                                            allowed_rotctl_ret_codes,
                                             *rotctl_transaction)
 
         self._tear_down()
@@ -79,14 +79,14 @@ class Test:
             p.terminate()
 
     @staticmethod
-    def verify_process_output(process_name, expected_lines, expected_ret_code, stdout_lines, stderr_lines,
-                              ret_code):  # type: (str, List[str], int, List[str], List[str], int) -> bool
+    def verify_process_output(process_name, expected_lines, expected_ret_codes, stdout_lines, stderr_lines,
+                              ret_code):  # type: (str, List[str], List[int], List[str], List[str], int) -> bool
         print("test: verify {} output ...".format(process_name))
         has_passed = True
 
-        if expected_ret_code != ret_code:
+        if ret_code not in expected_ret_codes:
             has_passed = False
-            print("test: failed: expected return code {} but found {}".format(expected_ret_code, ret_code))
+            print("test: failed: allowed return codes {} but found {}".format(expected_ret_codes, ret_code))
 
         if len(stderr_lines) > 0:
             has_passed = False
@@ -155,11 +155,11 @@ class TestRunner:
     def run(self):
         results = [
             (description, Test(self.project_dir)
-             .run(description, command, expected_test_program_lines, expected_test_program_ret_code,
-                  expected_rotctl_lines, expected_rotctl_ret_code))
+             .run(description, command, expected_test_program_lines, allowed_test_program_ret_codes,
+                  expected_rotctl_lines, allowed_rotctl_ret_codes))
             for
-            description, command, expected_test_program_lines, expected_test_program_ret_code, expected_rotctl_lines,
-            expected_rotctl_ret_code
+            description, command, expected_test_program_lines, allowed_test_program_ret_codes, expected_rotctl_lines,
+            allowed_rotctl_ret_codes
             in self.tests]
 
         print("test: test summary:")
