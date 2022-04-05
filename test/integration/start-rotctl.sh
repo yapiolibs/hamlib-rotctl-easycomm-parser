@@ -9,8 +9,8 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 DEVICE_FILE="--rot-file=${SCRIPT_DIR}/../easycomm-endpoint-rotctl"
 MODEL="--model=204"
-VERBOSITY=""
-CONFIG="--set-conf=timeout=500"
+VERBOSITY="-vvvvv"
+CONFIG="--set-conf=timeout=900,post_write_delay=100,write_delay=0"
 OPTIONAL_COMMANDS="$1"
 
 if [ -n "$OPTIONAL_COMMANDS" ]; then

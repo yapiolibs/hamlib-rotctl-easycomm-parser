@@ -42,7 +42,7 @@ class IntegrationTests(TestSet):
     @staticmethod
     def _test_get_pos():  # type: () -> (str, str, List[str], int, List[str], int)
         description = "get_pos: AZ EL"
-        rotctl_commands = "get_pos {}".format(IntegrationTests.postfix)
+        rotctl_commands = "{} get_pos {}".format(IntegrationTests.pause_command, IntegrationTests.postfix)
 
         expected_test_program_lines = [
             "received: >AZ<",
@@ -52,6 +52,7 @@ class IntegrationTests(TestSet):
         expected_test_program_return_code = 0
 
         expected_rotctl_lines = [
+            "{} ".format(IntegrationTests.pause_command),
             r"get_pos 11.0\d*",
             r"12.0\d*",
             "",
