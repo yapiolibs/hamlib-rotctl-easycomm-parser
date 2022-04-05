@@ -47,13 +47,13 @@ class IntegrationTests(TestSet):
         expected_test_program_lines = [
             "received: >AZ<",
             "received: >EL<",
-            "response: >AZ123.4 EL-12.3<",
+            "response: >AZ11.0 EL12.0<",
             "received: >RESET<"]
         expected_test_program_return_code = 0
 
         expected_rotctl_lines = [
-            "get_pos 123.40",
-            "-12.30",
+            "get_pos 11.00",
+            "12.00",
             "",
             "{} ".format(IntegrationTests.pause_command),
             IntegrationTests.exit_command]

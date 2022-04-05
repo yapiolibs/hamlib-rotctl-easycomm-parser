@@ -64,14 +64,14 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     {
         EasycommResponseAzimuth az;
         easycommResponseAzimuth(&az);
-        az.azimuth = 123.4;
+        az.azimuth = 11;
         easycommResponseAzimuthSprintf(&az, string_buffer);
     }
     else if(command->commandId == EasycommIdGetElevation)
     {
         EasycommResponseElevation el;
         easycommResponseElevation(&el);
-        el.elevation = -12.3;
+        el.elevation = 12;
         easycommResponseElevationSprintf(&el, string_buffer);
     }
     else if(command->commandId == EasycommIdGetAzimuthElevation)
