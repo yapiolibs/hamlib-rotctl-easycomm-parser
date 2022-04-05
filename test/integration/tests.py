@@ -62,7 +62,7 @@ class Easycomm2sIntegrationTests(TestSet):
                 r"12.0\d*",
                 r"",
                 r"{} ".format(PAUSE_COMMAND),
-                r"{} reset 0 reset: error = Communication timed out".format(EXIT_COMMAND)],  # see issue #1
+                r"{} reset: error = Communication timed out".format(EXIT_COMMAND)],  # see issue #1
             allowed_rotctl_return_codes=[0, 2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
@@ -105,8 +105,8 @@ class Easycomm2sIntegrationTests(TestSet):
             expected_rotctl_stdout_lines=[
                 r"set_pos 11.1\d* 12.2\d* ",
                 r"{} ".format(PAUSE_COMMAND),
-                r"{} reset: error = Communication timed out".format(EXIT_COMMAND)],
-            allowed_rotctl_return_codes=[0],
+                r"{} reset: error = Communication timed out".format(EXIT_COMMAND)],  # see issue #1
+            allowed_rotctl_return_codes=[0, 2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
         )
