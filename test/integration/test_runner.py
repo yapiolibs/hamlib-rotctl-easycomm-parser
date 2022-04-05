@@ -3,7 +3,15 @@ from typing import List, Tuple
 import subprocess
 import time
 import re
-from tests import IntegrationTests
+from tests import TestSet
+from test_base import TestData
+from enum import Enum
+
+
+class TestResult(Enum):
+    PASSED = 1
+    FAILED = 2
+    IGNORED = 3
 
 
 class Test:
@@ -46,30 +54,33 @@ class Test:
         self.timestamp_end = None
         self.runs_on_github_ci = runs_on_github_ci
 
-    def run(self, description: str, rotctl_commands: str, rotctl_extra_program_cli_args: List[str],
-            expected_test_program_lines: List[str], allowed_test_program_ret_codes: List[int],
-            expected_rotctl_lines: List[str], allowed_rotctl_ret_codes: List[int]) -> Tuple[bool, float]:
+    def run(self, test_data: TestData) -> Tuple[TestResult, float]:
         self.timestamp_start = time.time()
         print("test: -------------------- test start --------------------")
-        print("test: run test \"{}\" ({})".format(description, rotctl_commands.join(" ")))
+        print("test: run test \"{}\" ({})".format(test_data.description, test_data.rotctl_commands.join(" ")))
         self._set_up()
 
-        self.rotctl2_cmd.extend(rotctl_extra_program_cli_args)
+        self.rotctl2_cmd.extend(test_data.rotctl_extra_program_cli_args)
         self.rotctl2_cmd.append("-")
-        print("test: send command(s) \"{}\" to \"{}\"".format(rotctl_commands, " ".join(self.rotctl2_cmd)))
+        print("test: send command(s) \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl2_cmd)))
         self.rotctl = subprocess.Popen(self.rotctl2_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE, text=True)
 
-        test_program_transaction, rotctl_transaction = self._test_transaction("{}\n".format(rotctl_commands))
+        test_program_transaction, rotctl_transaction = self._test_transaction("{}\n".format(test_data.rotctl_commands))
         result = Test.verify_process_output(
-            "test program", expected_test_program_lines, allowed_test_program_ret_codes, *test_program_transaction) \
-                 and Test.verify_process_output(
-            "rotctl", expected_rotctl_lines, allowed_rotctl_ret_codes, *rotctl_transaction)
+            "test program",
+            test_data.expected_test_program_stdout_lines,
+            test_data.allowed_test_program_return_codes,
+            *test_program_transaction) and Test.verify_process_output(
+            "rotctl",
+            test_data.expected_rotctl_stdout_lines,
+            test_data.allowed_rotctl_return_codes,
+            *rotctl_transaction)
 
         self._tear_down()
         timespan = time.time() - self.timestamp_start
         print("test: ---------------------- test {} ---------------------".format("SUCCEEDED" if result else "FAILED"))
-        return result, timespan
+        return TestResult.PASSED if result else TestResult.FAILED, timespan
 
     def _set_up(self) -> None:
         print("test: setup ...")
@@ -170,33 +181,31 @@ class TestRunner:
 
     def __init__(self, project_dir, runs_on_github_ci: bool = False):
         self.project_dir = project_dir
-        self.tests = IntegrationTests().test_set
+        self.tests = TestSet.test_set()
         self.runs_on_github_ci = runs_on_github_ci
 
     def run(self):
-        results = [
-            (description, Test(self.project_dir, self.runs_on_github_ci)
-             .run(description, command, rotctl_extra_args, expected_test_program_lines,
-                  allowed_test_program_ret_codes, expected_rotctl_lines, allowed_rotctl_ret_codes))
-            for
-            description, command, rotctl_extra_args, expected_test_program_lines, allowed_test_program_ret_codes,
-            expected_rotctl_lines, allowed_rotctl_ret_codes
-            in self.tests]
+        results = [(test_data.description, Test(self.project_dir, self.runs_on_github_ci).run(test_data))
+                   for test_data in self.tests]
 
         print("test: test summary:")
-        all_passed = True
+        passed, failed, ignored = 0, 0, 0
         total_duration = 0
-        for description, (has_passed, timespan) in results:
-            total_duration += timespan
-            if has_passed:
-                print("test: OK ....... \"{}\" {:.2f}s".format(description, timespan))
+        for description, (test_result, duration) in results:
+            total_duration += duration
+            if test_result is TestResult.PASSED:
+                print("test: PASSED  in {:.2f}s ... \"{}\" ".format(duration, description))
+                passed += 1
+            elif test_result is TestResult.FAILED:
+                print("test: FAILED  in {:.2f}s ... \"{}\"".format(duration, description))
+                failed += 1
             else:
-                print("test: FAILED ... \"{}\" {:.2f}s".format(description, timespan))
-                all_passed = False
+                print("test: IGNORED in {:.2f}s ... \"{}\"".format(duration, description))
+                ignored += 1
 
-        if all_passed:
-            print("test: all tests passed in {:.2f}s".format(total_duration))
-            return 0
-        else:
-            print("test: some tests failed {:.2f}s".format(total_duration))
+        print("test: {} passed, {} failed, {} ignored in {:.2f}s".format(passed, failed, ignored, total_duration))
+
+        if failed > 0:
             return 1
+        else:
+            return 0
