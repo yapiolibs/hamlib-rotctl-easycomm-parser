@@ -29,7 +29,7 @@ class Test:
       A dummy response is generated sent back and printed to stdout if a response is expected.
     """
 
-    def __init__(self, project_dir):
+    def __init__(self, project_dir: str):
         self.pipe_endpoint_a = "{}/easycomm-endpoint-rotctl".format(project_dir)
         self.pipe_endpoint_b = "{}/easycomm-endpoint-test-program".format(project_dir)
         self.virtual_device_cmd = ["/usr/bin/socat", "-d", "-d",
@@ -65,28 +65,28 @@ class Test:
         timespan = time.time() - self.timestamp_start
         return result, timespan
 
-    def _set_up(self):
+    def _set_up(self) -> None:
         print("test: setup ...")
         print("test: prepare virtual device: \"{}\"".format(" ".join(self.virtual_device_cmd)))
         self.virtual_dev = subprocess.Popen(self.virtual_device_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        time.sleep(2)
+        time.sleep(2)  # time to breathe required for GitHub CI
         print("test: start test program: \"{}\"".format(" ".join(self.test_program_cmd)))
         self.test_program = subprocess.Popen(self.test_program_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-    def _tear_down(self):
+    def _tear_down(self) -> None:
         print("test: tear down")
         for p in [self.rotctl, self.test_program, self.virtual_dev]:
             p.terminate()
 
     @staticmethod
-    def verify_process_output(process_name, expected_lines, expected_ret_codes, stdout_lines, stderr_lines,
-                              ret_code):  # type: (str, List[str], List[int], List[str], List[str], int) -> bool
+    def verify_process_output(process_name: str, expected_lines: List[str], allowed_ret_codes: List[int],
+                              stdout_lines: List[str], stderr_lines: List[str], actual_ret_code) -> bool:
         print("test: verify {} output ...".format(process_name))
         has_passed = True
 
-        if ret_code not in expected_ret_codes:
+        if actual_ret_code not in allowed_ret_codes:
             has_passed = False
-            print("test: failed: allowed return codes {} but found {}".format(expected_ret_codes, ret_code))
+            print("test: failed: allowed return codes {} but found {}".format(allowed_ret_codes, actual_ret_code))
 
         if len(stderr_lines) > 0:
             has_passed = False
@@ -115,8 +115,7 @@ class Test:
 
         return has_passed
 
-    def _test_transaction(
-            self):  # type: () -> Tuple[Tuple[List[str], List[str], int], Tuple[List[str], List[str], int]]
+    def _test_transaction(self) -> Tuple[Tuple[List[str], List[str], int], Tuple[List[str], List[str], int]]:
         print("test: transaction ...")
         test_program_stdout, test_program_stderr, test_program_ret_code = None, None, None
         rotctl_stdout, rotctl_stderr, rotctl_ret_code = None, None, None

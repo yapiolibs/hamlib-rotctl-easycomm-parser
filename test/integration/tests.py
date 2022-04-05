@@ -4,7 +4,7 @@ from typing import List, Tuple
 class TestSet(object):
 
     def __init__(self):
-        self._tests = []  # type: List[Tuple[str, str, List[str], List[int], List[str], List[int]]]
+        self._tests: List[Tuple[str, str, List[str], List[int], List[str], List[int]]] = []
 
         for method_name in dir(self):
             if method_name.startswith('_test_'):
@@ -40,7 +40,7 @@ class IntegrationTests(TestSet):
     postfix = "{} {}".format(pause_command, exit_command)
 
     @staticmethod
-    def _test_get_pos():  # type: () -> (str, str, List[str], int, List[str], int)
+    def _test_get_pos() -> (str, str, List[str], List[int], List[str], List[int]):
         description = "get_pos: AZ EL"
         rotctl_commands = "{} get_pos {}".format(IntegrationTests.pause_command, IntegrationTests.postfix)
 
