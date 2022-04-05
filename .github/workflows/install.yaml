@@ -1,9 +1,9 @@
 name: install tools
-on: [workflow_call]
+on:
+  workflow_call:
 
 jobs:
   install-tools:
-
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
