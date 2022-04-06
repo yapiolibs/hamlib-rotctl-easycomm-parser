@@ -41,7 +41,6 @@ class Easycomm1IntegrationTests(TestSet):
             allowed_rotctl_versions=ROTCTL_VERSION_4,
         )
 
-
     @staticmethod
     def _test_easycomm_1_rotctl_v3():
         return TestData(
@@ -60,13 +59,13 @@ class Easycomm1IntegrationTests(TestSet):
                 r"Rotator command: \\pause 0.2",
                 "",
                 "Rotator command: w RESET",
-                "reset: error = Communication timed out",
                 "Reply: ",
-                "Rotator command: q"],  # see issue #1
-            allowed_rotctl_return_codes=[0, 2],  # see issue #1
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_1_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
         )
+
 
 Easycomm1IntegrationTests()
 
@@ -95,7 +94,7 @@ class Easycomm2sIntegrationTests(TestSet):
     def _test_easycomm2_rotctl_v3_get_pos() -> TestData:
         return TestData(
             description="v3   get_pos: AZ EL",
-            rotctl_commands="get_pos {}".format(EXIT_SEQUENCE),
+            rotctl_commands="\\get_pos\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >AZ<",
                 r"received: >EL<",
