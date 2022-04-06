@@ -19,7 +19,7 @@ class Easycomm1IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm_1_rotctl_v4():
         return TestData(
-            description="v4   Easycomm 1 command: AZ123.4 EL-12.3 UP1234 upm DN1235 dnm",
+            description="rotctl=v4.x easycomm=1 command: AZ123.4 EL-12.3 UP1234 upm DN1235 dnm",
             rotctl_commands="w AZ123.4 EL-12.3 UP1234 upm DN1235 dnm\n\\pause 0.2\nw RESET\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >AZ123.4\d*<",
@@ -44,7 +44,7 @@ class Easycomm1IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm_1_rotctl_v3():
         return TestData(
-            description="v3   Easycomm 1 command: AZ123.4 EL-12.3 UP1234 upm DN1235 dnm",
+            description="rotctl=v3.x easycomm=1 command: AZ123.4 EL-12.3 UP1234 upm DN1235 dnm",
             rotctl_commands="w AZ123.4 EL-12.3 UP1234 upm DN1235 dnm\n\\pause 0.2\nw RESET\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >AZ123.4\d*<",
@@ -75,7 +75,7 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     @staticmethod
     def _test_park_v3():
         return TestData(
-            description="v3   park (command not in Easycomm)",
+            description="rotctl=v3.x easycomm=? park (command not in Easycomm)",
             rotctl_commands="\\park\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >PARK\d*<",
@@ -99,7 +99,7 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     @staticmethod
     def _test_park_v4():
         return TestData(
-            description="v4   park (command not in Easycomm)",
+            description="rotctl=v4.x easycomm=? park (command not in Easycomm)",
             rotctl_commands="\\park\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >PARK\d*<",
@@ -121,7 +121,7 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     @staticmethod
     def _test_reset_v3():
         return TestData(
-            description="v3   reset (command not in Easycomm)",
+            description="rotctl=v3.x easycomm=? reset (command not in Easycomm)",
             rotctl_commands="\\reset 0\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >RESET<"],
@@ -139,7 +139,7 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     @staticmethod
     def _test_reset_v4():
         return TestData(
-            description="v4   reset (command not in Easycomm)",
+            description="rotctl=v4.x easycomm=? reset (command not in Easycomm)",
             rotctl_commands="\\reset 0\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >RESET<"],
@@ -163,7 +163,7 @@ class Easycomm2IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm2_rotctl_v3_get_pos() -> TestData:
         return TestData(
-            description="v3   get_pos: AZ EL",
+            description="rotctl=v3.x easycomm=2 get_pos: AZ EL",
             rotctl_commands="\\get_pos\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >AZ<",
@@ -190,7 +190,7 @@ class Easycomm2IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm2_rotctl_v4_get_pos() -> TestData:
         return TestData(
-            description="v4   get_pos: AZ EL",
+            description="rotctl=v4.x easycomm=2 get_pos: AZ EL",
             rotctl_commands="\\get_pos\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >AZ<",
@@ -216,7 +216,7 @@ class Easycomm2IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm2_rotctl_v3_set_pos() -> TestData:
         return TestData(
-            description="v3   set_pos: AZ11.1 EL12.2",
+            description="rotctl=v3.x easycomm=2 set_pos: AZ11.1 EL12.2",
             rotctl_commands="\\set_pos 11.1 12.2\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >AZ11.1\d*<",
@@ -242,7 +242,7 @@ class Easycomm2IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm2_rotctl_v4_set_pos() -> TestData:
         return TestData(
-            description="v4   set_pos: AZ11.1 EL12.2",
+            description="rotctl=v4.x easycomm=2 set_pos: AZ11.1 EL12.2",
             rotctl_commands="\\set_pos 11.1 12.2\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >AZ11.1\d*<",
@@ -265,7 +265,7 @@ class Easycomm2IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm2_rotctl_v3_stop() -> TestData:
         return TestData(
-            description="v3   stop",
+            description="rotctl=v3.x easycomm=2 stop",
             rotctl_commands="\\stop\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >SA<",
@@ -290,7 +290,7 @@ class Easycomm2IntegrationTests(TestSet):
     @staticmethod
     def _test_easycomm2_rotctl_v4_stop() -> TestData:
         return TestData(
-            description="v4   stop",
+            description="rotctl=v4.x easycomm=2 stop",
             rotctl_commands="\\stop\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >SA<",
@@ -311,10 +311,31 @@ class Easycomm2IntegrationTests(TestSet):
         )
 
     @staticmethod
-    def _test_easycomm2_set_moveu():
+    def _test_easycomm2_get_info():
         return None  # TODO
-        # rotor move
-        # MU MD ML MR
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v4_move_up():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=2 move: DIRECTION SPEED",
+            rotctl_commands="\\move 2 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >MU<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 2 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
 
     @staticmethod
     def _test_easycomm2_set_moved():
@@ -333,6 +354,29 @@ Easycomm2IntegrationTests()
 
 
 class Easycomm3IntegrationTests(TestSet):
+
+    @staticmethod
+    def _test_easycomm3_rotctl_v4_move_up():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=3 move: DIRECTION SPEED",
+            rotctl_commands="\\move 2 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >VU9900<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 2 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_3_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
 
     @staticmethod
     def _test_easycomm3_set_velocityd():

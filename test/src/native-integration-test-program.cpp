@@ -38,6 +38,7 @@
 
 typedef struct CallbackData
 {
+    // TODO remove need of buffering in retained_response
     std::string retained_response;
     size_t num_commands_pending;
     int serial_fd;
