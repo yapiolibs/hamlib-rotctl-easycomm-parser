@@ -38,7 +38,7 @@ class Easycomm1IntegrationTests(TestSet):
                 "Rotator command: q"],  # see issue #1
             allowed_rotctl_return_codes=[0],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_1_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_4,
+            allowed_rotctl_versions=ROTCTL_VERSION_4
         )
 
     @staticmethod
@@ -63,7 +63,7 @@ class Easycomm1IntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_1_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_3,
+            allowed_rotctl_versions=ROTCTL_VERSION_3
         )
 
 
@@ -75,7 +75,7 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     @staticmethod
     def _test_park_v3():
         return TestData(
-            description="v3   PARK (command not in Easycomm)",
+            description="v3   park (command not in Easycomm)",
             rotctl_commands="\\park\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >PARK\d*<",
@@ -93,13 +93,13 @@ class NoEasycommCommandsIntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[2],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_3,
+            allowed_rotctl_versions=ROTCTL_VERSION_3
         )
 
     @staticmethod
     def _test_park_v4():
         return TestData(
-            description="v4   PARK (command not in Easycomm)",
+            description="v4   park (command not in Easycomm)",
             rotctl_commands="\\park\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >PARK\d*<",
@@ -115,13 +115,13 @@ class NoEasycommCommandsIntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_4,
+            allowed_rotctl_versions=ROTCTL_VERSION_4
         )
 
     @staticmethod
     def _test_reset_v3():
         return TestData(
-            description="v3   RESET (command not in Easycomm)",
+            description="v3   reset (command not in Easycomm)",
             rotctl_commands="\\reset 0\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >RESET<"],
@@ -133,13 +133,13 @@ class NoEasycommCommandsIntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[2],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_3,
+            allowed_rotctl_versions=ROTCTL_VERSION_3
         )
 
     @staticmethod
     def _test_reset_v4():
         return TestData(
-            description="v4   RESET (command not in Easycomm)",
+            description="v4   reset (command not in Easycomm)",
             rotctl_commands="\\reset 0\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >RESET<"],
@@ -150,7 +150,7 @@ class NoEasycommCommandsIntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_4,
+            allowed_rotctl_versions=ROTCTL_VERSION_4
         )
 
 
@@ -184,7 +184,7 @@ class Easycomm2IntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_3,
+            allowed_rotctl_versions=ROTCTL_VERSION_3
         )
 
     @staticmethod
@@ -210,7 +210,7 @@ class Easycomm2IntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_4,
+            allowed_rotctl_versions=ROTCTL_VERSION_4
         )
 
     @staticmethod
@@ -236,7 +236,7 @@ class Easycomm2IntegrationTests(TestSet):
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_3,
+            allowed_rotctl_versions=ROTCTL_VERSION_3
         )
 
     @staticmethod
@@ -257,28 +257,59 @@ class Easycomm2IntegrationTests(TestSet):
                 r"Rotator command: \\reset 0",
                 "",
                 "Rotator command: q"],
-            allowed_rotctl_return_codes=[0, 2],
+            allowed_rotctl_return_codes=[0],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
-            allowed_rotctl_versions=ROTCTL_VERSION_4,
+            allowed_rotctl_versions=ROTCTL_VERSION_4
         )
 
-    @staticmethod
-    def _test_easycomm2_set_pos2():
-        return None  # TODO
-        # get position
-        # AZ EL -> AZf ELf
 
     @staticmethod
-    def _test_easycomm2_stop():
-        return None  # TODO
-        # movement stop
-        # "SA SE
+    def _test_easycomm2_rotctl_v3_stop() -> TestData:
+        return TestData(
+            description="v3   stop",
+            rotctl_commands="\\stop\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >SA<",
+                r"received: >SE<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\stop",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "reset: error = Communication timed out",  # see issue #1
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3
+        )
+
 
     @staticmethod
-    def _test_not_easycomm_park():
-        return None  # TODO
-        # rotor park
-        # PARK
+    def _test_easycomm2_rotctl_v4_stop() -> TestData:
+        return TestData(
+            description="v4   stop",
+            rotctl_commands="\\stop\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >SA<",
+                r"received: >SE<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\stop",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
 
     @staticmethod
     def _test_easycomm2_set_moveu():

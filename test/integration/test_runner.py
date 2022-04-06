@@ -246,8 +246,8 @@ class TestRunner:
             color = TestColors[TestResult.IGNORED]
         if ignored <= 0:
             color = TestColors[TestResult.PASSED]
-        print("{}test: {} failed, {} passed, {} ignored in {:.2f}s{}"
-              .format(color, failed, passed, ignored, total_duration, Fore.RESET))
+        print("{}test: {} failed, {} passed, {} ignored in {:.2f}s (total {} tests){}"
+              .format(color, failed, passed, ignored, total_duration, passed + failed + ignored, Fore.RESET))
 
         if failed > 0 or passed <= 0:
             return 1
