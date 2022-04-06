@@ -262,7 +262,6 @@ class Easycomm2IntegrationTests(TestSet):
             allowed_rotctl_versions=ROTCTL_VERSION_4
         )
 
-
     @staticmethod
     def _test_easycomm2_rotctl_v3_stop() -> TestData:
         return TestData(
@@ -275,6 +274,7 @@ class Easycomm2IntegrationTests(TestSet):
             allowed_test_program_return_codes=[0],
             expected_rotctl_stdout_lines=[
                 r"Rotator command: \\stop",
+                "stop: error = Communication timed out",  # see issue #1
                 "",
                 r"Rotator command: \\pause 0.2\d*",
                 "",
@@ -286,7 +286,6 @@ class Easycomm2IntegrationTests(TestSet):
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3
         )
-
 
     @staticmethod
     def _test_easycomm2_rotctl_v4_stop() -> TestData:
