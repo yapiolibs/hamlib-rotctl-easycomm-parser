@@ -122,12 +122,12 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     def _test_reset_v3():
         return TestData(
             description="v3   RESET (command not in Easycomm)",
-            rotctl_commands="\\reset\nq\n",
+            rotctl_commands="\\reset 0\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >RESET<"],
             allowed_test_program_return_codes=[0],
             expected_rotctl_stdout_lines=[
-                r"Rotator command: \\reset 0 ",
+                r"Rotator command: \\reset 0",
                 "reset: error = Communication timed out",  # see issue #1
                 "",
                 "Rotator command: q"],
@@ -140,12 +140,12 @@ class NoEasycommCommandsIntegrationTests(TestSet):
     def _test_reset_v4():
         return TestData(
             description="v4   RESET (command not in Easycomm)",
-            rotctl_commands="\\reset 0 \nq\n",
+            rotctl_commands="\\reset 0\nq\n",
             expected_test_program_stdout_lines=[
                 r"received: >RESET<"],
             allowed_test_program_return_codes=[0],
             expected_rotctl_stdout_lines=[
-                r"Rotator command: \\reset 0 ",
+                r"Rotator command: \\reset 0",
                 "",
                 "Rotator command: q"],
             allowed_rotctl_return_codes=[0],
