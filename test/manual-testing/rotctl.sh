@@ -3,12 +3,13 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 # start rotctl and use virtual device
 # usage:
-#   script "device-file"
-#   script "device-file" "model-id"
-#   script "device-file" "model-id" "verbosity-vvv"
+#   interactive: script
+#   single shot: script "optional rotctl commands"
 
 DEVICE_FILE="--rot-file=${SCRIPT_DIR}/../easycomm-endpoint-rotctl"
-MODEL="--model=204"
+#MODEL="--model=201" # easycomm 1
+#MODEL="--model=202" # easycomm 2
+MODEL="--model=204" # easycomm 3
 VERBOSITY=""
 CONFIG="--set-conf=timeout=900,post_write_delay=100,write_delay=0"
 OPTIONAL_COMMANDS="$1"

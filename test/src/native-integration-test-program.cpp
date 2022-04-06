@@ -35,12 +35,14 @@
  *      "R" or "\reset" causes the test program to finish
  */
 
+
 typedef struct CallbackData
 {
     std::string retained_response;
     size_t num_commands_pending;
     int serial_fd;
 } CallbackData;
+
 
 static void printCommandCallback(const EasycommData *command, void *custom_data)
 {
@@ -130,7 +132,6 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     }
     else
         return;
-
 
     if(data->num_commands_pending <= 0)
     {

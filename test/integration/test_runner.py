@@ -1,12 +1,11 @@
 from typing import List, Tuple
 
-import subprocess
-import time
-import re
-from tests import TestSet
-from test_base import TestData
 from enum import Enum
-
+import subprocess
+import re
+import time
+from test_base import TestData
+from tests import TestSet
 
 class TestResult(Enum):
     PASSED = 1
@@ -57,7 +56,7 @@ class Test:
 
     def run(self, test_data: TestData) -> Tuple[TestResult, float]:
         self.timestamp_start = time.time()
-        print("test: -------------------- test start ({}) --------------------".format(test_data.description))
+        print("test: -------------------- test start - \"{}\" --------------------".format(test_data.description))
 
         if re.fullmatch(test_data.allowed_rotctl_versions, self.rotctl_version) is None:
             print("test: found rotctl version \"{}\" version but applicable is \"{}\""
@@ -70,14 +69,13 @@ class Test:
             self._set_up()
 
             self.rotctl2_cmd.extend(test_data.rotctl_extra_program_cli_args)
-            self.rotctl2_cmd.append("-")
-            print(
-                "test: send command(s) \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl2_cmd)))
+            # self.rotctl2_cmd.append("-")
+            print("test: send \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl2_cmd)))
             self.rotctl = subprocess.Popen(self.rotctl2_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                            stderr=subprocess.PIPE, text=True)
 
             test_program_transaction, rotctl_transaction = self._test_transaction(
-                "{}\n".format(test_data.rotctl_commands))
+                "{}".format(test_data.rotctl_commands))
             test_result = TestResult.PASSED if Test.verify_process_output(
                 "test program",
                 test_data.expected_test_program_stdout_lines,
@@ -91,7 +89,7 @@ class Test:
             self._tear_down()
 
         duration = time.time() - self.timestamp_start
-        print("test: ---------------------- test {} ({}) ---------------------"
+        print("test: ---------------------- test {} - \"{}\" ---------------------"
               .format(test_result.name, test_data.description))
         return test_result, duration
 
