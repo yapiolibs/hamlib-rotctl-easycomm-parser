@@ -102,13 +102,13 @@ class Easycomm2sIntegrationTests(TestSet):
                 r"received: >RESET<"],
             allowed_test_program_return_codes=[0],
             expected_rotctl_stdout_lines=[
-                "Rotator command: \get_pos",
-                "Azimuth: 11.0\d*",
-                "Elevation: 12.0\d*",
+                r"Rotator command: \\get_pos",
+                r"Azimuth: 11.0\d*",
+                r"Elevation: 12.0\d*",
                 "",
-                "Rotator command: \pause 0.2",
+                r"Rotator command: \\pause 0.2",
                 "",
-                "Rotator command: \reset 0",
+                r"Rotator command: \\reset 0",
                 "reset: error = Communication timed out",  # see issue #1
                 "",
                 "Rotator command: q"],
