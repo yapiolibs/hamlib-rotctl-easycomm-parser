@@ -102,17 +102,17 @@ class Easycomm2sIntegrationTests(TestSet):
                 r"received: >RESET<"],
             allowed_test_program_return_codes=[0],
             expected_rotctl_stdout_lines=[
-                r"Rotator command: \\get_pos",
-                r"Azimuth: 11.0\d*",
-                r"Elevation: 12.0\d*",
+                "Rotator command: \get_pos",
+                "Azimuth: 11.0\d*",
+                "Elevation: 12.0\d*",
                 "",
-                r"Rotator command: \\pause 0.2",
+                "Rotator command: \pause 0.2",
                 "",
-                r"Rotator command: \\reset 0",
-                "reset: error = Communication timed out",
-                ""
+                "Rotator command: \reset 0",
+                "reset: error = Communication timed out",  # see issue #1
+                "",
                 "Rotator command: q"],
-            allowed_rotctl_return_codes=[0, 2],  # see issue #1
+            allowed_rotctl_return_codes=[2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
         )
@@ -161,10 +161,10 @@ class Easycomm2sIntegrationTests(TestSet):
                 r"Rotator command: \\pause 0.2\d*",
                 "",
                 r"Rotator command: \\reset 0",
-                "reset: error = Communication timed out",
+                "reset: error = Communication timed out",  # see issue #1
                 "",
                 "Rotator command: q"],
-            allowed_rotctl_return_codes=[0, 2],  # see issue #1
+            allowed_rotctl_return_codes=[2],  # see issue #1
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3,
         )

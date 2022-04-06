@@ -229,7 +229,7 @@ class TestRunner:
                 print("test: IGNORED in {:.2f}s ... \"{}\"".format(duration, description))
                 ignored += 1
 
-        print("test: {} passed, {} failed, {} ignored in {:.2f}s".format(passed, failed, ignored, total_duration))
+        print("test: {} failed, {} passed, {} ignored in {:.2f}s".format(failed, passed, ignored, total_duration))
 
         if failed > 0 or passed <= 0:
             return 1
