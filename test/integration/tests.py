@@ -318,7 +318,7 @@ class Easycomm2IntegrationTests(TestSet):
     def _test_easycomm2_rotctl_v4_move_up():
         # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
         return TestData(
-            description="rotctl=v4.x easycomm=2 move: DIRECTION SPEED",
+            description="rotctl=v4.x easycomm=2 move: UP SPEED",
             rotctl_commands="\\move 2 100\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >MU<",
@@ -338,16 +338,73 @@ class Easycomm2IntegrationTests(TestSet):
         )
 
     @staticmethod
-    def _test_easycomm2_set_moved():
-        return None  # TODO
+    def _test_easycomm2_rotctl_v4_move_down():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=2 move: DOWN SPEED",
+            rotctl_commands="\\move 4 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >MD<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 4 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
 
     @staticmethod
-    def _test_easycomm2_set_movel():
-        return None  # TODO
+    def _test_easycomm2_rotctl_v4_move_left():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=2 move: LEFT SPEED",
+            rotctl_commands="\\move 8 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >ML<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 8 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
 
     @staticmethod
-    def _test_easycomm2_set_mover():
-        return None  # TODO
+    def _test_easycomm2_rotctl_v4_move_right():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=2 move: RIGHT SPEED",
+            rotctl_commands="\\move 16 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >MR<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 16 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
 
 
 Easycomm2IntegrationTests()
@@ -359,7 +416,7 @@ class Easycomm3IntegrationTests(TestSet):
     def _test_easycomm3_rotctl_v4_move_up():
         # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
         return TestData(
-            description="rotctl=v4.x easycomm=3 move: DIRECTION SPEED",
+            description="rotctl=v4.x easycomm=3 move: UP SPEED",
             rotctl_commands="\\move 2 100\n{}".format(EXIT_SEQUENCE),
             expected_test_program_stdout_lines=[
                 r"received: >VU9900<",
