@@ -83,6 +83,7 @@ class IntegrationTests(TestSet):
             allowed_test_program_return_codes=[0],
             expected_rotctl_stdout_lines=[
                 r"Rotator command: \\park",
+                "park: error = Communication timed out",  # see issue #1
                 "",
                 r"Rotator command: \\pause 0.2",
                 "",
