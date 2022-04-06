@@ -70,7 +70,7 @@ class Easycomm1IntegrationTests(TestSet):
 Easycomm1IntegrationTests()
 
 
-class IntegrationTests(TestSet):
+class NoEasycommCommandsIntegrationTests(TestSet):
 
     @staticmethod
     def _test_park_v3():
@@ -119,15 +119,45 @@ class IntegrationTests(TestSet):
         )
 
     @staticmethod
-    def _test_reset():
-        return None  # TODO
-        # RESET
+    def _test_reset_v3():
+        return TestData(
+            description="v3   RESET (command not in Easycomm)",
+            rotctl_commands="\\reset\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\reset 0 ",
+                "reset: error = Communication timed out",  # see issue #1
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[2],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3,
+        )
+
+    @staticmethod
+    def _test_reset_v4():
+        return TestData(
+            description="v4   RESET (command not in Easycomm)",
+            rotctl_commands="\\reset 0 \nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\reset 0 ",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4,
+        )
 
 
-IntegrationTests()
+NoEasycommCommandsIntegrationTests()
 
 
-class Easycomm2sIntegrationTests(TestSet):
+class Easycomm2IntegrationTests(TestSet):
     easycomm2 = "--model=202"
 
     @staticmethod
@@ -269,7 +299,7 @@ class Easycomm2sIntegrationTests(TestSet):
         return None  # TODO
 
 
-Easycomm2sIntegrationTests()
+Easycomm2IntegrationTests()
 
 
 class Easycomm3IntegrationTests(TestSet):
