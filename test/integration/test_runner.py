@@ -4,13 +4,22 @@ from enum import Enum
 import subprocess
 import re
 import time
+from colorama import Fore
 from test_base import TestData
 from tests import TestSet
+
 
 class TestResult(Enum):
     PASSED = 1
     FAILED = 2
     IGNORED = 3
+
+
+TestColors = {
+    TestResult.PASSED: Fore.GREEN,
+    TestResult.FAILED: Fore.RED,
+    TestResult.IGNORED: Fore.BLUE,
+}
 
 
 class Test:
@@ -56,8 +65,8 @@ class Test:
 
     def run(self, test_data: TestData) -> Tuple[TestResult, float]:
         self.timestamp_start = time.time()
-        print("test: -------------------- test start - \"{}\" --------------------".format(test_data.description))
-
+        print("test: -------------------- [test {}start{} - \"{}\"] --------------------"
+              .format(Fore.GREEN, Fore.RESET, test_data.description))
         if re.fullmatch(test_data.allowed_rotctl_versions, self.rotctl_version) is None:
             print("test: found rotctl version \"{}\" version but applicable is \"{}\""
                   .format(self.rotctl_version, test_data.allowed_rotctl_versions))
@@ -89,8 +98,8 @@ class Test:
             self._tear_down()
 
         duration = time.time() - self.timestamp_start
-        print("test: ---------------------- test {} - \"{}\" ---------------------"
-              .format(test_result.name, test_data.description))
+        print("test: -------------------- [test {}{}{} - \"{}\"] ---------------------"
+              .format(TestColors[test_result], test_result.name, Fore.RESET, test_data.description))
         return test_result, duration
 
     def _set_up(self) -> None:
@@ -220,16 +229,25 @@ class TestRunner:
         for description, (test_result, duration) in results:
             total_duration += duration
             if test_result is TestResult.PASSED:
-                print("test: PASSED  in {:.2f}s ... \"{}\" ".format(duration, description))
+                print("test: {}PASSED{}  in {:.2f}s ... \"{}\" "
+                      .format(TestColors[TestResult.PASSED], Fore.RESET, duration, description))
                 passed += 1
             elif test_result is TestResult.FAILED:
-                print("test: FAILED  in {:.2f}s ... \"{}\"".format(duration, description))
+                print("test: {}FAILED{}  in {:.2f}s ... \"{}\""
+                      .format(TestColors[TestResult.FAILED], Fore.RESET, duration, description))
                 failed += 1
             else:
-                print("test: IGNORED in {:.2f}s ... \"{}\"".format(duration, description))
+                print("test: {}IGNORED{} in {:.2f}s ... \"{}\""
+                      .format(TestColors[TestResult.IGNORED], Fore.RESET, duration, description))
                 ignored += 1
 
-        print("test: {} failed, {} passed, {} ignored in {:.2f}s".format(failed, passed, ignored, total_duration))
+        color = TestColors[TestResult.FAILED]
+        if failed <= 0:
+            color = TestColors[TestResult.IGNORED]
+        if ignored <= 0:
+            color = TestColors[TestResult.PASSED]
+        print("{}test: {} failed, {} passed, {} ignored in {:.2f}s{}"
+              .format(color, failed, passed, ignored, total_duration, Fore.RESET))
 
         if failed > 0 or passed <= 0:
             return 1

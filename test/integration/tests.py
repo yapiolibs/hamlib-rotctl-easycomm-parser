@@ -73,10 +73,49 @@ Easycomm1IntegrationTests()
 class IntegrationTests(TestSet):
 
     @staticmethod
-    def _test_park():
-        return None  # TODO
-        # rotor park
-        # PARK
+    def _test_park_v3():
+        return TestData(
+            description="v3   PARK (command not in Easycomm)",
+            rotctl_commands="\\park\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >PARK\d*<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\park",
+                "",
+                r"Rotator command: \\pause 0.2",
+                "",
+                r"Rotator command: \\reset 0",
+                "reset: error = Communication timed out",  # see issue #1
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[2],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3,
+        )
+
+    @staticmethod
+    def _test_park_v4():
+        return TestData(
+            description="v4   PARK (command not in Easycomm)",
+            rotctl_commands="\\park\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >PARK\d*<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\park",
+                "",
+                r"Rotator command: \\pause 0.2",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4,
+        )
 
     @staticmethod
     def _test_reset():
