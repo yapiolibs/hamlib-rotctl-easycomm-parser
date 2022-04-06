@@ -281,8 +281,8 @@ class Easycomm2IntegrationTests(TestSet):
                 r"Rotator command: \\reset 0",
                 "reset: error = Communication timed out",  # see issue #1
                 "",
-                "Rotator command: q"],
-            allowed_rotctl_return_codes=[0],
+                "Rotator command: q"],  # see issue #1
+            allowed_rotctl_return_codes=[2],
             rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
             allowed_rotctl_versions=ROTCTL_VERSION_3
         )
