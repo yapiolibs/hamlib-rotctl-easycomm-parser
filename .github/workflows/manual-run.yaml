@@ -1,6 +1,6 @@
-name: Integration tests
+name: Install Hamlib from source
 
-on:
+on: [workflow_dispatch]
 
 jobs:
   install-tools:
