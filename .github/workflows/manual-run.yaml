@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install libhamlib-utils from source
+    - name: Install libhamlib-utils from source I
       run: |
         sudo apt install -y git make build-essential autoconf
         pwd
@@ -20,6 +20,16 @@ jobs:
         git clone https://github.com/Hamlib/Hamlib.git ./foo
         cd foo
         autoconf
+        ./configure
+        make
+        sudo make install
+      continue-on-error: true
+    - name: Install libhamlib-utils from source  II
+      run: |
+        pwd
+        cd
+        pwd
+        cd foo
         ./configure
         make
         sudo make install
