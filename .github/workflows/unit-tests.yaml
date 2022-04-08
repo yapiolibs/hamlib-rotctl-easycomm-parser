@@ -2,18 +2,17 @@ name: Unit tests
 
 on:
   push:
-    paths-ignore: ${{ env.ignore-changed-paths }}
-  pull_request:
-    paths-ignore: ${{ env.ignore-changed-paths }}
-
-env:
-  ignore-changed-paths:
     - "**.md"
     - "**LICENSE"
     - "**.gitignore"
     - "**.clang-format"
     - "library.json"
-
+  pull_request:
+    - "**.md"
+    - "**LICENSE"
+    - "**.gitignore"
+    - "**.clang-format"
+    - "library.json"
 
 jobs:
   install-tools:
