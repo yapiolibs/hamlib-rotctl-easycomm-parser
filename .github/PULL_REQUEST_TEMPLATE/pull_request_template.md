@@ -32,15 +32,14 @@ TODO
 
 
 ## Checklist
-- [ ] pre-commit hook is installed or at least run manually: `pre-commit install` or `pre-commit` <!-- note: `pre-commit install` enables pre-commit hook just for upcoming commits -->
+- [ ] I have installed the pre-commit hook or at least run it manually: `pre-commit install` or `pre-commit` <!-- note: `pre-commit install` enables pre-commit hook just for upcoming commits -->
 - [ ] my code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have commented my code in hard-to-understand areas and public interface
 - [ ] I have made corresponding changes to the documentation
 - [ ] my changes generate no new warnings
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] new and existing unit tests pass locally with my changes
-- [ ] any dependent changes have been merged and published in downstream modules
 - [ ] I have checked my code and corrected any misspellings
 
 
