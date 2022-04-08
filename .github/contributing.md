@@ -14,7 +14,9 @@ for trailing whitespaces and fix end of lines.
 # install hook for upcoming commits
 pre-commit install
 
-# run pre-commit checks manually
+# run pre-commit checks manually on all files
+pre-commit run --all-file
+# only on staged files
 pre-commit
 ```
 

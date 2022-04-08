@@ -32,7 +32,7 @@ TODO
 
 
 ## Checklist
-- [ ] I have installed the pre-commit hook or at least run it manually: `pre-commit install` or `pre-commit` <!-- note: `pre-commit install` enables pre-commit hook just for upcoming commits -->
+- [ ] I have installed the pre-commit hook or at least run it manually: `pre-commit install` or `pre-commit run --all-files` <!-- note: `pre-commit install` enables pre-commit hook just for upcoming commits -->
 - [ ] my code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code in hard-to-understand areas and public interface
