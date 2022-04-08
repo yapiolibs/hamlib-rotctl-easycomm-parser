@@ -20,7 +20,7 @@
 - this change requires a documentation update
 
 
-## Tests to verify the changes:
+## Tests to verify changes
 <!-- List old and new tests that verifies your changes or delete this section if not applicable. -->
 - Test A
 - Test B (new test)
@@ -29,6 +29,8 @@
 
 
 ## Checklist
+- [ ] pre-commit hooks are installed or at least run manually: `pre-commit install` or `pre-commit`
+<!-- note: `pre-commit install` enables pre-commit hook just for upcoming commits -->
 - [ ] my code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
@@ -41,8 +43,7 @@
 
 
 ## Testing
- - install and run pre-commit hooks
- - make sure tests pass
+- make sure tests pass
   - unit tests:
     - [ ] in GitHub CI: triggered on commit
     - [ ] on your machine: `pio test -e native`
