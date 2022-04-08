@@ -1,5 +1,11 @@
 name: Unit tests
 
+on:
+  push:
+    paths-ignore: ${{ env.ignore-changed-paths }}
+  pull_request:
+    paths-ignore: ${{ env.ignore-changed-paths }}
+
 env:
   ignore-changed-paths:
     - "**.md"
@@ -8,11 +14,6 @@ env:
     - "**.clang-format"
     - "library.json"
 
-on:
-  push:
-    paths-ignore: ${{ env.ignore-changed-paths }}
-  pull_request:
-    paths-ignore: ${{ env.ignore-changed-paths }}
 
 jobs:
   install-tools:
