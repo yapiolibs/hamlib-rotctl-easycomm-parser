@@ -2,17 +2,19 @@ name: Integration tests
 
 on:
   push:
-    - "**.md"
-    - "**LICENSE"
-    - "**.gitignore"
-    - "**.clang-format"
-    - "library.json"
+    paths-ignore:
+      - "**.md"
+      - "**LICENSE"
+      - "**.gitignore"
+      - "**.clang-format"
+      - "library.json"
   pull_request:
-    - "**.md"
-    - "**LICENSE"
-    - "**.gitignore"
-    - "**.clang-format"
-    - "library.json"
+    paths-ignore:
+      - "**.md"
+      - "**LICENSE"
+      - "**.gitignore"
+      - "**.clang-format"
+      - "library.json"
 
 jobs:
   install-tools:
