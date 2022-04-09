@@ -443,6 +443,75 @@ class Easycomm3IntegrationTests(TestSet):
         )
 
     @staticmethod
+    def _test_easycomm3_rotctl_v4_move_down():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=3 move: DOWN SPEED",
+            rotctl_commands="\\move 4 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >VD9900<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 4 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_3_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
+
+    @staticmethod
+    def _test_easycomm3_rotctl_v4_move_left():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=3 move: LEFT SPEED",
+            rotctl_commands="\\move 8 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >VL9900<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 8 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_3_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
+
+    @staticmethod
+    def _test_easycomm3_rotctl_v4_move_right():
+        # defect behaviour is reported in https://github.com/Hamlib/Hamlib/issues/1006
+        return TestData(
+            description="rotctl=v4.x easycomm=3 move: RIGHT SPEED",
+            rotctl_commands="\\move 16 100\n{}".format(EXIT_SEQUENCE),
+            expected_test_program_stdout_lines=[
+                r"received: >VR9900<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                r"Rotator command: \\move 16 100",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: \\reset 0",
+                "",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_3_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_4
+        )
+
+    @staticmethod
     def _test_easycomm3_set_velocityd():
         return None  # TODO
 
