@@ -1,4 +1,4 @@
-name: Hamlib 4.x integration tests
+name: Hamlib v4.x integration tests
 
 on:
   push:
@@ -42,10 +42,12 @@ jobs:
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         git clone --depth 1 --branch ${{ matrix.hamlib-version }} https://github.com/Hamlib/Hamlib.git ~/hamlib-src
+    - name: Install Hamlib v-${{ matrix.hamlib-version }} build tools
+      run: |
+        sudo apt install -y make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
     - name: Configure Hamlib v-${{ matrix.hamlib-version }}
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
-        sudo apt install -y make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
         cd ~/hamlib-src
         ./bootstrap
         ./configure
