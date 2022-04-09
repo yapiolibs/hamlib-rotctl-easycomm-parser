@@ -21,6 +21,7 @@ jobs:
         ./configure
         make
         sudo make install
+        ln -s /usr/local/bin/rotctl /usr/bin/rotctl
     - name: Cache pip
       uses: actions/cache@v2
       with:
