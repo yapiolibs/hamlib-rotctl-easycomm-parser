@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[FR] "
+title: "[FR] xxx"
 labels: enhancement
 assignees: rubienr
 
