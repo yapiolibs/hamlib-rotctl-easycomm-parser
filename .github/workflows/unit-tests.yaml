@@ -23,7 +23,7 @@ on:
       - ".github/workflows/unit-tests.yaml"
 
 jobs:
-  Unit tests:
+  unit-tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
