@@ -201,14 +201,23 @@ class Test:
         rotctl = subprocess.Popen(["/usr/bin/rotctl", "--version"],
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
-            stdout, _stderr = rotctl.communicate(timeout=3)
+            stdout, stderr = rotctl.communicate(timeout=3)
         except subprocess.TimeoutExpired:
             rotctl.kill()
-            stdout, _stderr = rotctl.communicate()
+            stdout, stderr = rotctl.communicate()
 
-        lines = self._lines_from_stream(stdout)
-        if len(lines) > 0:
-            return lines[0]
+        stderr_lines = self._lines_from_stream(stderr)
+        if len(stderr_lines) > 0:
+            print("test: failed to get rotctl version")
+            for line in stderr_lines:
+                print("test:   \"{}\"".format(line))
+
+        stdout_lines = self._lines_from_stream(stdout)
+        if len(stdout_lines) > 0:
+            print("test: get rotctl version")
+            for line in stdout_lines:
+                print("test:   \"{}\"".format(line))
+            return stdout_lines[0]
         return ""
 
 
