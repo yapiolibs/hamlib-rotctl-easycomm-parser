@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 from enum import Enum
 import subprocess
@@ -7,6 +7,7 @@ import time
 from colorama import Fore
 from test_base import TestData
 from tests import TestSet
+import os.path
 
 
 class TestResult(Enum):
@@ -51,7 +52,7 @@ class Test:
         self.virtual_device_cmd = ["/usr/bin/socat", "-d", "-d",
                                    "pty,raw,echo=0,link={}".format(self.pipe_endpoint_a),
                                    "pty,raw,echo=0,link={}".format(self.pipe_endpoint_b)]
-        self.rotctl2_cmd = ["/usr/bin/rotctl",
+        self.rotctl2_cmd = [self.rotctl_file_path,
                             "--rot-file={}".format(self.pipe_endpoint_a),
                             "--set-conf=timeout=900,post_write_delay=100,write_delay=0"]
         self.test_program_cmd = ["{}/.pio/build/native/program".format(project_dir), self.pipe_endpoint_b]
@@ -62,6 +63,14 @@ class Test:
         self.timestamp_end = None
         self.runs_on_github_ci = runs_on_github_ci
         self.rotctl_version = self._get_rotctl_version()
+
+    @property
+    def rotctl_file_path(self) -> Optional[str]:
+        candidates = ["/usr/local/bin/rotctl", "/usr/bin/rotctl"]
+        for f in candidates:
+            if os.path.exists(f):
+                return f
+        return None
 
     def run(self, test_data: TestData) -> Tuple[TestResult, float]:
         self.timestamp_start = time.time()
@@ -198,7 +207,7 @@ class Test:
             return str(lines_as_byte_array.strip()).split('\n') if len(lines_as_byte_array) > 0 else []
 
     def _get_rotctl_version(self) -> str:
-        rotctl = subprocess.Popen(["/usr/bin/rotctl", "--version"],
+        rotctl = subprocess.Popen([self.rotctl_file_path, "--version"],
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
             stdout, stderr = rotctl.communicate(timeout=3)
