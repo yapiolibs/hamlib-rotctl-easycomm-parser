@@ -8,41 +8,47 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
+        hamlib-version: [4.4, 4.3, 4.2, 4.1, 4.0]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Restore Hamlib cache
+    - name: Cache Hamlib
       uses: actions/cache@v3
       id: hamlib-cache
       with:
         path: ~/hamlib-src
-        key: ${{ runner.os }}-hamlib
-    - name: Crate Hamlib cache
+        key: ${{ runner.os }}-hamlib-version-${{ matrix.hamlib-version }}
+    - name: Checkout Hamlib source
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
-        git clone --depth 1 --branch 4.4 https://github.com/Hamlib/Hamlib.git ~/hamlib-src
-    - name: build and install Hamlib I
+        git clone --depth 1 --branch matr4.4 https://github.com/Hamlib/Hamlib.git ~/hamlib-src
+    - name: Configure Hamlib v${{ matrix.hamlib-version }}
+      if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         sudo apt install -y make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
         cd ~/hamlib-src
         ./bootstrap
         ./configure
       continue-on-error: true
-    - name: build and install Hamlib II
+    - name: Build Hamlib v${{ matrix.hamlib-version }}
+      if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         cd ~/hamlib-src
         make
+    - name: Install Hamlib v${{ matrix.hamlib-version }}
+      run: |
+        cd ~/hamlib-src
         sudo make install
         sudo ldconfig
     - name: Cache pip
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
     - name: Cache PlatformIO
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.platformio
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
@@ -55,7 +61,7 @@ jobs:
     - name: Install socat
       run: |
         sudo apt install -y socat
-    - name: Run integration tests
+    - name: Integration tests
       run: |
         cd test
         platformio run -e native -t integrationci
