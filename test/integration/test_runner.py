@@ -223,7 +223,6 @@ class Test:
 
         stdout_lines = self._lines_from_stream(stdout)
         if len(stdout_lines) > 0:
-            print("test: get rotctl version")
             for line in stdout_lines:
                 print("test:   \"{}\"".format(line))
             return stdout_lines[0]
