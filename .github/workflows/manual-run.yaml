@@ -1,4 +1,4 @@
-name: Install Hamlib from source
+name: Integration tests - Hamlib from source
 
 on: [workflow_dispatch]
 
@@ -11,26 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install libhamlib-utils from source I
+    - name: Install libhamlib-utils from source
       run: |
-        sudo apt install -y git make build-essential autoconf automake libtool shtool pkg-config
-        pwd
+        sudo apt install -y git make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
         cd
-        pwd
-        git clone https://github.com/Hamlib/Hamlib.git ./foo
-        cd foo
-        autoreconf -f -i
-        autoconf
-        ./configure
-        make
-        sudo make install
-      continue-on-error: true
-    - name: Install libhamlib-utils from source  II
-      run: |
-        pwd
-        cd
-        pwd
-        cd foo
+        git clone https://github.com/Hamlib/Hamlib.git ./hamlib
+        cd hamlib
+        ./bootstrap
         ./configure
         make
         sudo make install
@@ -54,9 +41,8 @@ jobs:
         pip install --upgrade platformio
     - name: Install socat
       run: |
-        sudo apt socat
+        sudo apt install -y socat
     - name: Run integration tests
       run: |
-        pwd
         cd test
         platformio run -e native -t integrationci
