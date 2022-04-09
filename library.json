@@ -7,14 +7,28 @@
     "type": "git",
     "url": "https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser.git"
   },
-  "authors": [
-    {
-        "name": "Raoul Rubien",
-        "url": "https://github.com/rubienr",
-        "maintainer" : "true"
-    }
-  ],
+  "authors": [{
+    "name": "Raoul Rubien",
+    "url": "https://github.com/rubienr",
+    "maintainer": "true"
+  }],
+  "license": "Apache-2.0",
   "version": "0.1",
   "frameworks": ["native", "arduino"],
-  "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"]
+  "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"],
+  "examples": [{
+    "name": "Parse a string / Parse with callback",
+    "base": "test/",
+    "files": [
+      "platformio.ini",
+      "main.cpp"
+    ]
+  }],
+  "export": {
+    "exclude": [
+      ".github/",
+      "test/cmake*",
+      "test/.idea"
+    ]
+  }
 }
