@@ -2,21 +2,25 @@ name: Unit tests
 
 on:
   push:
-    paths-ignore:
-      - "**.md"
-      - "**LICENSE"
-      - "**.gitignore"
-      - "**.clang-format"
-      - "library.json"
-      - "**manual-run.yaml"
+    paths:
+      - "**"
+      - "!**.md"
+      - "!**LICENSE"
+      - "!**.gitignore"
+      - "!**.clang-format"
+      - "!library.json"
+      - "!.github/workflows/**.yaml"
+      - ".github/workflows/unit-tests.yaml"
   pull_request:
-    paths-ignore:
-      - "**.md"
-      - "**LICENSE"
-      - "**.gitignore"
-      - "**.clang-format"
-      - "library.json"
-      - "**manual-run.yaml"
+    paths:
+      - "**"
+      - "!**.md"
+      - "!**LICENSE"
+      - "!**.gitignore"
+      - "!**.clang-format"
+      - "!library.json"
+      - "!.github/workflows/**.yaml"
+      - ".github/workflows/unit-tests.yaml"
 
 jobs:
   install-tools:

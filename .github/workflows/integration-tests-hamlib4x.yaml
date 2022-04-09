@@ -1,6 +1,26 @@
-name: Integration tests - Hamlib from source
+name: Hamlib 4.x integration tests
 
-on: [workflow_dispatch]
+on:
+  push:
+    paths:
+      - "**"
+      - "!**.md"
+      - "!**LICENSE"
+      - "!**.gitignore"
+      - "!**.clang-format"
+      - "!library.json"
+      - "!.github/workflows/**.yaml"
+      - ".github/workflows/integration-tests-hamlib4x.yaml"
+  pull_request:
+    paths:
+      - "**"
+      - "!**.md"
+      - "!**LICENSE"
+      - "!**.gitignore"
+      - "!**.clang-format"
+      - "!library.json"
+      - "!.github/workflows/**.yaml"
+      - ".github/workflows/integration-tests-hamlib4x.yaml"
 
 jobs:
   install-tools:
@@ -8,7 +28,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        hamlib-version: ["4.4", "4.3", "4.2", "4.1", "4.0"]
+        hamlib-version: ["master", "4.4", "4.3", "4.2", "4.1", "4.0"]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,7 +42,7 @@ jobs:
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         git clone --depth 1 --branch ${{ matrix.hamlib-version }} https://github.com/Hamlib/Hamlib.git ~/hamlib-src
-    - name: Configure Hamlib v${{ matrix.hamlib-version }}
+    - name: Configure Hamlib v-${{ matrix.hamlib-version }}
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         sudo apt install -y make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
@@ -30,12 +50,12 @@ jobs:
         ./bootstrap
         ./configure
       continue-on-error: true
-    - name: Build Hamlib v${{ matrix.hamlib-version }}
+    - name: Build Hamlib v-${{ matrix.hamlib-version }}
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         cd ~/hamlib-src
         make
-    - name: Install Hamlib v${{ matrix.hamlib-version }}
+    - name: Install Hamlib v-${{ matrix.hamlib-version }}
       run: |
         cd ~/hamlib-src
         sudo make install
