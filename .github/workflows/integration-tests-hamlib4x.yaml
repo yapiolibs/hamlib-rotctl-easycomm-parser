@@ -23,7 +23,7 @@ on:
       - ".github/workflows/integration-tests-hamlib4x.yaml"
 
 jobs:
-  install-tools:
+  Hamlib v-${{ matrix.hamlib-version }} integration tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
