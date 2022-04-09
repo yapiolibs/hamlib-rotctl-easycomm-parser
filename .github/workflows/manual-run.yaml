@@ -12,15 +12,30 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install libhamlib-utils from source
+    - name: Restore Hamlib Cache
+      id: hamlib-cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/hamlib-src
+        key: ${{ runner.os }}-hamlib
+    - name: Crate Hamlib Cache
+      if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
-        sudo apt install -y git make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
-        cd
-        git clone https://github.com/Hamlib/Hamlib.git ./hamlib
-        cd hamlib
+        git clone --depth 1 --branch 4.4 https://github.com/Hamlib/Hamlib.git ~/hamlib-src
+    - name: build and install Hamlib I
+      run: |
+        sudo apt install -y make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
+        cd ~/hamlib-src
         ./bootstrap
         ./configure
+      continue-on-error: true
+    - name: build and install Hamlib II
+      run: |
+        cd ~/hamlib-src
         make
         sudo make install
+      continue-on-error: true
     - name: Cache pip
       uses: actions/cache@v2
       with:
