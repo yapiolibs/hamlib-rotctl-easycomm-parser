@@ -6,14 +6,14 @@
 <!-- mark steps not run with  [--] -->
 
 
-## Description
+**Description**
 TODO
 <!-- Please include a summary of the change and which issue(s) it fixes (use `closes #XXXX`) -->
 <!-- Please include relevant motivation and context. -->
 <!-- List any dependencies that are required for this change. -->
 
 
-## Type of change
+**Type of change**
 <!-- Please delete options that are not applicable. -->
 - cleanup or refactoring (non-breaking change)
 - bug fix (non-breaking change which fixes an issue)
@@ -22,7 +22,7 @@ TODO
 - this change requires a documentation update
 
 
-## Tests to verify changes
+**Tests to verify changes**
 <!-- List old and new tests that verifies your changes or delete this section if not applicable. -->
 - Test A
 - Test B (new test)
@@ -31,7 +31,7 @@ TODO
 - Test N
 
 
-## Checklist
+**Checklist**
 - [ ] I have installed the pre-commit hook or at least run it manually: `pre-commit install` or `pre-commit run --all-files` <!-- note: `pre-commit install` enables pre-commit hook just for upcoming commits -->
 - [ ] my code follows the style guidelines of this project
 - [ ] I have performed a self-review of my own code
@@ -43,7 +43,7 @@ TODO
 - [ ] I have checked my code and corrected any misspellings
 
 
-## Testing
+**Testing**
 - unit tests:
   - [ ] in GitHub CI: triggered on commit
   - [ ] on your machine: `pio test -e native`
