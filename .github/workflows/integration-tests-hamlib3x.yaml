@@ -3,7 +3,8 @@ name: Hamlib v3.x integration tests
 on: [workflow_dispatch]
 
 jobs:
-  hamlib-v-3.x-integration-tests:
+  integration-tests:
+    name: Hamlib v-3.x integration tests on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

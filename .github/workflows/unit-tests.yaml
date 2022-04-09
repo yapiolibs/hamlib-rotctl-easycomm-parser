@@ -24,6 +24,7 @@ on:
 
 jobs:
   unit-tests:
+    name: Native unit tests on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
