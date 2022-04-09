@@ -11,13 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Restore Hamlib Cache
+    - name: Restore Hamlib cache
       uses: actions/cache@v3
       id: hamlib-cache
       with:
         path: ~/hamlib-src
         key: ${{ runner.os }}-hamlib
-    - name: Crate Hamlib Cache
+    - name: Crate Hamlib cache
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         git clone --depth 1 --branch 4.4 https://github.com/Hamlib/Hamlib.git ~/hamlib-src
@@ -33,6 +33,7 @@ jobs:
         cd ~/hamlib-src
         make
         sudo make install
+        sudo ldconfig
     - name: Cache pip
       uses: actions/cache@v2
       with:
