@@ -44,3 +44,11 @@ References:
 * Hamlib
   * [protocol description](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.txt)
   * [protocol source code](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.c)
+
+## Checks
+
+![y](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-run.yaml/badge.svg)
+![x](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-check.yaml/badge.svg)
+![y](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/unit-tests.yaml/badge.svg)
+![x](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib4x.yaml/badge.svg)
+![x](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib3x.yaml/badge.svg)
