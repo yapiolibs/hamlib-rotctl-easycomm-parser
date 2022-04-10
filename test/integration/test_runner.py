@@ -54,7 +54,8 @@ class Test:
                                    "pty,raw,echo=0,link={}".format(self.pipe_endpoint_b)]
         self.rotctl2_cmd = [self.rotctl_file_path,
                             "--rot-file={}".format(self.pipe_endpoint_a),
-                            "--set-conf=timeout=900,post_write_delay=100,write_delay=0"]
+                            # "--set-conf=timeout=900,post_write_delay=100,write_delay=0"
+                            ]
         self.test_program_cmd = ["{}/.pio/build/native/program".format(project_dir), self.pipe_endpoint_b]
         self.virtual_dev = None
         self.test_program = None

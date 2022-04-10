@@ -18,7 +18,7 @@ def run_integration_tests(source, target, env):
 
 def run_integration_tests_ci(source, target, env):
     project_dir = env["PROJECT_DIR"]
-    return TestRunner(project_dir, runs_on_github_ci=True).run()
+    return TestRunner(project_dir, runs_on_github_ci=False).run()
 
 
 env.AddCustomTarget("integration", "$BUILD_DIR/${PROGNAME}", run_integration_tests)
