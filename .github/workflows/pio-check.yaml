@@ -1,10 +1,30 @@
-name: Hamlib v3.x integration tests
+name: PIO static code analysis
 
-on: [workflow_dispatch]
+on:
+  push:
+    paths:
+      - "**"
+      - "!**.md"
+      - "!**LICENSE"
+      - "!**.gitignore"
+      - "!**.clang-format"
+      - "!library.json"
+      - "!.github/workflows/**.yaml"
+      - ".github/workflows/pio-check.yaml"
+  pull_request:
+    paths:
+      - "**"
+      - "!**.md"
+      - "!**LICENSE"
+      - "!**.gitignore"
+      - "!**.clang-format"
+      - "!library.json"
+      - "!.github/workflows/**.yaml"
+      - ".github/workflows/pio-check.yaml"
 
 jobs:
-  integration-tests:
-    name: Hamlib v-3.x integration tests on ${{ matrix.os }}
+  unit-tests:
+    name: PIO static code analysis ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -30,10 +50,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade platformio
-    - name: Install integration prerequisites
-      run: |
-        sudo apt install -y libhamlib-utils socat
-    - name: Integration tests
+    - name: Static code analysis
       run: |
         cd test
-        platformio run -e native -t integrationci
+        platformio check --verbose --skip-packages

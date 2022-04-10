@@ -48,12 +48,13 @@ typedef struct CallbackData
 static void printCommandCallback(const EasycommData *command, void *custom_data)
 {
     CallbackData *data = (CallbackData *)custom_data;
-    if(data->num_commands_pending-- <= 0)
+    if(data->num_commands_pending == 0)
     {
         printf("unexpected number of commands");
         exit(1);
     }
 
+    data->num_commands_pending--;
     char string_buffer[128] = { 0 };
 
     easycommDataSprintf(command, string_buffer);
@@ -134,7 +135,7 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     else
         return;
 
-    if(data->num_commands_pending <= 0)
+    if(data->num_commands_pending == 0)
     {
         data->retained_response.append(string_buffer);
         printf("response: >%s<\n", data->retained_response.c_str());
@@ -150,12 +151,12 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
 }
 
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
     if(argc < 2)
         return 1;
 
-    char *device_path = argv[1];
+    const char *device_path = argv[1];
 
     int serial_fd = open(device_path, O_RDWR);
     if(serial_fd < 0)

@@ -1,7 +1,13 @@
+# IDE
+.idea
+
+# platformio
 .pio
 CMakeListsPrivate.txt
 CMakeLists.txt
 cmake-build-*
 tmp_pio_test_transport.cpp
+
+# integration testing
 __pycache__
 easycomm-endpoint-*
