@@ -32,20 +32,25 @@ jobs:
         hamlib-version: ["master", "4.4", "4.3", "4.2", "4.1", "4.0"]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
     - name: Cache Hamlib
       uses: actions/cache@v3
       id: hamlib-cache
       with:
         path: ~/hamlib-src
         key: ${{ runner.os }}-hamlib-version-${{ matrix.hamlib-version }}
+
     - name: Checkout Hamlib source
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         git clone --depth 1 --branch ${{ matrix.hamlib-version }} https://github.com/Hamlib/Hamlib.git ~/hamlib-src
+
     - name: Install Hamlib v-${{ matrix.hamlib-version }} build tools
       run: |
         sudo apt install -y make build-essential autoconf automake libtool shtool pkg-config libusb-1.0-0-dev
+
     - name: Configure Hamlib v-${{ matrix.hamlib-version }}
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
@@ -53,16 +58,19 @@ jobs:
         ./bootstrap
         ./configure
       continue-on-error: true
+
     - name: Build Hamlib v-${{ matrix.hamlib-version }}
       if: steps.hamlib-cache.outputs.cache-hit != 'true'
       run: |
         cd ~/hamlib-src
         make
+
     - name: Install Hamlib v-${{ matrix.hamlib-version }}
       run: |
         cd ~/hamlib-src
         sudo make install
         sudo ldconfig
+
     - name: Cache pip
       uses: actions/cache@v3
       with:
@@ -70,20 +78,25 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
     - name: Cache PlatformIO
       uses: actions/cache@v3
       with:
         path: ~/.platformio
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
     - name: Set up Python
       uses: actions/setup-python@v2
+
     - name: Install PlatformIO
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade platformio
+
     - name: Install socat
       run: |
         sudo apt install -y socat
+
     - name: Integration tests
       run: |
         cd test
