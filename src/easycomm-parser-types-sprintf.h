@@ -15,7 +15,6 @@ extern "C"
     void easycommGetAzimuthSprintf(const EasycommGetAzimuth *from, char *to);
     void easycommElevationSprintf(const EasycommElevation *from, char *to);
     void easycommGetElevationSprintf(const EasycommGetElevation *from, char *to);
-    void easycommGetAzimuthElevationSprintf(const EasycommGetAzimuthElevation *from, char *to);
     void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *to);
     void easycommDownlinkFrequencySprintf(const EasycommDownlinkFrequency *from, char *to);
     void easycommUplinkModeSprintf(const EasycommUplinkMode *from, char *to);

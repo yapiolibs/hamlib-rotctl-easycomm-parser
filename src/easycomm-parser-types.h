@@ -80,17 +80,6 @@ extern "C"
     } EasycommGetElevation;
 
     /**
-     * command: AZ EL
-     * meaning: get azimuth and elevation in [deg]
-     * example: "AZ EL"
-     * standard: Easycomm 2
-     */
-    typedef struct EasycommGetAzimuthElevation
-    {
-        EasycommCommandId commandId;
-    } EasycommGetAzimuthElevation;
-
-    /**
      * command: UP
      * meaning: set uplink frequency in [Hz]
      * example: "UPnnnnnnnnn"
@@ -502,7 +491,6 @@ extern "C"
         EasycommGetAzimuth getAzimuth;
         EasycommElevation elevation;
         EasycommGetElevation getElevation;
-        EasycommGetAzimuthElevation getAzimuthElevation;
         EasycommUplinkFrequency uplinkFrequency;
         EasycommDownlinkFrequency downlinkFrequency;
         EasycommUplinkMode uplinkMode;

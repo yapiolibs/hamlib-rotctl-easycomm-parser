@@ -44,14 +44,6 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_elevation,
                                       getElevation)
 
 
-INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_azimuth_elevation,
-                                      EasycommGetAzimuthElevationLength,
-                                      EasycommParserStandard2,
-                                      easycommGetAzimuthElevation,
-                                      EasycommIdGetAzimuthElevation,
-                                      getAzimuthElevation)
-
-
 void test_parse_azimuth_01()
 {
     const char *valid_data = "AZ213.4";
@@ -193,19 +185,6 @@ void test_parse_get_elevation_01()
 }
 
 
-void test_parse_get_azimuth_elevation_01()
-{
-    const char *valid_data = "AZ EL";
-    const char *expected_representation = "AZ EL";
-    EasycommData expected_result;
-    easycommGetAzimuthElevation(&expected_result.as.getAzimuthElevation);
-    const bool expect_parser_success = true;
-
-    invariant_test_parse_get_azimuth_elevation(valid_data, &expected_result,
-                                               expected_representation, expect_parser_success);
-}
-
-
 #if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
 int main(int argc, char **argv)
 #else
@@ -227,7 +206,6 @@ void loop()
     RUN_TEST(test_parse_unexpected_elevation);
     RUN_TEST(test_parse_get_azimuth_01);
     RUN_TEST(test_parse_get_elevation_01);
-    RUN_TEST(test_parse_get_azimuth_elevation_01);
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560
     return 0;

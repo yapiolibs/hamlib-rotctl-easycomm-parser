@@ -41,7 +41,6 @@ void easycommCommandsCallbackCustomDefaultCb(EasycommCommandsCallback *callbacks
         callbacks->registry[EasycommIdAzimuth] = custom_default_cb;
         callbacks->registry[EasycommIdElevation] = custom_default_cb;
         callbacks->registry[EasycommIdGetElevation] = custom_default_cb;
-        callbacks->registry[EasycommIdGetAzimuthElevation] = custom_default_cb;
         callbacks->registry[EasycommIdUplinkFrequency] = custom_default_cb;
         callbacks->registry[EasycommIdDownlinkFrequency] = custom_default_cb;
         callbacks->registry[EasycommIdUplinkMode] = custom_default_cb;

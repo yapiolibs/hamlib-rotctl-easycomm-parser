@@ -52,16 +52,6 @@ extern "C"
     } EasycommResponseElevation;
 
     /**
-     * example: "AZaaa.a ELeee.e"
-     * standard: Easycomm 2
-     */
-    typedef struct EasycommResponseAzimuthElevation
-    {
-        float azimuth;
-        float elevation;
-    } EasycommResponseAzimuthElevation;
-
-    /**
      * example: "UPfff"
      * standard: Easycomm 2
      */

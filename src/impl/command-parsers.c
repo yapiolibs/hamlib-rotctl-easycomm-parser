@@ -64,12 +64,6 @@ bool isEasycomm2GetElevation(const char *buffer)
 }
 
 
-bool isEasycomm2GetAzimuthElevation(const char *buffer)
-{
-    return isFixedLengthCommandPattern(buffer, EasycommGetAzimuthElevationLength, "AZ EL", 5);
-}
-
-
 bool isEasycomm2UplinkFrequency(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommUplinkFrequencyMinLength,
@@ -350,14 +344,6 @@ bool readEasycomm2GetElevation(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "EL"
     easycommGetElevation(&parsed->as.getElevation);
-    return true;
-}
-
-
-bool readEasycomm2GetAzimuthElevation(const char *buffer, EasycommData *parsed)
-{
-    // buffer examples: "AZ EL"
-    easycommGetAzimuthElevation(&parsed->as.getAzimuthElevation);
     return true;
 }
 

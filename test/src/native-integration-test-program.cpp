@@ -78,14 +78,6 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
         el.elevation = 12;
         easycommResponseElevationSprintf(&el, string_buffer);
     }
-    else if(command->commandId == EasycommIdGetAzimuthElevation)
-    {
-        EasycommResponseAzimuthElevation azel;
-        easycommResponseAzimuthElevation(&azel);
-        azel.elevation = 1;
-        azel.azimuth = 2;
-        easycommResponseAzimuthElevationSprintf(&azel, string_buffer);
-    }
     else if(command->commandId == EasycommIdGetStatusRegister)
     {
         EasycommResponseGetStatusRegister gs;
@@ -159,6 +151,18 @@ int main(int argc, const char **argv)
     const char *device_path = argv[1];
 
     int serial_fd = open(device_path, O_RDWR);
+    for(int8_t retries = 16; (retries > 0) && (serial_fd < 0); retries--)
+    {
+        timeval timeout{ .tv_sec = 0, .tv_usec = 125 * 1000 };
+        select(0, nullptr, nullptr, nullptr, &timeout);
+        serial_fd = open(device_path, O_RDWR);
+        if(serial_fd < 0)
+        {
+            printf("failed to open device %s: %s (error %d), retries: %d", device_path,
+                   strerror(errno), errno, retries);
+        }
+    }
+
     if(serial_fd < 0)
     {
         printf("failed to open device %s: %s (error %d)", device_path, strerror(errno), errno);

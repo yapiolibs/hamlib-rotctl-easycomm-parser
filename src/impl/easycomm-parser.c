@@ -50,7 +50,6 @@ static bool easycommParse1(const char *buffer, EasycommData *parsed)
 static bool easycommParse2(const char *buffer, EasycommData *parsed)
 {
     static CommandParser parsers[] = {
-        { .isCommand = isEasycomm2GetAzimuthElevation, .parseCommand = readEasycomm2GetAzimuthElevation },
         { .isCommand = isEasycomm2Azimuth, .parseCommand = readEasycomm2Azimuth },
         { .isCommand = isEasycomm2GetAzimuth, .parseCommand = readEasycomm2GetAzimuth },
         { .isCommand = isEasycomm2Elevation, .parseCommand = readEasycomm2Elevation },

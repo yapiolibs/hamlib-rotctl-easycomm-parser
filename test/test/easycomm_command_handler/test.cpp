@@ -85,9 +85,6 @@ void test_command_handler_invoke_default_callbacks_version_12()
 
     TEST_ASSERT_TRUE(easycommHandleCommand("EL", &cb_handler, EasycommParserStandard12, &num_callback_invocations));
     TEST_ASSERT_EQUAL(7, num_callback_invocations);
-
-    TEST_ASSERT_TRUE(easycommHandleCommand("AZ EL", &cb_handler, EasycommParserStandard12, &num_callback_invocations));
-    TEST_ASSERT_EQUAL(8, num_callback_invocations);
 }
 
 
@@ -120,9 +117,6 @@ void test_command_handler_invoke_default_callbacks_version_123()
 
     TEST_ASSERT_TRUE(easycommHandleCommand("EL", &cb_handler, EasycommParserStandard123, &num_callback_invocations));
     TEST_ASSERT_EQUAL(7, num_callback_invocations);
-
-    TEST_ASSERT_TRUE(easycommHandleCommand("AZ EL", &cb_handler, EasycommParserStandard123, &num_callback_invocations));
-    TEST_ASSERT_EQUAL(8, num_callback_invocations);
 }
 
 

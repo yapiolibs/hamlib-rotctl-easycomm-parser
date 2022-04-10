@@ -30,12 +30,6 @@ void easycommResponseElevationSprintf(const EasycommResponseElevation *from, cha
 }
 
 
-void easycommResponseAzimuthElevationSprintf(const EasycommResponseAzimuthElevation *from, char *to)
-{
-    sprintf(to, "AZ%.1f EL%.1f", from->azimuth, from->elevation);
-}
-
-
 void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to)
 {
 #if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)

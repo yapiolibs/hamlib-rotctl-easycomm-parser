@@ -17,8 +17,6 @@ extern "C"
     bool easycommGetAzimuthEquals(const EasycommGetAzimuth *a, const EasycommGetAzimuth *b);
     bool easycommElevationEquals(const EasycommElevation *a, const EasycommElevation *b);
     bool easycommGetElevationEquals(const EasycommGetElevation *a, const EasycommGetElevation *b);
-    bool easycommGetAzimuthElevationEquals(const EasycommGetAzimuthElevation *a,
-                                           const EasycommGetAzimuthElevation *b);
     bool easycommUplinkFrequencyEquals(const EasycommUplinkFrequency *a, const EasycommUplinkFrequency *b);
     bool easycommDownlinkFrequencyEquals(const EasycommDownlinkFrequency *a, const EasycommDownlinkFrequency *b);
     bool easycommUplinkModeEquals(const EasycommUplinkMode *a, const EasycommUplinkMode *b);

@@ -38,12 +38,6 @@ void easycommElevationSprintf(const EasycommElevation *from, char *to)
 void easycommGetElevationSprintf(const EasycommGetElevation *from, char *to) { sprintf(to, "EL"); }
 
 
-void easycommGetAzimuthElevationSprintf(const EasycommGetAzimuthElevation *from, char *to)
-{
-    sprintf(to, "AZ EL");
-}
-
-
 void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *to)
 {
 #if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
@@ -243,7 +237,6 @@ void easycommDataSprintf(const EasycommData *from, char *to)
         else if ( from->commandId == EasycommIdGetAzimuth) {easycommGetAzimuthSprintf(&from->as.getAzimuth, to); }
         else if ( from->commandId == EasycommIdElevation) {easycommElevationSprintf(&from->as.elevation, to); }
         else if ( from->commandId == EasycommIdGetElevation) {easycommGetElevationSprintf(&from->as.getElevation, to); }
-        else if ( from->commandId == EasycommIdGetAzimuthElevation) {easycommGetAzimuthElevationSprintf(&from->as.getAzimuthElevation, to); }
         else if ( from->commandId == EasycommIdUplinkFrequency) {easycommUplinkFrequencySprintf(&from->as.uplinkFrequency, to); }
         else if ( from->commandId == EasycommIdDownlinkFrequency) {easycommDownlinkFrequencySprintf(&from->as.downlinkFrequency, to); }
         else if ( from->commandId == EasycommIdUplinkMode) {easycommUplinkModeSprintf(&from->as.uplinkMode, to); }

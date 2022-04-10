@@ -54,13 +54,6 @@ void easycommGetElevation(EasycommGetElevation *d)
 }
 
 
-void easycommGetAzimuthElevation(EasycommGetAzimuthElevation *d)
-{
-    memset(d, 0, sizeof(EasycommGetAzimuthElevation));
-    d->commandId = EasycommIdGetAzimuthElevation;
-}
-
-
 void easycommUplinkFrequency(EasycommUplinkFrequency *d)
 {
     memset(d, 0, sizeof(EasycommUplinkFrequency));

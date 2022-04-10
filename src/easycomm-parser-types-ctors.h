@@ -15,7 +15,6 @@ extern "C"
     void easycommGetAzimuth(EasycommGetAzimuth *d);
     void easycommElevation(EasycommElevation *d);
     void easycommGetElevation(EasycommGetElevation *d);
-    void easycommGetAzimuthElevation(EasycommGetAzimuthElevation *d);
     void easycommUplinkFrequency(EasycommUplinkFrequency *d);
     void easycommDownlinkFrequency(EasycommDownlinkFrequency *d);
     void easycommUplinkMode(EasycommUplinkMode *d);

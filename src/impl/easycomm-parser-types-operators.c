@@ -73,11 +73,6 @@ bool easycommGetElevationEquals(const EasycommGetElevation *a, const EasycommGet
 }
 
 
-bool easycommGetAzimuthElevationEquals(const EasycommGetAzimuthElevation *a, const EasycommGetAzimuthElevation *b)
-{
-    return 0 == memcmp(a, b, sizeof(EasycommGetAzimuthElevation));
-}
-
 bool easycommUplinkFrequencyEquals(const EasycommUplinkFrequency *a, const EasycommUplinkFrequency *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommUplinkFrequency));

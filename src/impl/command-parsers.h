@@ -16,9 +16,6 @@ extern "C"
     bool isEasycomm2GetAzimuth(const char *buffer);
     bool isEasycomm2Elevation(const char *buffer);
     bool isEasycomm2GetElevation(const char *buffer);
-    bool isEasycomm2GetAzimuthElevation(const char *buffer);
-    bool isEasycomm2AzimuthElevation(const char *buffer);
-    bool isEasycomm2ElevationAzimuth(const char *buffer);
     bool isEasycomm2UplinkFrequency(const char *buffer);
     bool isEasycomm2DownlinkFrequency(const char *buffer);
     bool isEasycomm2UplinkMode(const char *buffer);
@@ -62,8 +59,6 @@ extern "C"
     bool readEasycomm2GetAzimuth(const char *buffer, EasycommData *parsed);
     bool readEasycomm2Elevation(const char *buffer, EasycommData *parsed);
     bool readEasycomm2GetElevation(const char *buffer, EasycommData *parsed);
-    bool readEasycomm2GetAzimuthElevation(const char *buffer, EasycommData *parsed);
-    bool readEasycomm2ElevationAzimuth(const char *buffer, EasycommData *parsed);
     bool readEasycomm2UplinkFrequency(const char *buffer, EasycommData *parsed);
     bool readEasycomm2DownlinkFrequency(const char *buffer, EasycommData *parsed);
     bool readEasycomm2UplinkMode(const char *buffer, EasycommData *parsed);

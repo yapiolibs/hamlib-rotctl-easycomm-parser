@@ -47,7 +47,6 @@ extern "C"
         EasycommIdGetAzimuth,
         EasycommIdElevation,
         EasycommIdGetElevation,
-        EasycommIdGetAzimuthElevation,
         EasycommIdUplinkFrequency,
         EasycommIdDownlinkFrequency,
         EasycommIdUplinkMode,
@@ -100,12 +99,6 @@ extern "C"
         EasycommElevationMinLength = 5,         // "ELe.e"
         EasycommElevationMaxLength = 7,         // "ELeee.e"
         EasycommGetElevationLength = 2,         // "EL"
-        EasycommGetAzimuthElevationLength = 5,  // "AZ EL" TODO workaround:
-                                                //           AZ EL cannot be responded as documented
-                                                //           with "AZxxx\nELxxx\n" because
-                                                //           first '\n' terminates the response
-        EasycommElevationAzimuthMinLength = 11, // "ELe.e AZa.a"
-        EasycommElevationAzimuthMaxLength = 15, // "ELeee.e AZaaa.a"
         EasycommUplinkFrequencyMinLength = 3,   // "UPu"
         EasycommUplinkFrequencyMaxLength = 11,  // "UPuuuuuuuuu"
         EasycommDownlinkFrequencyMinLength = 3, // "DNd"
@@ -139,8 +132,6 @@ extern "C"
         EasycommResponseSingleLineLength = 47, // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
         EasycommResponseAzimuthLength = 7,     // "AZaaa.a"
         EasycommResponseElevationLength = 7,   // "ELeee.e"
-        EasycommResponseAzimuthElevationLength = 15,   // "AZaaa.a ELeee.e"
-        EasycommResponseElevationAzimuthLength = 15,   // "ELeee.e AZaaa.a"
         EasycommResponseUplinkFrequencyLength = 11,    // "UPuuuuuuuuu"
         EasycommResponseDownlinkFrequencyLength = 11,  // "DNddddddddd"
         EasycommResponseUplinkModeLength = 5,          // "UMabc"
