@@ -9,6 +9,7 @@ on:
       - "!**.gitignore"
       - "!**.clang-format"
       - "!library.json"
+      - "!**.py"
       - "!.github/workflows/**.yaml"
       - ".github/workflows/pio-check.yaml"
   pull_request:
@@ -19,6 +20,7 @@ on:
       - "!**.gitignore"
       - "!**.clang-format"
       - "!library.json"
+      - "!**.py"
       - "!.github/workflows/**.yaml"
       - ".github/workflows/pio-check.yaml"
 
