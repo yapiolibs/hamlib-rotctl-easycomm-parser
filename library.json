@@ -42,6 +42,15 @@
         "example-parse-stream.h",
         "example-parse-stream.cpp"
       ]
+    },
+    {
+      "name": "Parse data from stream (native integration test program)",
+      "base": "test/src/",
+      "files": [
+        "platformio.ini",
+        "native-integration-test-program.h",
+        "native-integration-test-program.cpp"
+      ]
     }
   ],
   "export": {
