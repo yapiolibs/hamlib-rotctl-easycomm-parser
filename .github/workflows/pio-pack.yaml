@@ -1,10 +1,11 @@
-name: Hamlib v3.x integration tests
+name: PIO pack library
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
-  integration-tests:
-    name: Hamlib v-3.x integration tests on ${{ matrix.os }}
+  pio-check:
+    name: PIO pack library on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -36,17 +37,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade platformio
 
-    - name: Install integration prerequisites
+    - name: Pack library
       run: |
-        sudo apt install -y libhamlib-utils socat
+        platformio package pack
 
-    - name: Integration tests
-      run: |
-        cd test
-        platformio run -e native -t integration
-
-    - name: Upload log
+    - name: Upload packed library
       uses: actions/upload-artifact@v3
       with:
-        name: test-program.log
-        path: ./test/program.log
+        path: ./*.tar.gz
+        if-no-files-found: error

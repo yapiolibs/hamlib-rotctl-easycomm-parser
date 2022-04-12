@@ -46,7 +46,7 @@ class Test:
       A dummy response is generated sent back and printed to stdout if a response is expected.
     """
 
-    def __init__(self, project_dir: str, runs_on_github_ci: bool = False):
+    def __init__(self, project_dir: str):
         self.virtual_dev_lockfile = "{}/easycomm-endpoint-lockfile".format(project_dir)
         self.pipe_endpoint_a = "{}/easycomm-endpoint-rotctl".format(project_dir)
         self.pipe_endpoint_b = "{}/easycomm-endpoint-test-program".format(project_dir)
@@ -62,7 +62,6 @@ class Test:
         self.rotctl = None
         self.timestamp_start = None
         self.timestamp_end = None
-        self.runs_on_github_ci = runs_on_github_ci
         self.rotctl_version = self._get_rotctl_version()
 
     @property
@@ -130,8 +129,7 @@ class Test:
 
         wait_until_file_exists(self.pipe_endpoint_a)
         wait_until_file_exists(self.pipe_endpoint_b)
-        if self.runs_on_github_ci:
-            time.sleep(2)  # time to breathe required for GitHub CI
+
         print("test: start test program: \"{}\"".format(" ".join(self.test_program_cmd)))
         self.test_program = subprocess.Popen(self.test_program_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                              text=True)
@@ -242,13 +240,12 @@ class Test:
 
 class TestRunner:
 
-    def __init__(self, project_dir, runs_on_github_ci: bool = False):
+    def __init__(self, project_dir):
         self.project_dir = project_dir
         self.tests = TestSet.test_set()
-        self.runs_on_github_ci = runs_on_github_ci
 
     def run(self):
-        results = [(test_data.description, Test(self.project_dir, self.runs_on_github_ci).run(test_data))
+        results = [(test_data.description, Test(self.project_dir).run(test_data))
                    for test_data in self.tests]
 
         print("test: test summary:")
