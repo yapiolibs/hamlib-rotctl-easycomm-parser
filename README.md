@@ -47,9 +47,9 @@ References:
 
 ## Checks
 
-![pio-run.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-run.yaml/badge.svg)<br />
-![pio-check.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-check.yaml/badge.svg)<br />
-![unit-tests.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/unit-tests.yaml/badge.svg)<br />
-![integration-tests-hamlib3x.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib3x.yaml/badge.svg)<br />
-![integration-tests-hamlib4x.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib4x.yaml/badge.svg)<br />
-![codeql-analysis.yml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/codeql-analysis.yml/badge.svg)<br />
+[![pio-run.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-run.yaml/badge.svg)](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-run.yaml)<br />
+[![pio-check.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-check.yaml/badge.svg)](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/pio-check.yaml)<br />
+[![unit-tests.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/unit-tests.yaml)<br />
+[![integration-tests-hamlib3x.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib3x.yaml/badge.svg)](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib3x.yaml)<br />
+[![integration-tests-hamlib4x.yaml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib4x.yaml/badge.svg)](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/integration-tests-hamlib4x.yaml)<br />
+[![codeql-analysis.yml](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/actions/workflows/codeql-analysis.yaml)<br />
