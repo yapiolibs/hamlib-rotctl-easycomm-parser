@@ -61,10 +61,4 @@ jobs:
     - name: Static code analysis
       run: |
         cd test
-        platformio check --verbose --skip-packages \
-        --fail-on-defect=high \
-        --fail-on-defect=medium \
-        --fail-on-defect=low \
-        --severity=high \
-        --severity=medium \
-        --severity=low
+        platformio check --fail-on-defect=high --fail-on-defect=medium --fail-on-defect=low
