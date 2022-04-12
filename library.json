@@ -57,7 +57,7 @@
       ]
     },
     {
-      "name": "Parse data from stream (native integration test program)",
+      "name": "Parse from stream and reply - native integration test program",
       "base": "test/src/",
       "files": [
         "platformio.ini",
