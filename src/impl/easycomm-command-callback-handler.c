@@ -87,7 +87,7 @@ bool easycommHandleCommand(const char *buffer,
                            void *custom_data)
 {
     EasycommData command;
-    if(easycommParse(buffer, &command, parser_standard))
+    if(easycommParseCommand(buffer, &command, parser_standard))
     {
         if(NULL == registry)
             return false;

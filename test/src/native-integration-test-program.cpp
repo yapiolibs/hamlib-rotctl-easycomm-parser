@@ -1,4 +1,5 @@
 #if defined(ENV_NATIVE)
+#include <easycomm-buffered-tokenizer.h>
 #include <easycomm-command-callback-handler.h>
 #include <easycomm-parser-types-sprintf.h>
 #include <easycomm-response-types-ctors.h>
@@ -38,10 +39,10 @@
 
 typedef struct CallbackData
 {
-    // TODO remove need of buffering in retained_response
-    std::string retained_response;
-    size_t num_commands_pending;
-    int serial_fd;
+    std::string retained_response{};
+    size_t num_commands_pending{ 0 };
+    int serial_fd{ -1 };
+    FILE *log_file{ nullptr };
 } CallbackData;
 
 
@@ -59,9 +60,18 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
 
     easycommDataSprintf(command, string_buffer);
     printf("received: >%s<\n", string_buffer);
+    fprintf(data->log_file, "      parsed: >%s<\n", string_buffer);
 
     if(EasycommIdReset == command->commandId)
     {
+        if(0 != close(data->serial_fd))
+        {
+            fprintf(data->log_file, "failed to close serial device; %s (error %d)", strerror(errno), errno);
+        }
+        fprintf(data->log_file, "<< exit  PID=%d\n", getpid());
+        fflush(data->log_file);
+        fclose(data->log_file);
+        fflush(stdout);
         exit(0);
     }
     else if(command->commandId == EasycommIdGetAzimuth)
@@ -130,9 +140,12 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     if(data->num_commands_pending == 0)
     {
         data->retained_response.append(string_buffer);
+        fprintf(data->log_file, "      response: >%s<\n", data->retained_response.c_str());
         printf("response: >%s<\n", data->retained_response.c_str());
         (void)write(data->serial_fd, data->retained_response.c_str(), data->retained_response.length());
         (void)write(data->serial_fd, "\n", 1);
+        fflush(data->log_file);
+        fflush(stdout);
         data->retained_response.clear();
     }
     else
@@ -142,88 +155,151 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     }
 }
 
+extern const char *__progname;
 
 int main(int argc, const char **argv)
 {
-    if(argc < 2)
-        return 1;
+    CallbackData cb_data;
 
-    const char *device_path = argv[1];
-
-    int serial_fd = open(device_path, O_RDWR);
-    for(int8_t retries = 16; (retries > 0) && (serial_fd < 0); retries--)
-    {
-        timeval timeout{ .tv_sec = 0, .tv_usec = 125 * 1000 };
-        select(0, nullptr, nullptr, nullptr, &timeout);
-        serial_fd = open(device_path, O_RDWR);
-        if(serial_fd < 0)
+    { // open log file
+        char log_file_name[128] = { 0 };
+        sprintf(log_file_name, "%s.log", __progname);
+        cb_data.log_file = fopen(log_file_name, "a");
+        if(nullptr == cb_data.log_file)
         {
-            printf("failed to open device %s: %s (error %d), retries: %d", device_path,
-                   strerror(errno), errno, retries);
+            printf("failed to open logfile: \"%s\"", log_file_name);
+            fflush(stdout);
+            return 1;
+        }
+        fprintf(cb_data.log_file, ">> start PID=%d\n", getpid());
+        fflush(cb_data.log_file);
+    }
+
+    if(argc < 2) // check cli arguments
+    {
+        printf("not enough arguments provided: serial device path missing\n");
+        fprintf(cb_data.log_file, "not enough arguments provided: serial device path missing\n");
+        fflush(stdout);
+        fflush(cb_data.log_file);
+        fclose(cb_data.log_file);
+        return 1;
+    }
+
+    { // open serial device
+        const char *device_path = argv[1];
+        cb_data.serial_fd = open(device_path, O_RDWR);
+        for(int8_t retries = 16; (retries > 0) && (cb_data.serial_fd < 0); retries--)
+        {
+            timeval timeout{ .tv_sec = 0, .tv_usec = 125 * 1000 };
+            select(0, nullptr, nullptr, nullptr, &timeout);
+            cb_data.serial_fd = open(device_path, O_RDWR);
+            if(cb_data.serial_fd < 0)
+            {
+                printf("failed to open device %s: %s (error %d), retries: %d", device_path,
+                       strerror(errno), errno, retries);
+                fprintf(cb_data.log_file, "failed to open device %s: %s (error %d), retries: %d",
+                        device_path, strerror(errno), errno, retries);
+            }
+        }
+
+        if(cb_data.serial_fd < 0)
+        {
+            printf("failed to open device %s: %s (error %d)", device_path, strerror(errno), errno);
+            fprintf(cb_data.log_file, "failed to open device %s: %s (error %d)", device_path,
+                    strerror(errno), errno);
+            fflush(stdout);
+            fflush(cb_data.log_file);
+            fclose(cb_data.log_file);
+            return 1;
         }
     }
 
-    if(serial_fd < 0)
-    {
-        printf("failed to open device %s: %s (error %d)", device_path, strerror(errno), errno);
-        return 1;
-    }
 
-    fd_set read_fds;
-    fd_set exception_fds;
-
-    CallbackData cb_data;
-    cb_data.serial_fd = serial_fd;
     EasycommCommandsCallback cb_handler;
     easycommCommandsCallbackCustomDefaultCb(&cb_handler, EasycommParserStandard123, printCommandCallback);
 
-    while(true)
+    EasycommBufferedTokenizerState line_token_state;
+    easycommBufferedTokenizerState(&line_token_state);
+    char line_token_buffer[128] = { 0 };
+    easycommBufferedTokenizerStateSetBuffers(&line_token_state, line_token_buffer, sizeof(line_token_buffer));
+
+    while(true) // read bytes from serial device
     {
         char line_buffer[256] = { 0 };
-        FD_SET(serial_fd, &read_fds);
-        FD_SET(serial_fd, &exception_fds);
+        fd_set read_fds;
+        fd_set exception_fds;
+        FD_SET(cb_data.serial_fd, &read_fds);
+        FD_SET(cb_data.serial_fd, &exception_fds);
 
-        if(0 > select(serial_fd + 1, &read_fds, nullptr, &exception_fds, nullptr))
+        fprintf(cb_data.log_file, "  waiting ...\n");
+        if(0 > select(cb_data.serial_fd + 1, &read_fds, nullptr, &exception_fds, nullptr))
         {
-            printf("error: device not ready\n");
-            return 1;
+            printf("error: device not ready: %s (error %d)\n", strerror(errno), errno);
+            fprintf(cb_data.log_file, "error: device not ready: %s (error %d)\n", strerror(errno), errno);
         }
 
-        // assume line buffered read: a read will include '\n'
-        if(0 < read(serial_fd, &line_buffer, sizeof(line_buffer)))
+        // assume:
+        //   - a read may contain multiple lines of 1 to N commands
+        //   - a line terminates with '\n' or "\r\n"
+        //   - a line may have leading/trailing ' ' around '\n' or "\r\n"
+        //   - multiple commands in a line are separated by one or multiple ' '
+        ssize_t read_len = read(cb_data.serial_fd, &line_buffer, sizeof(line_buffer));
+        if(0 > read_len)
         {
-            // assume each command is space separated or ends with newline
-            // assume rotctl expects exactly one answer for all commands in each line (due to timout)
+            printf("error: failed to read stdin: %s (error %d)\n", strerror(errno), errno);
+            fprintf(cb_data.log_file, "error: failed to read stdin: %s (error %d)\n", strerror(errno), errno);
+            fflush(stdout);
+            fflush(cb_data.log_file);
+            fclose(cb_data.log_file);
+            return 1;
+        }
+        else if(0 == read_len)
+        {
+            printf("error: unexpected read of 0 bytes\n");
+            fprintf(cb_data.log_file, "error: unexpected read of 0 bytes\n");
+            fflush(stdout);
+            fflush(cb_data.log_file);
+            fclose(cb_data.log_file);
+            return 1;
+        }
+        else
+        { // tokenize lines
+            fprintf(cb_data.log_file, "  received >%s<\n", line_buffer);
+            fflush(cb_data.log_file);
 
-            // cleanup and trim trailing '\r' '\n' and ' ' from rotctl
-            *strchrnul(line_buffer, '\r') = 0;
-            *strchrnul(line_buffer, '\n') = 0;
-            for(char *c = line_buffer + strlen(line_buffer) - 1; c != line_buffer; c--)
-            {
-                if(*c == ' ')
-                    *c = 0;
-                else
-                    break;
-            }
+            // assume:
+            //   - each command is space separated or ends with newline
+            //   - due to rx-timeout rotctl expects exactly one answer for all commands in
+            //     each line until '\n'r
 
-            // remember how many responses are to be retained; last response sends '\n'
-            cb_data.num_commands_pending = 1;
-            for(char *c = line_buffer; *c != 0; c++)
+            char *line_buffer_ptr = line_buffer;
+            while(easycommBufferedTokenizerStrtok(&line_token_state, line_buffer_ptr, read_len))
             {
-                if(*c == ' ')
-                    cb_data.num_commands_pending++;
-            }
+                line_buffer_ptr = nullptr;
+                if(1 == line_token_state.has_token)
+                {
+                    // remember how many responses are to be retained; last response appends '\n'
+                    cb_data.num_commands_pending = 1;
+                    for(char *c = line_token_state.token; *c != 0; c++)
+                        if(*c == ' ')
+                            cb_data.num_commands_pending++;
 
-            char *token = strtok(line_buffer, " ");
-            while(nullptr != token)
-            {
-                easycommHandleCommand(token, &cb_handler, EasycommParserStandard123, &cb_data);
-                token = strtok(nullptr, " ");
+                    char *save_ptr = nullptr;
+                    char *word_token = strtok_r(line_token_state.token, " ", &save_ptr);
+                    while(nullptr != word_token) // tokenize words
+                    {
+                        fprintf(cb_data.log_file, "    token >%s<, pending %zu\n", word_token,
+                                cb_data.num_commands_pending);
+                        easycommHandleCommand(word_token, &cb_handler, EasycommParserStandard123, &cb_data);
+                        word_token = strtok_r(nullptr, " ", &save_ptr);
+                    }
+                    fprintf(cb_data.log_file, "  pending %zu\n", cb_data.num_commands_pending);
+
+                    line_token_state.token_consumed = 1;
+                }
             }
         }
     }
-
-    close(serial_fd);
     return 0;
 }
 #endif

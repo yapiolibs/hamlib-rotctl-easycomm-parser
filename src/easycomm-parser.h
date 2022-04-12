@@ -1,5 +1,4 @@
 #pragma once
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -28,12 +27,12 @@ extern "C"
 
     /**
      * Parses issued commands from host
-     * @param buffer the command string (null terminated without newline/carriage return)
+     * @param buffer the command string: trimmed, no whitespace, null terminated, without "\r" "\n"
      * @param protocol_standard Easycomm standard: to intercept
      * @param parsed the parsed structure (assume the struct touched in any case regardless of return value)
      * @return true on success
      */
-    bool easycommParse(const char *buffer, EasycommData *parsed, EasycommParserStandard protocol_standard);
+    bool easycommParseCommand(const char *buffer, EasycommData *parsed, EasycommParserStandard protocol_standard);
 
 #ifdef __cplusplus
 }

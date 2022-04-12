@@ -5,11 +5,12 @@
 #include <easycomm-command-callback-handler.h>
 #include <easycomm-parser.h>
 
+// cppcheck-suppress unusedFunction
 bool parser_example()
 {
     const char *data = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
     EasycommData result;
-    return easycommParse(data, &result, EasycommParserStandard1);
+    return easycommParseCommand(data, &result, EasycommParserStandard1);
 }
 
 
@@ -29,8 +30,10 @@ bool pase_with_callback_example()
     return true == is_test_callback_invoked && true == is_callback_invoked;
 }
 
+// cppcheck-suppress unusedFunction
 void setup() {}
 
+// cppcheck-suppress unusedFunction
 void loop()
 {
     // parser_example();

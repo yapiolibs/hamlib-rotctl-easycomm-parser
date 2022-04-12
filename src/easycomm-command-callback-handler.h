@@ -38,7 +38,7 @@ extern "C"
     /**
      * Invokes the parser and the resulting callback.
      * If the parser fails the EasycommIdInvalid-callback is invoked.
-     * @param buffer data to parse from (null terminated string)
+     * @param buffer data to parse from: trimmed, no whitespace, null terminated, without "\r" "\n"
      * @param registry command-callback registry, NULL entries are allowed but skipped
      * @param parser_standard easycomm standard for the parser
      * @param custom_data pointer to custom data for the callback

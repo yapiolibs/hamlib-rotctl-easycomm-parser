@@ -132,7 +132,7 @@ static bool easycommParse123(const char *buffer, EasycommData *parsed)
 }
 
 
-bool easycommParse(const char *buffer, EasycommData *parsed, EasycommParserStandard parser_standard)
+bool easycommParseCommand(const char *buffer, EasycommData *parsed, EasycommParserStandard parser_standard)
 {
     static EasycommParseStandardFunction standards[] = {
         easycommParse1, easycommParse12, easycommParse123,

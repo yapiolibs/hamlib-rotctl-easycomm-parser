@@ -20,7 +20,7 @@
                  const char *expected_representation, bool expect_parser_success)                        \
     {                                                                                                    \
         EasycommData parsed;                                                                             \
-        bool is_parsed = easycommParse(data, &parsed, parser_standard);                                  \
+        bool is_parsed = easycommParseCommand(data, &parsed, parser_standard);                           \
         char data_as_string[str_buffer_len + 1] = { 0 };                                                 \
                                                                                                          \
         if(expect_parser_success)                                                                        \

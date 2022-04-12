@@ -11,3 +11,4 @@ tmp_pio_test_transport.cpp
 # integration testing
 __pycache__
 easycomm-endpoint-*
+*.log

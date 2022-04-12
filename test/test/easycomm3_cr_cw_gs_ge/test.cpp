@@ -2,15 +2,13 @@
 #include <Arduino.h>
 #endif
 
+#include "../common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
 #include <easycomm-parser.h>
-#include <stdio.h>
 #include <string.h>
 #include <unity.h>
-
-#include "../common.h"
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_config,
                                       EasycommReadConfigMaxLength,

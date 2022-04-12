@@ -47,14 +47,15 @@ class Test:
     """
 
     def __init__(self, project_dir: str, runs_on_github_ci: bool = False):
+        self.virtual_dev_lockfile = "{}/easycomm-endpoint-lockfile".format(project_dir)
         self.pipe_endpoint_a = "{}/easycomm-endpoint-rotctl".format(project_dir)
         self.pipe_endpoint_b = "{}/easycomm-endpoint-test-program".format(project_dir)
-        self.virtual_device_cmd = ["/usr/bin/socat", "-d", "-d",
+        self.virtual_device_cmd = ["/usr/bin/socat", "-d", "-d", "-W{}".format(self.virtual_dev_lockfile),
                                    "pty,raw,echo=0,link={}".format(self.pipe_endpoint_a),
                                    "pty,raw,echo=0,link={}".format(self.pipe_endpoint_b)]
-        self.rotctl2_cmd = [self.rotctl_file_path,
-                            "--rot-file={}".format(self.pipe_endpoint_a),
-                            "--set-conf=timeout=400,post_write_delay=0,write_delay=0"]
+        self.rotctl_cmd = [self._rotctl_file_path,
+                           "--rot-file={}".format(self.pipe_endpoint_a),
+                           "--set-conf=timeout=400,post_write_delay=0,write_delay=0"]
         self.test_program_cmd = ["{}/.pio/build/native/program".format(project_dir), self.pipe_endpoint_b]
         self.virtual_dev = None
         self.test_program = None
@@ -65,7 +66,7 @@ class Test:
         self.rotctl_version = self._get_rotctl_version()
 
     @property
-    def rotctl_file_path(self) -> Optional[str]:
+    def _rotctl_file_path(self) -> Optional[str]:
         candidates = ["/usr/local/bin/rotctl", "/usr/bin/rotctl"]
         for f in candidates:
             if os.path.exists(f):
@@ -86,10 +87,9 @@ class Test:
                   .format(self.rotctl_version, test_data.allowed_rotctl_versions))
             self._set_up()
 
-            self.rotctl2_cmd.extend(test_data.rotctl_extra_program_cli_args)
-            # self.rotctl2_cmd.append("-")
-            print("test: send \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl2_cmd)))
-            self.rotctl = subprocess.Popen(self.rotctl2_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+            self.rotctl_cmd.extend(test_data.rotctl_extra_program_cli_args)
+            print("test: send \"{}\" to \"{}\"".format(test_data.rotctl_commands, " ".join(self.rotctl_cmd)))
+            self.rotctl = subprocess.Popen(self.rotctl_cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                            stderr=subprocess.PIPE, text=True)
 
             test_program_transaction, rotctl_transaction = self._test_transaction(
@@ -116,11 +116,26 @@ class Test:
         print("test: prepare virtual device: \"{}\"".format(" ".join(self.virtual_device_cmd)))
         self.virtual_dev = subprocess.Popen(self.virtual_device_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                             text=True)
+
+        def wait_until_file_exists(f: str) -> bool:
+            retry = 16
+            while not os.path.exists(f) and retry >= 0:
+                retry -= 1
+                time.sleep(0.125)
+            if not os.path.exists(f):
+                print("test: failed to wait for endpoint: \"{}\"".format(f))
+                return False
+            else:
+                return True
+
+        wait_until_file_exists(self.pipe_endpoint_a)
+        wait_until_file_exists(self.pipe_endpoint_b)
         if self.runs_on_github_ci:
             time.sleep(2)  # time to breathe required for GitHub CI
         print("test: start test program: \"{}\"".format(" ".join(self.test_program_cmd)))
         self.test_program = subprocess.Popen(self.test_program_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                              text=True)
+        print("test: test program PID={}".format(self.test_program.pid))
 
     def _tear_down(self) -> None:
         print("test: tear down")
@@ -173,8 +188,6 @@ class Test:
     def _test_transaction(self, rotctl_commands: str) \
             -> Tuple[Tuple[List[str], List[str], int], Tuple[List[str], List[str], int]]:
         print("test: transaction ...")
-        test_program_stdout, test_program_stderr, test_program_ret_code = None, None, None
-        rotctl_stdout, rotctl_stderr, rotctl_ret_code = None, None, None
 
         try:
             rotctl_stdout, rotctl_stderr = self.rotctl.communicate(rotctl_commands, timeout=3)
@@ -207,7 +220,7 @@ class Test:
             return str(lines_as_byte_array.strip()).split('\n') if len(lines_as_byte_array) > 0 else []
 
     def _get_rotctl_version(self) -> str:
-        rotctl = subprocess.Popen([self.rotctl_file_path, "--version"],
+        rotctl = subprocess.Popen([self._rotctl_file_path, "--version"],
                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
             stdout, stderr = rotctl.communicate(timeout=3)

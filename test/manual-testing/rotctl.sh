@@ -11,7 +11,7 @@ DEVICE_FILE="--rot-file=${SCRIPT_DIR}/../easycomm-endpoint-rotctl"
 #MODEL="--model=202" # easycomm 2
 MODEL="--model=204" # easycomm 3
 VERBOSITY=""
-CONFIG="--set-conf=timeout=900,post_write_delay=100,write_delay=0"
+CONFIG="--set-conf=timeout=900,post_write_delay=0,write_delay=0"
 OPTIONAL_COMMANDS="$1"
 
 if [ -n "$OPTIONAL_COMMANDS" ]; then
