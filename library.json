@@ -17,13 +17,33 @@
   "frameworks": ["native", "arduino"],
   "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"],
   "examples": [{
-    "name": "Parse a string / Parse with callback",
-    "base": "test/",
-    "files": [
-      "platformio.ini",
-      "main.cpp"
-    ]
-  }],
+      "name": "Parse a single command",
+      "base": "test/src/",
+      "files": [
+        "platformio.ini",
+        "example-parse-command.h",
+        "example-parse-command.cpp"
+      ]
+    },
+    {
+      "name": "Parse a command with callback",
+      "base": "test/src/",
+      "files": [
+        "platformio.ini",
+        "example-parse-with-callback.h",
+        "example-parse-with-callback.cpp"
+      ]
+    },
+    {
+      "name": "Parse data from stream",
+      "base": "test/src/",
+      "files": [
+        "platformio.ini",
+        "example-parse-stream.h",
+        "example-parse-stream.cpp"
+      ]
+    }
+  ],
   "export": {
     "exclude": [
       ".github/",

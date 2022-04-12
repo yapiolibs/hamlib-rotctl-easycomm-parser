@@ -243,7 +243,7 @@ int main(int argc, const char **argv)
         //   - a line terminates with '\n' or "\r\n"
         //   - a line may have leading/trailing ' ' around '\n' or "\r\n"
         //   - multiple commands in a line are separated by one or multiple ' '
-        ssize_t read_len = read(cb_data.serial_fd, &line_buffer, sizeof(line_buffer));
+        ssize_t read_len = read(cb_data.serial_fd, &line_buffer[0], sizeof(line_buffer));
         if(0 > read_len)
         {
             printf("error: failed to read stdin: %s (error %d)\n", strerror(errno), errno);

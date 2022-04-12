@@ -1,43 +1,21 @@
 #if defined(ENV_NATIVE)
 #include "native-integration-test-program.h"
+
+#elif defined(PIO_EXAMPLE_PARSE_COMMAND)
+#include "example-parse-command.h"
+
+#elif defined(PIO_EXAMPLE_PARSE_WITH_CALLBACK)
+#include "example-parse-with-callback.h"
+
+#elif defined(PIO_EXAMPLE_PARSE_STREAM)
+#include "example-parse-stream.h"
+
 #else
+
 #include <Arduino.h>
-#include <easycomm-command-callback-handler.h>
-#include <easycomm-parser.h>
 
-// cppcheck-suppress unusedFunction
-bool parser_example()
-{
-    const char *data = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
-    EasycommData result;
-    return easycommParseCommand(data, &result, EasycommParserStandard1);
-}
-
-
-void testCallback(const EasycommData *command, void *custom_data) { *((bool *)custom_data) = true; }
-
-
-bool pase_with_callback_example()
-{
-    EasycommCommandsCallback cb_handler;
-    easycommCommandsCallback(&cb_handler, EasycommParserStandard1);
-    cb_handler.registry[EasycommIdSingleLine] = testCallback;
-    const char *command = "AZ0.0 EL0.0 UP0 UUU DN0 DDD";
-
-    bool is_test_callback_invoked = false;
-    bool is_callback_invoked =
-    easycommHandleCommand(command, &cb_handler, EasycommParserStandard1, &is_test_callback_invoked);
-    return true == is_test_callback_invoked && true == is_callback_invoked;
-}
-
-// cppcheck-suppress unusedFunction
 void setup() {}
 
-// cppcheck-suppress unusedFunction
-void loop()
-{
-    // parser_example();
-    pase_with_callback_example();
-}
+void loop() {}
 
 #endif
