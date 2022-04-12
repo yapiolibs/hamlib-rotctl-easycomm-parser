@@ -1,12 +1,13 @@
-name: CodeQL
+name: Analyze with CodeQL
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "19 0 * * 5"
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze with CodeQL
     runs-on: ubuntu-latest
     permissions:
       actions: read

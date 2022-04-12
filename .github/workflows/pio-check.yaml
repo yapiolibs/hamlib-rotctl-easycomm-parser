@@ -26,7 +26,7 @@ on:
 
 jobs:
   pio-check:
-    name: PIO static code analysis ${{ matrix.os }}
+    name: PIO static code analysis on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
