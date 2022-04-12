@@ -13,7 +13,7 @@
     "maintainer": "true"
   }],
   "license": "Apache-2.0",
-  "version": "0.1",
+  "version": "0.1.0",
   "frameworks": ["native", "arduino"],
   "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"],
   "headers": [
@@ -33,36 +33,36 @@
       "name": "Parse a single command",
       "base": "test/src/",
       "files": [
-        "platformio.ini",
-        "example-parse-command.h",
-        "example-parse-command.cpp"
+        "../platformio.ini",
+        "./example-parse-command.h",
+        "./example-parse-command.cpp"
       ]
     },
     {
       "name": "Parse a command with callback",
       "base": "test/src/",
       "files": [
-        "platformio.ini",
-        "example-parse-with-callback.h",
-        "example-parse-with-callback.cpp"
+        "../platformio.ini",
+        "./example-parse-with-callback.h",
+        "./example-parse-with-callback.cpp"
       ]
     },
     {
       "name": "Parse data from stream",
       "base": "test/src/",
       "files": [
-        "platformio.ini",
-        "example-parse-stream.h",
-        "example-parse-stream.cpp"
+        "../platformio.ini",
+        "./example-parse-stream.h",
+        "./example-parse-stream.cpp"
       ]
     },
     {
       "name": "Parse from stream and reply - native integration test program",
       "base": "test/src/",
       "files": [
-        "platformio.ini",
-        "native-integration-test-program.h",
-        "native-integration-test-program.cpp"
+        "../platformio.ini",
+        "./native-integration-test-program.h",
+        "./native-integration-test-program.cpp"
       ]
     }
   ],

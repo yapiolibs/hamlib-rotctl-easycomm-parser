@@ -12,7 +12,7 @@ framework = arduino
 lib_deps  = https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser.git
 ```
 
-[**Parse a single command:**](./test/src/example-parse-command.cpp)
+[**Parse a single command:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-command.cpp)
 ```c
 #include <easycomm-parser.h>
 
@@ -30,7 +30,7 @@ void loop()
 }
 ```
 
-[**Parse with callback:**](./test/src/example-parse-with-callback.cpp)
+[**Parse with callback:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-with-callback.cpp)
 ```c
 #include "example-parse-with-callback.h"
 #include <easycomm-command-callback-handler.h>
@@ -64,12 +64,12 @@ void loop()
 }
 ```
 
-**Parse from stream:** [see full example](./test/src/example-parse-stream.cpp).
+**Parse from stream:** [see full example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-stream.cpp).
 
 **More examples:**
 
-* [native-integration-test-program.cpp](./test/src/native-integration-test-program.cpp)
-* [unit tests](./test/test/)
+* [native-integration-test-program.cpp](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/native-integration-test-program.cpp)
+* [unit tests](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/test/)
 
 **References:**
 
