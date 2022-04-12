@@ -1,6 +1,6 @@
 {
   "name": "HamlibRotctlEasycommParser",
-  "keywords": "hamlib, rotctl, easycomm, parser, antenna, rotor",
+  "keywords": "hamlib, rotctl, easycomm, parser, antenna, rotor, rotator",
   "description": "easycomm parser for hamlib rotator control",
   "homepage": "https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser",
   "repository": {
@@ -16,6 +16,19 @@
   "version": "0.1",
   "frameworks": ["native", "arduino"],
   "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"],
+  "headers": [
+    "easycomm-types.h",
+    "easycomm-parser.h",
+    "easycomm-parser-types.h",
+    "easycomm-parser-types-ctors.h",
+    "easycomm-parser-types-sprintf.h",
+    "easycomm-parser-types-operators.h",
+    "easycomm-response-types.h",
+    "easycomm-response-types-ctors.h",
+    "easycomm-response-types-sprintf.h",
+    "easycomm-command-callback-handler.h",
+    "easycomm-buffered-tokenizer.h"
+  ],
   "examples": [{
       "name": "Parse a single command",
       "base": "test/src/",
