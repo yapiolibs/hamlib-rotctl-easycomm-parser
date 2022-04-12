@@ -73,7 +73,7 @@ void loop()
 
 **References:**
 
-* [library documentation](./src/)
+* [library documentation](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
 * Easycomm protocol
   * rotctl --list
   * rotctl --model=204 --dump-caps

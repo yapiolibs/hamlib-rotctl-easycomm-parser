@@ -13,21 +13,21 @@
     "maintainer": "true"
   }],
   "license": "Apache-2.0",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "frameworks": ["native", "arduino"],
   "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"],
   "headers": [
-    "easycomm-types.h",
     "easycomm-parser.h",
+    "easycomm-command-callback-handler.h",
+    "easycomm-buffered-tokenizer.h",
+    "easycomm-types.h",
     "easycomm-parser-types.h",
     "easycomm-parser-types-ctors.h",
     "easycomm-parser-types-sprintf.h",
     "easycomm-parser-types-operators.h",
     "easycomm-response-types.h",
     "easycomm-response-types-ctors.h",
-    "easycomm-response-types-sprintf.h",
-    "easycomm-command-callback-handler.h",
-    "easycomm-buffered-tokenizer.h"
+    "easycomm-response-types-sprintf.h"
   ],
   "examples": [{
       "name": "Parse a single command",
