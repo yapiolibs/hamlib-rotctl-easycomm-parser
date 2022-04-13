@@ -12,18 +12,25 @@ class TestData(object):
                  allowed_test_program_return_codes: List[int] = [0],
                  allowed_rotctl_return_codes: List[int] = [0]):
         """
-        :param description: a human readable test name
-        :param rotctl_commands: string sent to rotctl at start-time
-               same as in interactive mode but space separated and without leading '\'
-               see rotctl --help
-        :param rotctl_extra_program_cli_args: the expected output of the parser library test-program
-               every command string-representation is enclosed in > and < to make leading/trailing whitespaces visible
+        :param description: A human readable test name.
+
+        :param rotctl_commands: The string sent to rotctl at start-time via stdin; same syntax as in interactive mode.
+        :param rotctl_extra_program_cli_args: Useful if a specific Easycomm version shall be enforced.
+
+
         :param allowed_rotctl_versions:
-        :param expected_test_program_stdout_lines: regex to match against 1st line of `rotctl --version`
-               test data will be ignored if version does not match
-        :param expected_rotctl_stdout_lines: the expected output of the rotctl program
-        :param allowed_test_program_return_codes: list of accepted return codes
-        :param allowed_rotctl_return_codes: list of accepted return codes
+               A regex to match against 1st line of `rotctl --version`.
+               If no match the test data will be ignored.
+               Useful when specific hamlib versions must be treated specifically.
+
+        :param expected_test_program_stdout_lines:
+               The expected output of the parser test-program.
+               Every command's string-representation is enclosed in > and < to make leading/trailing whitespaces
+               and line endings visible.
+        :param expected_rotctl_stdout_lines: The expected output of the rotctl program.
+
+        :param allowed_test_program_return_codes: A list of accepted return codes.
+        :param allowed_rotctl_return_codes: A list of accepted return codes.
         """
         self.description: str = description
         self.rotctl_commands: str = rotctl_commands

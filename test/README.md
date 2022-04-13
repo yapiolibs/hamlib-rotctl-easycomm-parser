@@ -16,4 +16,10 @@ pio test -e espressif32          # requies esp32doit-devkit-v1 board
 
 # integration test on desktop
 pio run -e native -t integration # requires libhamlib-utils installed
+
+# build all targets inclusive examples
+pio run
+
+# static code analysis
+pio check --fail-on-defect=high --fail-on-defect=medium --fail-on-defect=low
 ```

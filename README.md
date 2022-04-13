@@ -1,41 +1,57 @@
-# Hamlib rotctl Easycomm parser
-Platformio parser library for hamlib rotator (Easycomm I,II,III) control commands programmed in C for C and C++ projects.
+# [Hamlib](https://github.com/Hamlib/Hamlib) rotctl [Easycomm](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm) parser
+A PlatformIO parser library for Hamlib rotator control commands.
+Parses the text protocol as described by Easycomm standards I, II or III.
+Programmed with less dependencies in C for C and C++ projects.
+Requires float support for `scanf` and `printf`.
 
 
-**Integrate in project:**
+[**Integrate in project:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/platformio.ini)
 ```ini
 # platformio.ini
 [env:xxx]
 platform  = xxx # one of ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"]
 board     = xxx
 framework = arduino
-lib_deps  = https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser.git
+lib_deps  = rubienr/HamlibRotctlEasycommParser
+# some platforms require folat support for scanf/printf to be explicitely enabled
+build_flags =
+    # if platfrom is atmelavr:
+    # -Wl,-u,vfscanf,-lscanf_flt,-u,vfprintf,-lprintf_flt
+    # if platform is ststm32:
+    # -Wl,-u_scanf_float,-u_printf_float
 ```
 
 [**Parse a single command:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-command.cpp)
 ```c
-#include <easycomm-parser.h>
-
 void setup() {}
 
 void loop()
 {
-    const char *data = "AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD";
     EasycommData result;
 
-    if(easycommParseCommand(data, &result, EasycommParserStandard1))
+    easycommData(&result);
+    if(easycommParseCommand("AZ000.1 EL000.0 UP000000000 UUU DN000000000 DDD", &result, EasycommParserStandard1))
     {
-        // command was parsed
+        // standard 1 command was parsed
+    }
+
+    easycommData(&result);
+    if(easycommParseCommand("AZ100", &result, EasycommParserStandard2))
+    {
+        // standard 2 command was parsed
+    }
+
+    easycommData(&result);
+    if(easycommParseCommand("VU50", &result, EasycommParserStandard23))
+    {
+        // standard 3 command was parsed
     }
 }
 ```
 
 [**Parse with callback:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-with-callback.cpp)
 ```c
-#include "example-parse-with-callback.h"
-#include <easycomm-command-callback-handler.h>
-
-void commandCallback(const EasycommData *command, void *custom_data)
+void customCallback(const EasycommData *command, void *custom_data)
 {
     *((bool *)custom_data) = true;
 }
@@ -44,27 +60,37 @@ void setup() {}
 
 void loop()
 {
+    // registry for possible callbacks (CB) for each command; CBs may be nullptr
     EasycommCommandsCallback cb_handler;
-    easycommCommandsCallback(&cb_handler, EasycommParserStandard1);
-    cb_handler.registry[EasycommIdSingleLine] = commandCallback;
-    const char *command = "AZ0.0 EL0.0 UP0 UUU DN0 DDD";
 
-    bool is_command_callback_invoked = false;
-    bool is_callback_invoked =
-    easycommHandleCommand(command, &cb_handler, EasycommParserStandard1, &is_command_callback_invoked);
+    // register empty SB stubs for all commands described in standard 2
+    easycommCommandsCallback(&cb_handler, EasycommParserStandard2);
 
-    if(is_command_callback_invoked)
-    {
-        // command callback was invoked
-    }
-    else if(is_callback_invoked)
-    {
-        // dummy callback was invoked
-    }
+    // override a specific CB
+    cb_handler.registry[EasycommIdAzimuth] = customCallback;
+
+    bool some_cb_invoked = { false };
+    bool custom_cb_invoked = { false };
+
+    some_cb_invoked = easycommHandleCommand("EL100.1", &cb_handler, EasycommParserStandard2, &custom_cb_invoked);
+    // custom_cb_invoked == false because customCallback(...) was regitered for AZ but not EL
+    // command some_cb_invoked == true because a default empty CB was called for EL command
+
+    some_cb_invoked = easycommHandleCommand("AZ100.1", &cb_handler, EasycommParserStandard2, &custom_cb_invoked);
+    // custom_cb_invoked == true
+    // some_cb_invoked == true
+
+    some_cb_invoked = easycommHandleCommand("VU", &cb_handler, EasycommParserStandard3, &custom_cb_invoked);
+    // custom_cb_invoked == false
+    // some_cb_invoked == false because VU is a standard 3 command but CBs are registered only for standard 2
+
+    // suppress unused variable warnings
+    (void)custom_cb_invoked;
+    (void)some_cb_invoked;
 }
 ```
 
-**Parse from stream:** [see full example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-stream.cpp).
+**Parse from stream:** [see full example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-stream.cpp)
 
 **More examples:**
 
@@ -73,13 +99,13 @@ void loop()
 
 **References:**
 
-* [library documentation](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
+* [Command reference](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
 * Easycomm protocol
   * rotctl --list
   * rotctl --model=204 --dump-caps
 * Hamlib
   * [protocol description](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.txt)
-  * [protocol source code](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.c)
+  * [protocol source](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.c)
 
 
 **Checks**

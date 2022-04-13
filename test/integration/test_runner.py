@@ -26,19 +26,19 @@ TestColors = {
 class Test:
     """
                         command(s)
-        ┌─────────────┐-----------→┌─────────────┐-----------→┌──────────────┐
-      ┌─│rotctl/hamlib│            │    pipe     │            │ test program │─┐
-      │ └─────────────┘←-----------└─────────────┘←-----------└──────────────┘ │
-      │      │    │ rotctl output                    response      │    │      │
-      │      ↓    ↓                                                ↓    ↓      │
-      │ ┌──────┐┌──────┐                                      ┌──────┐┌──────┐ │
-      │ │stderr││stdout│──────┐                        ┌──────│stderr││stdout│ │
-      │ └──────┘└──────┘      │                        │      └──────┘└──────┘ │
-      │     ↓                 ↓                        ↓                 ↓     │
-      │ must be empty      expected lines   expected lines:      must be empty │
-      │                                     string repr.                       │
-      ↓                                     of parsed commands                 ↓
-      return code                                                    return code
+        ┌─────────────┐-----------→┌─────────────────────┐-----------→┌──────────────┐
+      ┌─│rotctl/hamlib│            │pipe/virtual ser. dev│            │ test program │─┐
+      │ └─────────────┘←-----------└─────────────────────┘←-----------└──────────────┘ │
+      │      │    │                                       response         │    │      │
+      │      ↓    ↓ output                                          output ↓    ↓      │
+      │ ┌──────┐┌──────┐                                              ┌──────┐┌──────┐ │
+      │ │stderr││stdout│──────┐                                ┌──────│stderr││stdout│ │
+      │ └──────┘└──────┘      │                                │      └──────┘└──────┘ │
+      │     ↓                 ↓                                ↓                 ↓     │
+      │ must be empty      expected lines           expected lines:      must be empty │
+      │                                             string repr.                       │
+      ↓                                             of parsed commands                 ↓
+      return code                                   and response             return code
 
       A test program receives data from rotctl and feeds the parser library under test.
       The library parses the payload to a struct.

@@ -6,12 +6,14 @@
 #include <easycomm-response-types-sprintf.h>
 #include <easycomm-response-types.h>
 
+/**
+ * This example aims to show how the line-tokenizer is applied to receive data from rotctl
+ * and how to reply to each command that was received in the same line.
+ */
+
 // -------------------------------------------------------------------------------------------------
 
-size_t read(char *buffer, size_t buffer_length);
-size_t write(const char *buffer, size_t buffer_length);
-void commandCallback(const EasycommData *command, void *custom_data);
-
+// custom data for each callback
 typedef struct CallbackData
 {
     String retained_response{};
@@ -20,20 +22,28 @@ typedef struct CallbackData
 
 // -------------------------------------------------------------------------------------------------
 
-char line_buffer[128] = { 0 };       // for read
-char line_token_buffer[130] = { 0 }; // for tokenizer state
-CallbackData cb_data;
-EasycommCommandsCallback cb_handler;
-EasycommBufferedTokenizerState line_token_state;
+size_t read(char *buffer, size_t buffer_length);                      // read from serial stub
+size_t write(const char *buffer, size_t buffer_length);               // write to serial stub
+void commandCallback(const EasycommData *command, void *custom_data); // custom callback for each command
+
+// -------------------------------------------------------------------------------------------------
+
+char line_buffer[128] = { 0 };                   // for reading input
+CallbackData cb_data;                            // custom data for all callbacks
+EasycommCommandsCallback cb_handler;             // callback registry for each command
+EasycommBufferedTokenizerState line_token_state; // state for buffered line tokenizer
+char line_token_buffer[130] = { 0 };             // line tokenizer buffer
 
 // -------------------------------------------------------------------------------------------------
 
 void setup()
 {
-    easycommCommandsCallbackCustomDefaultCb(&cb_handler, // callback storage
-                                            EasycommParserStandard123, // register cb to all commands defined in standard
-                                            commandCallback); // the custom callback to register
-    easycommBufferedTokenizerState(&line_token_state);
+    easycommCommandsCallbackCustomDefaultCb(&cb_handler, // callback registry
+                                            EasycommParserStandard123, // register CB to all commands defined in standard 1, 2 and 3
+                                            commandCallback); // a custom callback to register
+
+    easycommBufferedTokenizerState(&line_token_state); // ctor
+    // bind a buffer to tokenizer state
     easycommBufferedTokenizerStateSetBuffers(&line_token_state, line_token_buffer, sizeof(line_token_buffer));
 }
 
@@ -52,7 +62,7 @@ void loop()
     size_t read_len = read(line_buffer, sizeof(line_buffer));
 
     // when responding to rotctl:
-    //   - all commands of one set must be responded within one line
+    //   - all commands in one set must be responded within one line terminated by '\n'
     //   - the response order should be the same as the command order
 
     char *line_buffer_ptr = line_buffer;
@@ -64,33 +74,32 @@ void loop()
     // the result is: :cmd:(\s:cmd:)*
     while(easycommBufferedTokenizerStrtok(&line_token_state, line_buffer_ptr, read_len))
     {
-        // subsequent reentrant calls with NULL
+        // subsequent reentrant calls provide NULL instead of line_buffer pointer
         line_buffer_ptr = nullptr;
 
-
-        // if line was received
+        // if a line was completed
         if(1 == line_token_state.has_token)
         {
             // remember how many commands are received
-            // to retain possible responses so that last response appends '\n'
+            // to retain possible responses so that the last response appends '\n'
             cb_data.num_commands_pending = 1;
             for(char *c = line_token_state.token; *c != 0; c++)
                 if(*c == ' ')
                     cb_data.num_commands_pending++;
 
-            // tokenize line by spaces and parse each command
-            char *save_ptr = nullptr;
+            // tokenize line by spaces and parse each token/command
+            char *save_ptr{ nullptr };
             char *word_token = strtok_r(line_token_state.token, " ", &save_ptr);
             while(nullptr != word_token)
             {
-                easycommHandleCommand(word_token,  // a potential command to parse
-                                      &cb_handler, // registered callbacks for each command type
-                                      EasycommParserStandard123, // Easycomm protocol standard
-                                      &cb_data);                 // custom data provided to callback
+                easycommHandleCommand(word_token,                // a potential command to parse
+                                      &cb_handler,               // registry of CBs for each command
+                                      EasycommParserStandard123, // Easycomm protocol standard to consider
+                                      &cb_data);                 // custom data provided to all CBs
                 word_token = strtok_r(nullptr, " ", &save_ptr);
             }
 
-            // mark token as consumed to not block next reentrant line-tokenizer call
+            // mark line as consumed to not block subsequent reentrant line-tokenizer calls
             line_token_state.token_consumed = 1;
         }
     }
@@ -103,19 +112,23 @@ size_t write(const char *buffer, size_t buffer_length) { return 0; }
 
 // -------------------------------------------------------------------------------------------------
 
+// A naive callback example: all commands pass this CB.
+// 1. for each command/callback, decrement the pending counter
+// 2. prepare responses for commands where a response is expected
+// 3. retain responses until the last the last command (counter == 0) and append '\n'
 void commandCallback(const EasycommData *command, void *custom_data)
 {
     auto *data = (CallbackData *)custom_data;
     if(data->num_commands_pending == 0)
     {
-        // "unexpected callback"
+        // unexpected callback
+        return;
     }
 
     data->num_commands_pending--;
     char string_buffer[128] = { 0 };
 
-    if(EasycommIdReset == command->commandId) {}
-    else if(command->commandId == EasycommIdGetAzimuth)
+    if(command->commandId == EasycommIdGetAzimuth)
     {
         // requested current azimuth, prepare response
         EasycommResponseAzimuth az;
@@ -126,36 +139,18 @@ void commandCallback(const EasycommData *command, void *custom_data)
     else if(command->commandId == EasycommIdGetElevation)
     { // prepare response ...
     }
-    else if(command->commandId == EasycommIdGetStatusRegister)
-    {
-        // prepare response ...
+    // other commands ...
+    else if(command->commandId == EasycommIdReset)
+    { // no response expected
     }
-    else if(command->commandId == EasycommIdGetErrorRegister)
-    {
-        // prepare response ...
-    }
-    else if(command->commandId == EasycommIdReadInput)
-    {
-        // prepare response ...
-    }
-    else if(command->commandId == EasycommIdReadAnalogueInput)
-    {
-        // prepare response ...
-    }
-    else if(command->commandId == EasycommIdRequestVersion)
-    {
-        // prepare response ...
-    }
-    else if(command->commandId == EasycommIdReadConfig)
-    {
-        // prepare response ...
-    }
+    // further commands ...
     else
         return;
 
-    // buffer responses
+    // retain response
     data->retained_response.concat(string_buffer);
 
+    // last command was interpreted
     if(data->num_commands_pending == 0)
     {
         (void)write(data->retained_response.c_str(), data->retained_response.length());
@@ -163,6 +158,7 @@ void commandCallback(const EasycommData *command, void *custom_data)
         data->retained_response = "";
     }
     else
+    // other commands will follow
     {
         data->retained_response.concat(" ");
     }

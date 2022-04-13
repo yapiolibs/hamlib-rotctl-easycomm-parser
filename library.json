@@ -1,7 +1,7 @@
 {
   "name": "HamlibRotctlEasycommParser",
-  "keywords": "hamlib, rotctl, easycomm, parser, antenna, rotor, rotator",
-  "description": "easycomm parser for hamlib rotator control",
+  "keywords": "hamlib, rotctl, easycomm, parser, antenna, rotor, rotator, hamradio",
+  "description": "Easycomm parser for hamlib rotator control",
   "homepage": "https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser",
   "repository": {
     "type": "git",
@@ -30,39 +30,39 @@
     "easycomm-response-types-sprintf.h"
   ],
   "examples": [{
-      "name": "Parse a single command",
-      "base": "test/src/",
+      "name": "parse_a_single_command",
+      "base": "test/",
       "files": [
-        "../platformio.ini",
-        "./example-parse-command.h",
-        "./example-parse-command.cpp"
+        "platformio.ini",
+        "src/example-parse-command.h",
+        "src/example-parse-command.cpp"
       ]
     },
     {
-      "name": "Parse a command with callback",
-      "base": "test/src/",
+      "name": "parse_a_command_with_callback",
+      "base": "test/",
       "files": [
-        "../platformio.ini",
-        "./example-parse-with-callback.h",
-        "./example-parse-with-callback.cpp"
+        "platformio.ini",
+        "src/example-parse-with-callback.h",
+        "src/example-parse-with-callback.cpp"
       ]
     },
     {
-      "name": "Parse data from stream",
-      "base": "test/src/",
+      "name": "parse_data_from_stream",
+      "base": "test/",
       "files": [
-        "../platformio.ini",
-        "./example-parse-stream.h",
-        "./example-parse-stream.cpp"
+        "platformio.ini",
+        "src/example-parse-stream.h",
+        "src/example-parse-stream.cpp"
       ]
     },
     {
-      "name": "Parse from stream and reply - native integration test program",
-      "base": "test/src/",
+      "name": "parse_from_stream_and_reply-native_integration_test_program",
+      "base": "test/",
       "files": [
-        "../platformio.ini",
-        "./native-integration-test-program.h",
-        "./native-integration-test-program.cpp"
+        "platformio.ini",
+        "src/native-integration-test-program.h",
+        "src/native-integration-test-program.cpp"
       ]
     }
   ],
