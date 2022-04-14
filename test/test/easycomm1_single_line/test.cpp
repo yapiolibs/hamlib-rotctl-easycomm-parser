@@ -253,6 +253,9 @@ void setup() {}
 void loop()
 #endif
 {
+#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
+    delay(1000);
+#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_elevation_01);
     RUN_TEST(test_parse_elevation_02);

@@ -351,36 +351,32 @@ void setup() {}
 void loop()
 #endif
 {
+#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
+    delay(1000);
+#endif
     UNITY_BEGIN();
-
     RUN_TEST(test_parse_uplink_frequency_01);
     RUN_TEST(test_parse_uplink_frequency_02);
     RUN_TEST(test_parse_invalid_uplink_frequency_01);
     RUN_TEST(test_parse_invalid_uplink_frequency_02);
-
     RUN_TEST(test_parse_downlink_frequency_01);
     RUN_TEST(test_parse_downlink_frequency_02);
     RUN_TEST(test_parse_invalid_downlink_frequency_01);
     RUN_TEST(test_parse_invalid_downlink_frequency_02);
-
     RUN_TEST(test_parse_downlink_mode_01);
     RUN_TEST(test_parse_downlink_mode_02);
     RUN_TEST(test_parse_downlink_mode_03);
     RUN_TEST(test_parse_invalid_downlink_mode_01);
-
     RUN_TEST(test_parse_uplink_mode_01);
     RUN_TEST(test_parse_uplink_mode_02);
     RUN_TEST(test_parse_uplink_mode_03);
     RUN_TEST(test_parse_invalid_uplink_mode_01);
-
     RUN_TEST(test_parse_uplink_radio_01);
     RUN_TEST(test_parse_uplink_radio_02);
     RUN_TEST(test_parse_invalid_uplink_radio);
-
     RUN_TEST(test_parse_downlink_radio_01);
     RUN_TEST(test_parse_downlink_radio_02);
     RUN_TEST(test_parse_invalid_downlink_radio);
-
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560
     return 0;

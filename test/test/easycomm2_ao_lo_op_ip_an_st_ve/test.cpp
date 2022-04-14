@@ -247,26 +247,22 @@ void setup() {}
 void loop()
 #endif
 {
+#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
+    delay(1000);
+#endif
     UNITY_BEGIN();
-
     RUN_TEST(test_parse_acquisition_of_signal);
     RUN_TEST(test_parse_loss_of_signal);
-
     RUN_TEST(test_parse_set_output_01);
     RUN_TEST(test_parse_set_output_02);
-
     RUN_TEST(test_parse_read_input_01);
     RUN_TEST(test_parse_read_input_02);
-
     RUN_TEST(test_parse_read_analogue_input_01);
     RUN_TEST(test_parse_read_analogue_input_02);
-
     RUN_TEST(test_parse_set_time_01);
     RUN_TEST(test_parse_set_time_02);
     RUN_TEST(test_parse_set_time_03);
-
     RUN_TEST(test_parse_request_version);
-
     UNITY_END();
 #ifdef ARDUINO_AVR_MEGA2560
     return 0;
