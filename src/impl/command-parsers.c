@@ -560,8 +560,20 @@ bool readEasycomm2SetTime(const char *buffer, EasycommData *parsed)
     // buffer examples: "STyy:MM:dd:hh:mm:ss"
     char c;
     easycommSetTime(&parsed->as.setTime);
-    return 8 == sscanf(buffer, "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu", &c, &c, &parsed->as.setTime.year,
-                       &parsed->as.setTime.month, &parsed->as.setTime.day, &parsed->as.setTime.hour,
+    return 8 == sscanf(buffer,
+#if defined(ARDUINO_ARCH_AVR)
+                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#elif defined(ARDUINO_ARCH_ESP32)
+                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#else // assume native platform
+                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#endif
+                       &c, &c, &parsed->as.setTime.year, &parsed->as.setTime.month,
+                       &parsed->as.setTime.day, &parsed->as.setTime.hour,
                        &parsed->as.setTime.minute, &parsed->as.setTime.second);
 }
 

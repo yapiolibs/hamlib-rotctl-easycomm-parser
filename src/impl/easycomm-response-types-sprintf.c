@@ -6,9 +6,13 @@
 void easycommResponseSingleLineSprintf(const EasycommResponseSingleLine *from, char *to)
 {
     sprintf(to,
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
+#if defined(ARDUINO_ARCH_AVR)
             "AZ%.1f EL%.1f UP%lu %s DN%lu %s",
-#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+            "AZ%.1f EL%.1f UP%lu %s DN%lu %s",
+#elif defined(ARDUINO_ARCH_ESP8266)
+            "AZ%.1f EL%.1f UP%u %s DN%u %s",
+#elif defined(ARDUINO_ARCH_ESP32)
             "AZ%.1f EL%.1f UP%u %s DN%u %s",
 #else // assume native platform
             "AZ%.1f EL%.1f UP%u %s DN%u %s",
@@ -32,9 +36,13 @@ void easycommResponseElevationSprintf(const EasycommResponseElevation *from, cha
 
 void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequency *from, char *to)
 {
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
+#if defined(ARDUINO_ARCH_AVR)
     sprintf(to, "UP%lu", from->frequency.as.uint32);
-#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+    sprintf(to, "UP%lu", from->frequency.as.uint32);
+#elif defined(ARDUINO_ARCH_ESP8266)
+    sprintf(to, "UP%u", from->frequency.as.uint32);
+#elif defined(ARDUINO_ARCH_ESP32)
     sprintf(to, "UP%u", from->frequency.as.uint32);
 #else // assume native platform
     sprintf(to, "UP%u", from->frequency.as.uint32);
@@ -44,9 +52,13 @@ void easycommResponseUplinkFrequencySprintf(const EasycommResponseUplinkFrequenc
 
 void easycommResponseDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to)
 {
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
-    sprintf(to, "DN%ld", from->frequency.as.uint32);
-#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#if defined(ARDUINO_ARCH_AVR)
+    sprintf(to, "DN%lu", from->frequency.as.uint32);
+#elif defined(ARDUINO_ARCH_STM32)
+    sprintf(to, "DN%lu", from->frequency.as.uint32);
+#elif defined(ARDUINO_ARCH_ESP32)
+    sprintf(to, "DN%u", from->frequency.as.uint32);
+#elif defined(ARDUINO_ARCH_ESP32)
     sprintf(to, "DN%u", from->frequency.as.uint32);
 #else // assume native platform
     sprintf(to, "DN%u", from->frequency.as.uint32);
