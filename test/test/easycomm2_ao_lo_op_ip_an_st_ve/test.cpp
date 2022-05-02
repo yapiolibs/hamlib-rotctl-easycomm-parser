@@ -172,6 +172,33 @@ void test_parse_read_analogue_input_02()
 }
 
 
+void test_parse_set_time_string()
+{
+    // issue: https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/issues/4
+    // buffer examples: "STyy:MM:dd:hh:mm:ss"
+    EasycommSetTime timeStamp;
+
+    size_t items = sscanf("ST11:22:33:44:55:66",
+#if defined(ARDUINO_ARCH_AVR)
+                          "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#elif defined(ARDUINO_ARCH_STM32)
+                          "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                          "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#else // assume native platform
+                          "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#endif
+                          &timeStamp.year, &timeStamp.month, &timeStamp.day, &timeStamp.hour,
+                          &timeStamp.minute, &timeStamp.second);
+
+    TEST_ASSERT_EQUAL(6, items);
+    TEST_ASSERT_EQUAL(11, timeStamp.year);
+    TEST_ASSERT_EQUAL(22, timeStamp.month);
+    TEST_ASSERT_EQUAL(33, timeStamp.day);
+    TEST_ASSERT_EQUAL(44, timeStamp.hour);
+    TEST_ASSERT_EQUAL(55, timeStamp.minute);
+    TEST_ASSERT_EQUAL(66, timeStamp.second);
+}
 void test_parse_set_time_01()
 {
     const char *valid_data = "ST11:22:33:44:55:66";
@@ -259,6 +286,7 @@ void loop()
     RUN_TEST(test_parse_read_input_02);
     RUN_TEST(test_parse_read_analogue_input_01);
     RUN_TEST(test_parse_read_analogue_input_02);
+    RUN_TEST(test_parse_set_time_string);
     RUN_TEST(test_parse_set_time_01);
     RUN_TEST(test_parse_set_time_02);
     RUN_TEST(test_parse_set_time_03);
