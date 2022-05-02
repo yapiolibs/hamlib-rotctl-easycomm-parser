@@ -4,7 +4,7 @@
 #include <string.h> // size_t
 
 static bool
-isDynamicLengthCommandPattern(const char *buffer, size_t min_length, size_t max_length, char *prefix, size_t prefix_length)
+isDynamicLengthCommandPattern(const char *buffer, size_t min_length, size_t max_length, const char *prefix, size_t prefix_length)
 {
     if(buffer == NULL || prefix == NULL)
         return false;
@@ -16,7 +16,7 @@ isDynamicLengthCommandPattern(const char *buffer, size_t min_length, size_t max_
     return false;
 }
 
-static bool isFixedLengthCommandPattern(const char *buffer, size_t length, char *prefix, size_t prefix_length)
+static bool isFixedLengthCommandPattern(const char *buffer, size_t length, const char *prefix, size_t prefix_length)
 {
     if(buffer == NULL || prefix == NULL)
         return false;
@@ -300,9 +300,13 @@ bool readEasycomm1SingleLine(const char *buffer, EasycommData *parsed)
     return 14 == sscanf(buffer,
 
 // TODO limit mode %s to max 3 letters %3s
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
+#if defined(ARDUINO_ARCH_AVR)
                         "%c%c%f %c%c%f %c%c%lu %s %c%c%lu %s",
-#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                        "%c%c%f %c%c%f %c%c%lu %s %c%c%lu %s",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                        "%c%c%f %c%c%f %c%c%u %s %c%c%u %s",
+#elif defined(ARDUINO_ARCH_ESP32)
                         "%c%c%f %c%c%f %c%c%u %s %c%c%u %s",
 #else // assume native platform
                         "%c%c%f %c%c%f %c%c%u %s %c%c%u %s",
@@ -355,9 +359,13 @@ bool readEasycomm2UplinkFrequency(const char *buffer, EasycommData *parsed)
     easycommUplinkFrequency(&parsed->as.uplinkFrequency);
     return 3 == sscanf(buffer,
 
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%lu",
-#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%lu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%u",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%u",
 #else // assume native platform
                        "%c%c%u",
@@ -373,9 +381,13 @@ bool readEasycomm2DownlinkFrequency(const char *buffer, EasycommData *parsed)
     easycommDownlinkFrequency(&parsed->as.downlinkFrequency);
     return 3 == sscanf(buffer,
 
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_STM32)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%lu",
-#elif defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%lu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%u",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%u",
 #else // assume native platform
                        "%c%c%u",
@@ -427,9 +439,13 @@ bool readEasycomm2DownlinkRadioNumber(const char *buffer, EasycommData *parsed)
     char c;
     easycommDownlinkRadioNumber(&parsed->as.downlinkRadio);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
 #else // assume native platform
                        "%c%c%hu",
@@ -508,9 +524,13 @@ bool readEasycomm2SetOutput(const char *buffer, EasycommData *parsed)
     char c, value;
     easycommSetOutput(&parsed->as.setOutput);
     size_t items = sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                           "%c%c%u%c%c",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                          "%c%c%hu%c%c",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                          "%c%c%hu%c%c",
+#elif defined(ARDUINO_ARCH_ESP32)
                           "%c%c%hu%c%c",
 #else // assume native platform
                           "%c%c%hu%c%c",
@@ -527,9 +547,13 @@ bool readEasycomm2ReadInput(const char *buffer, EasycommData *parsed)
     char c;
     easycommReadInput(&parsed->as.readInput);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
 #else // assume native platform
                        "%c%c%hu",
@@ -544,9 +568,13 @@ bool readEasycomm2ReadAnalogueInput(const char *buffer, EasycommData *parsed)
     char c;
     easycommReadAnalogueInput(&parsed->as.readAnalogueInput);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
 #else // assume native platform
                        "%c%c%hu",
@@ -558,23 +586,17 @@ bool readEasycomm2ReadAnalogueInput(const char *buffer, EasycommData *parsed)
 bool readEasycomm2SetTime(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "STyy:MM:dd:hh:mm:ss"
-    char c;
     easycommSetTime(&parsed->as.setTime);
-    return 8 == sscanf(buffer,
+    return 6 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
-                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
-#elif defined(ARDUINO_ARCH_STM32)
-                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
-#elif defined(ARDUINO_ARCH_ESP8266)
-                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
-#elif defined(ARDUINO_ARCH_ESP32)
-                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+                       "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+                       "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
 #else // assume native platform
-                       "%c%c%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
+                       "ST%hhu:%hhu:%hhu:%hhu:%hhu:%hhu",
 #endif
-                       &c, &c, &parsed->as.setTime.year, &parsed->as.setTime.month,
-                       &parsed->as.setTime.day, &parsed->as.setTime.hour,
-                       &parsed->as.setTime.minute, &parsed->as.setTime.second);
+                       &parsed->as.setTime.year, &parsed->as.setTime.month, &parsed->as.setTime.day,
+                       &parsed->as.setTime.hour, &parsed->as.setTime.minute, &parsed->as.setTime.second);
 }
 
 
@@ -592,9 +614,13 @@ bool readEasycomm3VelocityLeft(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityLeft(&parsed->as.velocityLeft);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
 #else // assume native platform
                        "%c%c%hu",
@@ -617,7 +643,7 @@ bool readEasycomm3VelocityRight(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityRight(&parsed->as.velocityRight);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
 #elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
@@ -642,7 +668,7 @@ bool readEasycomm3VelocityUp(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityUp(&parsed->as.velocityUp);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
 #elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
@@ -667,9 +693,13 @@ bool readEasycomm3VelocityDown(const char *buffer, EasycommData *parsed)
     char c;
     easycommVelocityDown(&parsed->as.velocityDown);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
 #else // assume native platform
                        "%c%c%hu",
@@ -692,9 +722,13 @@ bool readEasycomm3ReadConfig(const char *buffer, EasycommData *parsed)
     char c;
     easycommReadConfig(&parsed->as.readConfig);
     return 3 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu",
 #else // assume native platform
                        "%c%c%hu",
@@ -709,9 +743,13 @@ bool readEasycomm3WriteConfig(const char *buffer, EasycommData *parsed)
     char c;
     easycommWriteConfig(&parsed->as.writeConfig);
     return 4 == sscanf(buffer,
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ARDUINO_ARCH_AVR)
+#if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u,%s",
-#elif defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#elif defined(ARDUINO_ARCH_STM32)
+                       "%c%c%hu,%s",
+#elif defined(ARDUINO_ARCH_ESP8266)
+                       "%c%c%hu,%s",
+#elif defined(ARDUINO_ARCH_ESP32)
                        "%c%c%hu,%s",
 #else // assume native platform
                        "%c%c%hu,%s",
