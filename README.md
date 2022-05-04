@@ -1,7 +1,9 @@
 # [Hamlib](https://github.com/Hamlib/Hamlib) rotctl [Easycomm](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm) parser
 
 A PlatformmIO parser library for Hamlib rotator control commands.
-- Parses the text protocol as described by Easycomm standards I, II or III.
+- Parses the string-based protocol as described by Easycomm standards I, II or III.
+  - from string to C-struct (reception)
+  - from C-struct to string (response)
 - Programmed with less dependencies in C for C and C++ projects.
 - Requires float support for `scanf` and `printf`.
 
