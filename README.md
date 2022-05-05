@@ -1,14 +1,12 @@
-# [Hamlib](https://github.com/Hamlib/Hamlib) rotctl [Easycomm](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm) parser
+# [Hamlib](https://github.com/Hamlib/Hamlib) rotctl [Easycomm](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm) parser [![PlatformIO Registry](https://badges.registry.platformio.org/packages/rubienr/library/HamlibRotctlEasycommParser.svg)](https://registry.platformio.org/libraries/rubienr/HamlibRotctlEasycommParser)
 
-A PlatformmIO parser library for Hamlib rotator control commands.
+A PlatformIO parser library for Hamlib rotator control commands.
 - Parses the string-based protocol as described by Easycomm standards I, II or III.
   - from string to C-struct (reception)
   - from C-struct to string (response)
 - Programmed with less dependencies in C for C and C++ projects.
 - Requires float support for `scanf` and `printf`.
 - [Commands reference](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
-
-[![PlatformIO Registry](https://badges.registry.platformio.org/packages/rubienr/library/HamlibRotctlEasycommParser.svg)](https://registry.platformio.org/libraries/rubienr/HamlibRotctlEasycommParser)
 
 **Integrate in project [example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/platformio.ini)**
 ```ini
