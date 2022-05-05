@@ -6,10 +6,11 @@ A PlatformmIO parser library for Hamlib rotator control commands.
   - from C-struct to string (response)
 - Programmed with less dependencies in C for C and C++ projects.
 - Requires float support for `scanf` and `printf`.
+- [Commands reference](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
 
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/rubienr/library/HamlibRotctlEasycommParser.svg)](https://registry.platformio.org/libraries/rubienr/HamlibRotctlEasycommParser)
 
-[**Integrate in project:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/platformio.ini)
+**Integrate in project [example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/platformio.ini)**
 ```ini
 # platformio.ini
 [env:xxx]
@@ -20,13 +21,13 @@ lib_deps  = rubienr/HamlibRotctlEasycommParser
 # some platforms require folat support for scanf/printf to be explicitely enabled
 build_flags =
     # if platfrom is atmelavr:
-    # -Wl,-u,vfscanf,-lscanf_flt,-u,vfprintf,-lprintf_flt
-    # if platform is ststm32:
-    # -Wl,-u_scanf_float,-u_printf_float
+    -Wl,-u,vfscanf,-lscanf_flt,-u,vfprintf,-lprintf_flt
+    # if platform is [...]
 ```
 
-[**Parse a single command:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-command.cpp)
+**Parse a single command [example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-command.cpp)**
 ```c
+// main.c
 void setup() {}
 
 void loop()
@@ -53,8 +54,9 @@ void loop()
 }
 ```
 
-[**Parse with callback:**](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-with-callback.cpp)
+**Parse with callback [example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-with-callback.cpp)**
 ```c
+// main.c
 void customCallback(const EasycommData *command, void *custom_data)
 {
     *((bool *)custom_data) = true;
@@ -97,20 +99,8 @@ void loop()
 **Parse from stream:** [see full example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/example-parse-stream.cpp)
 
 **More examples:**
-
-* [native-integration-test-program.cpp](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/native-integration-test-program.cpp)
-* [unit tests](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/test/)
-
-**References:**
-
-* [Command reference](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
-* Easycomm protocol
-  * rotctl --list
-  * rotctl --model=204 --dump-caps
-* Hamlib
-  * [protocol description](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.txt)
-  * [protocol source](https://github.com/Hamlib/Hamlib/tree/master/rotators/easycomm/easycomm.c)
-
+[native-integration-test-program.cpp](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/src/native-integration-test-program.cpp), 
+[unit tests](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/test/)
 
 **Checks**
 
