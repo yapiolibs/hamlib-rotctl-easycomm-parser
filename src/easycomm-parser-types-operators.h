@@ -12,45 +12,49 @@ extern "C"
     bool easycommPayloadEquals(const EasycommPayload *a, const EasycommPayload *b);
     bool easycommSingleLineEquals(const EasycommSingleLine *a, const EasycommSingleLine *b);
     bool easycommFrequencyEquals(const EasycommFrequency *a, const EasycommFrequency *b);
-    bool easycommAzimuthEquals(const EasycommAzimuth *a, const EasycommAzimuth *b);
+    bool easycommSetAzimuthEquals(const EasycommSetAzimuth *a, const EasycommSetAzimuth *b);
     bool easycommGetAzimuthEquals(const EasycommGetAzimuth *a, const EasycommGetAzimuth *b);
-    bool easycommElevationEquals(const EasycommElevation *a, const EasycommElevation *b);
+    bool easycommSetElevationEquals(const EasycommSetElevation *a, const EasycommSetElevation *b);
     bool easycommGetElevationEquals(const EasycommGetElevation *a, const EasycommGetElevation *b);
-    bool easycommUplinkFrequencyEquals(const EasycommUplinkFrequency *a, const EasycommUplinkFrequency *b);
-    bool easycommDownlinkFrequencyEquals(const EasycommDownlinkFrequency *a, const EasycommDownlinkFrequency *b);
-    bool easycommUplinkModeEquals(const EasycommUplinkMode *a, const EasycommUplinkMode *b);
-    bool easycommDownlinkModeEquals(const EasycommDownlinkMode *a, const EasycommDownlinkMode *b);
-    bool easycommUplinkRadioNumberEquals(const EasycommUplinkRadioNumber *a, const EasycommUplinkRadioNumber *b);
-    bool easycommDownlinkRadioNumberEquals(const EasycommDownlinkRadioNumber *a,
-                                           const EasycommDownlinkRadioNumber *b);
-    bool easycommMoveLeftEquals(const EasycommMoveLeft *a, const EasycommMoveLeft *b);
-    bool easycommMoveRightEquals(const EasycommMoveRight *a, const EasycommMoveRight *b);
-    bool easycommMoveUpEquals(const EasycommMoveUp *a, const EasycommMoveUp *b);
-    bool easycommMoveDownEquals(const EasycommMoveDown *a, const EasycommMoveDown *b);
-    bool easycommStopAzimuthMoveEquals(const EasycommStopAzimuthMove *a, const EasycommStopAzimuthMove *b);
-    bool easycommStopElevationMoveEquals(const EasycommStopElevationMove *a, const EasycommStopElevationMove *b);
+    bool easycommSetUplinkFrequencyEquals(const EasycommSetUplinkFrequency *a,
+                                          const EasycommSetUplinkFrequency *b);
+    bool easycommSetDownlinkFrequencyEquals(const EasycommSetDownlinkFrequency *a,
+                                            const EasycommSetDownlinkFrequency *b);
+    bool easycommSetUplinkModeEquals(const EasycommSetUplinkMode *a, const EasycommSetUplinkMode *b);
+    bool easycommSetDownlinkModeEquals(const EasycommSetDownlinkMode *a, const EasycommSetDownlinkMode *b);
+    bool easycommSetUplinkRadioNumberEquals(const EasycommSetUplinkRadioNumber *a,
+                                            const EasycommSetUplinkRadioNumber *b);
+    bool easycommSetDownlinkRadioNumberEquals(const EasycommSetDownlinkRadioNumber *a,
+                                              const EasycommSetDownlinkRadioNumber *b);
+    bool easycommDoMoveLeftEquals(const EasycommDoMoveLeft *a, const EasycommDoMoveLeft *b);
+    bool easycommDoMoveRightEquals(const EasycommDoMoveRight *a, const EasycommDoMoveRight *b);
+    bool easycommDoMoveUpEquals(const EasycommDoMoveUp *a, const EasycommDoMoveUp *b);
+    bool easycommDoMoveDownEquals(const EasycommDoMoveDown *a, const EasycommDoMoveDown *b);
+    bool easycommDoStopAzimuthMoveEquals(const EasycommDoStopAzimuthMove *a, const EasycommDoStopAzimuthMove *b);
+    bool easycommDoStopElevationMoveEquals(const EasycommDoStopElevationMove *a,
+                                           const EasycommDoStopElevationMove *b);
     bool easycommAcquisitionOfSignalEquals(const EasycommAcquisitionOfSignal *a,
                                            const EasycommAcquisitionOfSignal *b);
     bool easycommLossOfSignalEquals(const EasycommLossOfSignal *a, const EasycommLossOfSignal *b);
-    bool easycommSetOutputEquals(const EasycommSetOutput *a, const EasycommSetOutput *b);
-    bool easycommReadInputEquals(const EasycommReadInput *a, const EasycommReadInput *b);
-    bool easycommReadAnalogueInputEquals(const EasycommReadAnalogueInput *a, const EasycommReadAnalogueInput *b);
+    bool easycommSetDigitalOutputEquals(const EasycommSetDigitalOutput *a, const EasycommSetDigitalOutput *b);
+    bool easycommGetDigitalInputEquals(const EasycommGetDigitalInput *a, const EasycommGetDigitalInput *b);
+    bool easycommGetAnalogueInputEquals(const EasycommGetAnalogueInput *a, const EasycommGetAnalogueInput *b);
     bool easycommSetTimeEquals(const EasycommSetTime *a, const EasycommSetTime *b);
-    bool easycommRequestVersionEquals(const EasycommRequestVersion *a, const EasycommRequestVersion *b);
-    bool easycommVelocityLeftEquals(const EasycommVelocityLeft *a, const EasycommVelocityLeft *b);
+    bool easycommGetVersionEquals(const EasycommGetVersion *a, const EasycommGetVersion *b);
+    bool easycommSetVelocityLeftEquals(const EasycommSetVelocityLeft *a, const EasycommSetVelocityLeft *b);
     bool easycommGetVelocityLeftEquals(const EasycommGetVelocityLeft *a, const EasycommGetVelocityLeft *b);
-    bool easycommVelocityRightEquals(const EasycommVelocityRight *a, const EasycommVelocityRight *b);
+    bool easycommSetVelocityRightEquals(const EasycommSetVelocityRight *a, const EasycommSetVelocityRight *b);
     bool easycommGetVelocityRightEquals(const EasycommGetVelocityRight *a, const EasycommGetVelocityRight *b);
-    bool easycommVelocityUpEquals(const EasycommVelocityUp *a, const EasycommVelocityUp *b);
+    bool easycommSetVelocityUpEquals(const EasycommSetVelocityUp *a, const EasycommSetVelocityUp *b);
     bool easycommGetVelocityUpEquals(const EasycommGetVelocityUp *a, const EasycommGetVelocityUp *b);
-    bool easycommVelocityDownEquals(const EasycommVelocityDown *a, const EasycommVelocityDown *b);
+    bool easycommSetVelocityDownEquals(const EasycommSetVelocityDown *a, const EasycommSetVelocityDown *b);
     bool easycommGetVelocityDownEquals(const EasycommGetVelocityDown *a, const EasycommGetVelocityDown *b);
-    bool easycommReadConfigEquals(const EasycommReadConfig *a, const EasycommReadConfig *b);
-    bool easycommWriteConfigEquals(const EasycommWriteConfig *a, const EasycommWriteConfig *b);
+    bool easycommGetConfigRegisterEquals(const EasycommGetConfigRegister *a, const EasycommGetConfigRegister *b);
+    bool easycommSetConfigRegisterEquals(const EasycommSetConfigRegister *a, const EasycommSetConfigRegister *b);
     bool easycommGetStatusRegisterEquals(const EasycommGetStatusRegister *a, const EasycommGetStatusRegister *b);
     bool easycommGetErrorRegisterEquals(const EasycommGetErrorRegister *a, const EasycommGetErrorRegister *b);
-    bool easycommResetEquals(const EasycommReset *a, const EasycommReset *b);
-    bool easycommParkEquals(const EasycommPark *a, const EasycommPark *b);
+    bool easycommDoResetEquals(const EasycommDoReset *a, const EasycommDoReset *b);
+    bool easycommDoParkEquals(const EasycommDoPark *a, const EasycommDoPark *b);
 
     // ----- copy (equivalent to =, shallow copy)
 
@@ -58,8 +62,8 @@ extern "C"
     void easycommPayloadCopy(const EasycommPayload *from, EasycommPayload *to);
     void easycommSingleLineCopy(const EasycommSingleLine *from, EasycommSingleLine *to);
     void easycommFrequencyCopy(const EasycommFrequency *from, EasycommFrequency *to);
-    void easycommAzimuthCopy(const EasycommAzimuth *from, EasycommAzimuth *to);
-    void easycommElevationCopy(const EasycommElevation *from, EasycommElevation *to);
+    void easycommSetAzimuthCopy(const EasycommSetAzimuth *from, EasycommSetAzimuth *to);
+    void easycommSetElevationCopy(const EasycommSetElevation *from, EasycommSetElevation *to);
 
 
 #ifdef __cplusplus

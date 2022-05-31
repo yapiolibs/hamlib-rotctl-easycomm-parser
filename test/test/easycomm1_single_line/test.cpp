@@ -22,7 +22,7 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_single_line,
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_reset,
                                       EasycommResetLength,
                                       EasycommParserStandard1,
-                                      easycommReset,
+                                      easycommDoReset,
                                       EasycommIdReset,
                                       reset)
 
@@ -30,7 +30,7 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_reset,
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_park,
                                       EasycommParkLength,
                                       EasycommParserStandard1,
-                                      easycommPark,
+                                      easycommDoPark,
                                       EasycommIdPark,
                                       park)
 
@@ -226,7 +226,7 @@ void test_parse_reset()
     const char *valid_data = "RESET";
     const char *expected_representation = "RESET";
     EasycommData expected_result;
-    easycommReset(&expected_result.as.reset);
+    easycommDoReset(&expected_result.as.doReset);
     const bool expect_parser_success = true;
 
     invariant_test_parse_reset(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -238,7 +238,7 @@ void test_parse_park()
     const char *valid_data = "PARK";
     const char *expected_representation = "PARK";
     EasycommData expected_result;
-    easycommPark(&expected_result.as.park);
+    easycommPark(&expected_result.as.doPark);
     const bool expect_parser_success = true;
 
     invariant_test_parse_park(valid_data, &expected_result, expected_representation, expect_parser_success);

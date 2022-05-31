@@ -90,19 +90,19 @@ void easycommResponseUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioN
 }
 
 
-void easycommResponseReadInputSprintf(const EasycommResponseReadInput *from, char *to)
+void easycommResponseDigitalInputSprintf(const EasycommResponseDigitalInput *from, char *to)
 {
     sprintf(to, "IP%u,%u", from->number, from->value);
 }
 
 
-void easycommResponseReadAnalogueInputSprintf(const EasycommResponseReadAnalogueInput *from, char *to)
+void easycommResponseAnalogueInputSprintf(const EasycommResponseAnalogueInput *from, char *to)
 {
     sprintf(to, "AN%u,%u", from->number, from->value);
 }
 
 
-void easycommResponseRequestVersionSprintf(const EasycommResponseRequestVersion *from, char *to)
+void easycommResponseVersionSprintf(const EasycommResponseVersion *from, char *to)
 {
     sprintf(to, "VE%u.%u", from->major, from->minor);
 }
@@ -137,19 +137,19 @@ void easycommResponseVelocityDownSprintf(const EasycommResponseVelocityDown *fro
 }
 
 
-void easycommResponseReadConfigSprintf(const EasycommResponseReadConfig *from, char *to)
+void easycommResponseConfigRegisterSprintf(const EasycommResponseConfigRegister *from, char *to)
 {
     sprintf(to, "CR%u,%s", from->registerNumber, from->value.as.str);
 }
 
 
-void easycommResponseGetStatusRegisterSprintf(const EasycommResponseGetStatusRegister *from, char *to)
+void easycommResponseStatusRegisterSprintf(const EasycommResponseStatusRegister *from, char *to)
 {
     sprintf(to, "GS%u", from->status);
 }
 
 
-void easycommResponseGetErrorRegisterSprintf(const EasycommResponseGetErrorRegister *from, char *to)
+void easycommResponseErrorRegisterSprintf(const EasycommResponseErrorRegister *from, char *to)
 {
     sprintf(to, "GE%u", from->status);
 }

@@ -57,21 +57,21 @@ void easycommResponseUplinkRadioNumber(EasycommResponseUplinkRadioNumber *d)
 }
 
 
-void easycommResponseReadInput(EasycommResponseReadInput *d)
+void easycommResponseDigitalInput(EasycommResponseDigitalInput *d)
 {
-    memset(d, 0, sizeof(EasycommResponseReadInput));
+    memset(d, 0, sizeof(EasycommResponseDigitalInput));
 }
 
 
-void easycommResponseReadAnalogueInput(EasycommResponseReadAnalogueInput *d)
+void easycommResponseAnalogueInput(EasycommResponseAnalogueInput *d)
 {
-    memset(d, 0, sizeof(EasycommResponseReadAnalogueInput));
+    memset(d, 0, sizeof(EasycommResponseAnalogueInput));
 }
 
 
-void easycommResponseRequestVersion(EasycommResponseRequestVersion *d)
+void easycommResponseVersion(EasycommResponseVersion *d)
 {
-    memset(d, 0, sizeof(EasycommResponseRequestVersion));
+    memset(d, 0, sizeof(EasycommResponseVersion));
 }
 
 
@@ -105,19 +105,19 @@ void easycommResponseVelocityDown(EasycommResponseVelocityDown *d)
 }
 
 
-void easycommResponseReadConfig(EasycommResponseReadConfig *d)
+void easycommResponseConfigRegister(EasycommResponseConfigRegister *d)
 {
-    memset(d, 0, sizeof(EasycommResponseReadConfig));
+    memset(d, 0, sizeof(EasycommResponseConfigRegister));
 }
 
 
-void easycommResponseGetStatusRegister(EasycommResponseGetStatusRegister *d)
+void easycommResponseStatusRegister(EasycommResponseStatusRegister *d)
 {
-    memset(d, 0, sizeof(EasycommResponseGetStatusRegister));
+    memset(d, 0, sizeof(EasycommResponseStatusRegister));
 }
 
 
-void easycommResponseGetErrorRegister(EasycommResponseGetErrorRegister *d)
+void easycommResponseErrorRegister(EasycommResponseErrorRegister *d)
 {
-    memset(d, 0, sizeof(EasycommResponseGetErrorRegister));
+    memset(d, 0, sizeof(EasycommResponseErrorRegister));
 }

@@ -139,12 +139,12 @@ void test_response_uplink_radioNumber_01()
 void test_response_read_input_01()
 {
     const char *expected_response = "IP128,1";
-    EasycommResponseReadInput response;
-    easycommResponseReadInput(&response);
+    EasycommResponseDigitalInput response;
+    easycommResponseDigitalInput(&response);
     response.number = 128;
     response.value = true;
     char response_str[32];
-    easycommResponseReadInputSprintf(&response, response_str);
+    easycommResponseDigitalInputSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
@@ -152,12 +152,12 @@ void test_response_read_input_01()
 void test_response_read_analogue_input_01()
 {
     const char *expected_response = "AN2,256";
-    EasycommResponseReadAnalogueInput response;
-    easycommResponseReadAnalogueInput(&response);
+    EasycommResponseAnalogueInput response;
+    easycommResponseAnalogueInput(&response);
     response.number = 2;
     response.value = 256;
     char response_str[32];
-    easycommResponseReadAnalogueInputSprintf(&response, response_str);
+    easycommResponseAnalogueInputSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
@@ -165,12 +165,12 @@ void test_response_read_analogue_input_01()
 void test_response_request_version_01()
 {
     const char *expected_response = "VE0.16";
-    EasycommResponseRequestVersion response;
-    easycommResponseRequestVersion(&response);
+    EasycommResponseVersion response;
+    easycommResponseVersion(&response);
     response.minor = 16;
     response.major = 0;
     char response_str[32];
-    easycommResponseRequestVersionSprintf(&response, response_str);
+    easycommResponseVersionSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
@@ -238,12 +238,12 @@ void test_response_velocity_down_01()
 void test_response_read_config_01()
 {
     const char *expected_response = "CR1,#+!$abc";
-    EasycommResponseReadConfig response;
-    easycommResponseReadConfig(&response);
+    EasycommResponseConfigRegister response;
+    easycommResponseConfigRegister(&response);
     response.registerNumber = 1;
     memcpy(response.value.as.str, "#+!$abc", 8);
     char response_str[32];
-    easycommResponseReadConfigSprintf(&response, response_str);
+    easycommResponseConfigRegisterSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
@@ -251,11 +251,11 @@ void test_response_read_config_01()
 void test_response_get_status_register_01()
 {
     const char *expected_response = "GS2";
-    EasycommResponseGetStatusRegister response;
-    easycommResponseGetStatusRegister(&response);
+    EasycommResponseStatusRegister response;
+    easycommResponseStatusRegister(&response);
     response.status = EasycommStatusMoving;
     char response_str[32];
-    easycommResponseGetStatusRegisterSprintf(&response, response_str);
+    easycommResponseStatusRegisterSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
@@ -263,11 +263,11 @@ void test_response_get_status_register_01()
 void test_response_get_error_register_01()
 {
     const char *expected_response = "GE2";
-    EasycommResponseGetErrorRegister response;
-    easycommResponseGetErrorRegister(&response);
+    EasycommResponseErrorRegister response;
+    easycommResponseErrorRegister(&response);
     response.status = EasycommErrorJam;
     char response_str[32];
-    easycommResponseGetErrorRegisterSprintf(&response, response_str);
+    easycommResponseErrorRegisterSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 

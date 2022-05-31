@@ -15,17 +15,17 @@ extern "C"
     void easycommResponseDownlinkMode(EasycommResponseDownlinkMode *d);
     void easycommResponseDownlinkRadioNumber(EasycommResponseDownlinkRadioNumber *d);
     void easycommResponseUplinkRadioNumber(EasycommResponseUplinkRadioNumber *d);
-    void easycommResponseReadInput(EasycommResponseReadInput *d);
-    void easycommResponseReadAnalogueInput(EasycommResponseReadAnalogueInput *d);
-    void easycommResponseRequestVersion(EasycommResponseRequestVersion *d);
+    void easycommResponseDigitalInput(EasycommResponseDigitalInput *d);
+    void easycommResponseAnalogueInput(EasycommResponseAnalogueInput *d);
+    void easycommResponseVersion(EasycommResponseVersion *d);
     void easycommResponseAlarm(EasycommResponseAlarm *d);
     void easycommResponseVelocityLeft(EasycommResponseVelocityLeft *d);
     void easycommResponseVelocityRight(EasycommResponseVelocityRight *d);
     void easycommResponseVelocityUp(EasycommResponseVelocityUp *d);
     void easycommResponseVelocityDown(EasycommResponseVelocityDown *d);
-    void easycommResponseReadConfig(EasycommResponseReadConfig *d);
-    void easycommResponseGetStatusRegister(EasycommResponseGetStatusRegister *d);
-    void easycommResponseGetErrorRegister(EasycommResponseGetErrorRegister *d);
+    void easycommResponseConfigRegister(EasycommResponseConfigRegister *d);
+    void easycommResponseStatusRegister(EasycommResponseStatusRegister *d);
+    void easycommResponseErrorRegister(EasycommResponseErrorRegister *d);
 
 #ifdef __cplusplus
 }

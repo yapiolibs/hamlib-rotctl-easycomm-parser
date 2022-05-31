@@ -24,7 +24,7 @@ void easycommSingleLineSprintf(const EasycommSingleLine *from, char *to)
 }
 
 
-void easycommAzimuthSprintf(const EasycommAzimuth *from, char *to)
+void easycommSetAzimuthSprintf(const EasycommSetAzimuth *from, char *to)
 {
     sprintf(to, "AZ%.1f", from->azimuth);
 }
@@ -33,7 +33,7 @@ void easycommAzimuthSprintf(const EasycommAzimuth *from, char *to)
 void easycommGetAzimuthSprintf(const EasycommGetAzimuth *from, char *to) { sprintf(to, "AZ"); }
 
 
-void easycommElevationSprintf(const EasycommElevation *from, char *to)
+void easycommSetElevationSprintf(const EasycommSetElevation *from, char *to)
 {
     sprintf(to, "EL%.1f", from->elevation);
 }
@@ -42,7 +42,7 @@ void easycommElevationSprintf(const EasycommElevation *from, char *to)
 void easycommGetElevationSprintf(const EasycommGetElevation *from, char *to) { sprintf(to, "EL"); }
 
 
-void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *to)
+void easycommSetUplinkFrequencySprintf(const EasycommSetUplinkFrequency *from, char *to)
 {
 #if defined(ARDUINO_ARCH_AVR)
     sprintf(to, "UP%lu", from->frequency.as.uint32);
@@ -58,7 +58,7 @@ void easycommUplinkFrequencySprintf(const EasycommUplinkFrequency *from, char *t
 }
 
 
-void easycommDownlinkFrequencySprintf(const EasycommDownlinkFrequency *from, char *to)
+void easycommSetDownlinkFrequencySprintf(const EasycommSetDownlinkFrequency *from, char *to)
 {
 #if defined(ARDUINO_ARCH_AVR)
     sprintf(to, "DN%lu", from->frequency.as.uint32);
@@ -74,49 +74,49 @@ void easycommDownlinkFrequencySprintf(const EasycommDownlinkFrequency *from, cha
 }
 
 
-void easycommUplinkModeSprintf(const EasycommUplinkMode *from, char *to)
+void easycommSetUplinkModeSprintf(const EasycommSetUplinkMode *from, char *to)
 {
     sprintf(to, "UM%c%c%c", from->mode[0], from->mode[1], from->mode[2]);
 }
 
 
-void easycommDownlinkModeSprintf(const EasycommDownlinkMode *from, char *to)
+void easycommSetDownlinkModeSprintf(const EasycommSetDownlinkMode *from, char *to)
 {
     sprintf(to, "DM%c%c%c", from->mode[0], from->mode[1], from->mode[2]);
 }
 
 
-void easycommUplinkRadioNumberSprintf(const EasycommUplinkRadioNumber *from, char *to)
+void easycommSetUplinkRadioNumberSprintf(const EasycommSetUplinkRadioNumber *from, char *to)
 {
     sprintf(to, "UR%u", from->number);
 }
 
 
-void easycommDownlinkRadioNumberSprintf(const EasycommDownlinkRadioNumber *from, char *to)
+void easycommSetDownlinkRadioNumberSprintf(const EasycommSetDownlinkRadioNumber *from, char *to)
 {
     sprintf(to, "DR%u", from->number);
 }
 
 
-void easycommMoveLeftSprintf(const EasycommMoveLeft *from, char *to) { sprintf(to, "ML"); }
+void easycommDoMoveLeftSprintf(const EasycommDoMoveLeft *from, char *to) { sprintf(to, "ML"); }
 
 
-void easycommMoveRightSprintf(const EasycommMoveRight *from, char *to) { sprintf(to, "MR"); }
+void easycommDoMoveRightSprintf(const EasycommDoMoveRight *from, char *to) { sprintf(to, "MR"); }
 
 
-void easycommMoveUpSprintf(const EasycommMoveUp *from, char *to) { sprintf(to, "MU"); }
+void easycommDoMoveUpSprintf(const EasycommDoMoveUp *from, char *to) { sprintf(to, "MU"); }
 
 
-void easycommMoveDownSprintf(const EasycommMoveDown *from, char *to) { sprintf(to, "MD"); }
+void easycommDoMoveDownSprintf(const EasycommDoMoveDown *from, char *to) { sprintf(to, "MD"); }
 
 
-void easycommStopAzimuthMoveSprintf(const EasycommStopAzimuthMove *from, char *to)
+void easycommDoStopAzimuthMoveSprintf(const EasycommDoStopAzimuthMove *from, char *to)
 {
     sprintf(to, "SA");
 }
 
 
-void easycommStopElevationMoveSprintf(const EasycommStopElevationMove *from, char *to)
+void easycommDoStopElevationMoveSprintf(const EasycommDoStopElevationMove *from, char *to)
 {
     sprintf(to, "SE");
 }
@@ -131,19 +131,19 @@ void easycommAcquisitionOfSignalSprintf(const EasycommAcquisitionOfSignal *from,
 void easycommLossOfSignalSprintf(const EasycommLossOfSignal *from, char *to) { sprintf(to, "LO"); }
 
 
-void easycommSetOutputSprintf(const EasycommSetOutput *from, char *to)
+void easycommSetDigitalOutputSprintf(const EasycommSetDigitalOutput *from, char *to)
 {
     sprintf(to, "OP%u,%u", from->number, from->value);
 }
 
 
-void easycommReadInputSprintf(const EasycommReadInput *from, char *to)
+void easycommGetDigitalInputSprintf(const EasycommGetDigitalInput *from, char *to)
 {
     sprintf(to, "IP%u", from->number);
 }
 
 
-void easycommReadAnalogueInputSprintf(const EasycommReadAnalogueInput *from, char *to)
+void easycommGetAnalogueInputSprintf(const EasycommGetAnalogueInput *from, char *to)
 {
     sprintf(to, "AN%u", from->number);
 }
@@ -156,13 +156,10 @@ void easycommSetTimeSprintf(const EasycommSetTime *from, char *to)
 }
 
 
-void easycommRequestVersionSprintf(const EasycommRequestVersion *from, char *to)
-{
-    sprintf(to, "VE");
-}
+void easycommGetVersionSprintf(const EasycommGetVersion *from, char *to) { sprintf(to, "VE"); }
 
 
-void easycommVelocityLeftSprintf(const EasycommVelocityLeft *from, char *to)
+void easycommSetVelocityLeftSprintf(const EasycommSetVelocityLeft *from, char *to)
 {
     sprintf(to, "VL%u", from->milliDegSecond);
 }
@@ -174,7 +171,7 @@ void easycommGetVelocityLeftSprintf(const EasycommGetVelocityLeft *from, char *t
 }
 
 
-void easycommVelocityRightSprintf(const EasycommVelocityRight *from, char *to)
+void easycommSetVelocityRightSprintf(const EasycommSetVelocityRight *from, char *to)
 {
     sprintf(to, "VR%u", from->milliDegSecond);
 }
@@ -186,7 +183,7 @@ void easycommGetVelocityRightSprintf(const EasycommGetVelocityRight *from, char 
 }
 
 
-void easycommVelocityUpSprintf(const EasycommVelocityUp *from, char *to)
+void easycommSetVelocityUpSprintf(const EasycommSetVelocityUp *from, char *to)
 {
     sprintf(to, "VU%u", from->milliDegSecond);
 }
@@ -198,7 +195,7 @@ void easycommGetVelocityUpSprintf(const EasycommGetVelocityUp *from, char *to)
 }
 
 
-void easycommVelocityDownSprintf(const EasycommVelocityDown *from, char *to)
+void easycommSetVelocityDownSprintf(const EasycommSetVelocityDown *from, char *to)
 {
     sprintf(to, "VD%u", from->milliDegSecond);
 }
@@ -210,13 +207,13 @@ void easycommGetVelocityDownSprintf(const EasycommGetVelocityDown *from, char *t
 }
 
 
-void easycommReadConfigSprintf(const EasycommReadConfig *from, char *to)
+void easycommGetConfigRegisterSprintf(const EasycommGetConfigRegister *from, char *to)
 {
     sprintf(to, "CR%u", from->registerNumber);
 }
 
 
-void easycommWriteConfigSprintf(const EasycommWriteConfig *from, char *to)
+void easycommSetConfigRegisterSprintf(const EasycommSetConfigRegister *from, char *to)
 {
     sprintf(to, "CW%u,%s", from->registerNumber, from->value.as.str);
 }
@@ -234,10 +231,10 @@ void easycommGetErrorRegisterSprintf(const EasycommGetErrorRegister *from, char 
 }
 
 
-void easycommResetSprintf(const EasycommReset *from, char *to) { sprintf(to, "RESET"); }
+void easycommDoResetSprintf(const EasycommDoReset *from, char *to) { sprintf(to, "RESET"); }
 
 
-void easycommParkSprintf(const EasycommPark *from, char *to) { sprintf(to, "PARK"); }
+void easycommDoParkSprintf(const EasycommDoPark *from, char *to) { sprintf(to, "PARK"); }
 
 
 void easycommDataSprintf(const EasycommData *from, char *to)
@@ -245,42 +242,42 @@ void easycommDataSprintf(const EasycommData *from, char *to)
     // clang-format off
         if      ( from->commandId == EasycommIdInvalid) {easycommInvalidSprintf(from, to); }
         else if ( from->commandId == EasycommIdSingleLine) {easycommSingleLineSprintf(&from->as.singleLine, to); }
-        else if ( from->commandId == EasycommIdAzimuth) {easycommAzimuthSprintf(&from->as.azimuth, to); }
+        else if ( from->commandId == EasycommIdAzimuth) {easycommSetAzimuthSprintf(&from->as.setAzimuth, to); }
         else if ( from->commandId == EasycommIdGetAzimuth) {easycommGetAzimuthSprintf(&from->as.getAzimuth, to); }
-        else if ( from->commandId == EasycommIdElevation) {easycommElevationSprintf(&from->as.elevation, to); }
+        else if ( from->commandId == EasycommIdElevation) {easycommSetElevationSprintf(&from->as.setElevation, to); }
         else if ( from->commandId == EasycommIdGetElevation) {easycommGetElevationSprintf(&from->as.getElevation, to); }
-        else if ( from->commandId == EasycommIdUplinkFrequency) {easycommUplinkFrequencySprintf(&from->as.uplinkFrequency, to); }
-        else if ( from->commandId == EasycommIdDownlinkFrequency) {easycommDownlinkFrequencySprintf(&from->as.downlinkFrequency, to); }
-        else if ( from->commandId == EasycommIdUplinkMode) {easycommUplinkModeSprintf(&from->as.uplinkMode, to); }
-        else if ( from->commandId == EasycommIdDownlinkMode) {easycommDownlinkModeSprintf(&from->as.downlinkMode, to); }
-        else if ( from->commandId == EasycommIdUplinkRadioNumber) {easycommUplinkRadioNumberSprintf(&from->as.uplinkRadio, to); }
-        else if ( from->commandId == EasycommIdDownlinkRadioNumber) {easycommDownlinkRadioNumberSprintf(&from->as.downlinkRadio, to); }
-        else if ( from->commandId == EasycommIdMoveLeft) {easycommMoveLeftSprintf(&from->as.moveLeft, to); }
-        else if ( from->commandId == EasycommIdMoveRight) {easycommMoveRightSprintf(&from->as.moveRight, to); }
-        else if ( from->commandId == EasycommIdMoveUp) {easycommMoveUpSprintf(&from->as.moveUp, to); }
-        else if ( from->commandId == EasycommIdMoveDown) {easycommMoveDownSprintf(&from->as.moveDown, to); }
-        else if ( from->commandId == EasycommIdStopAzimuthMove) {easycommStopAzimuthMoveSprintf(&from->as.stopAzimuthMove, to); }
-        else if ( from->commandId == EasycommIdStopElevationMove) {easycommStopElevationMoveSprintf(&from->as.stopElevationMove, to); }
+        else if ( from->commandId == EasycommIdUplinkFrequency) {easycommSetUplinkFrequencySprintf(&from->as.setUplinkFrequency, to); }
+        else if ( from->commandId == EasycommIdDownlinkFrequency) {easycommSetDownlinkFrequencySprintf(&from->as.setDownlinkFrequency, to); }
+        else if ( from->commandId == EasycommIdUplinkMode) {easycommSetUplinkModeSprintf(&from->as.setUplinkMode, to); }
+        else if ( from->commandId == EasycommIdDownlinkMode) {easycommSetDownlinkModeSprintf(&from->as.setDownlinkMode, to); }
+        else if ( from->commandId == EasycommIdUplinkRadioNumber) {easycommSetUplinkRadioNumberSprintf(&from->as.setUplinkRadio, to); }
+        else if ( from->commandId == EasycommIdDownlinkRadioNumber) {easycommSetDownlinkRadioNumberSprintf(&from->as.setDownlinkRadio, to); }
+        else if ( from->commandId == EasycommIdMoveLeft) {easycommDoMoveLeftSprintf(&from->as.doMoveLeft, to); }
+        else if ( from->commandId == EasycommIdMoveRight) {easycommDoMoveRightSprintf(&from->as.doMoveRight, to); }
+        else if ( from->commandId == EasycommIdMoveUp) {easycommDoMoveUpSprintf(&from->as.doMoveUp, to); }
+        else if ( from->commandId == EasycommIdMoveDown) {easycommDoMoveDownSprintf(&from->as.doMoveDown, to); }
+        else if ( from->commandId == EasycommIdStopAzimuthMove) {easycommDoStopAzimuthMoveSprintf(&from->as.doStopAzimuthMove, to); }
+        else if ( from->commandId == EasycommIdStopElevationMove) {easycommDoStopElevationMoveSprintf(&from->as.doStopElevationMove, to); }
         else if ( from->commandId == EasycommIdAcquisitionOfSignal) {easycommAcquisitionOfSignalSprintf(&from->as.acquisitionOfSignal, to); }
         else if ( from->commandId == EasycommIdLossOfSignal) {easycommLossOfSignalSprintf(&from->as.lossOfSignal, to); }
-        else if ( from->commandId == EasycommIdSetOutput) {easycommSetOutputSprintf(&from->as.setOutput, to); }
-        else if ( from->commandId == EasycommIdReadInput) {easycommReadInputSprintf(&from->as.readInput, to); }
-        else if ( from->commandId == EasycommIdReadAnalogueInput) {easycommReadAnalogueInputSprintf(&from->as.readAnalogueInput, to); }
+        else if ( from->commandId == EasycommIdSetOutput) {easycommSetDigitalOutputSprintf(&from->as.setDigitalOutput, to); }
+        else if ( from->commandId == EasycommIdReadInput) {easycommGetDigitalInputSprintf(&from->as.getDigitalInput, to); }
+        else if ( from->commandId == EasycommIdReadAnalogueInput) {easycommGetAnalogueInputSprintf(&from->as.getAnalogueInput, to); }
         else if ( from->commandId == EasycommIdSetTime) {easycommSetTimeSprintf(&from->as.setTime, to); }
-        else if ( from->commandId == EasycommIdRequestVersion) {easycommRequestVersionSprintf(&from->as.requestVersion, to); }
-        else if ( from->commandId == EasycommIdVelocityLeft) {easycommVelocityLeftSprintf(&from->as.velocityLeft, to); }
+        else if ( from->commandId == EasycommIdRequestVersion) {easycommGetVersionSprintf(&from->as.getVersion, to); }
+        else if ( from->commandId == EasycommIdVelocityLeft) {easycommSetVelocityLeftSprintf(&from->as.setVelocityLeft, to); }
         else if ( from->commandId == EasycommIdGetVelocityLeft) {easycommGetVelocityLeftSprintf(&from->as.getVelocityLeft, to); }
-        else if ( from->commandId == EasycommIdVelocityRight) {easycommVelocityRightSprintf(&from->as.velocityRight, to); }
+        else if ( from->commandId == EasycommIdVelocityRight) {easycommSetVelocityRightSprintf(&from->as.setVelocityRight, to); }
         else if ( from->commandId == EasycommIdGetVelocityRight) {easycommGetVelocityRightSprintf(&from->as.getVelocityRight, to); }
-        else if ( from->commandId == EasycommIdVelocityUp) {easycommVelocityUpSprintf(&from->as.velocityUp, to); }
+        else if ( from->commandId == EasycommIdVelocityUp) {easycommSetVelocityUpSprintf(&from->as.setVelocityUp, to); }
         else if ( from->commandId == EasycommIdGetVelocityUp) {easycommGetVelocityUpSprintf(&from->as.getVelocityUp, to); }
-        else if ( from->commandId == EasycommIdVelocityDown) {easycommVelocityDownSprintf(&from->as.velocityDown, to); }
+        else if ( from->commandId == EasycommIdVelocityDown) {easycommSetVelocityDownSprintf(&from->as.setVelocityDown, to); }
         else if ( from->commandId == EasycommIdGetVelocityDown) {easycommGetVelocityDownSprintf(&from->as.getVelocityDown, to); }
-        else if ( from->commandId == EasycommIdReadConfig) {easycommReadConfigSprintf(&from->as.readConfig, to); }
-        else if ( from->commandId == EasycommIdWriteConfig) {easycommWriteConfigSprintf(&from->as.writeConfig, to); }
+        else if ( from->commandId == EasycommIdReadConfig) {easycommGetConfigRegisterSprintf(&from->as.getConfigRegister, to); }
+        else if ( from->commandId == EasycommIdWriteConfig) {easycommSetConfigRegisterSprintf(&from->as.setConfigRegister, to); }
         else if ( from->commandId == EasycommIdGetStatusRegister) {easycommGetStatusRegisterSprintf(&from->as.getStatusRegister, to); }
         else if ( from->commandId == EasycommIdGetErrorRegister) {easycommGetErrorRegisterSprintf(&from->as.getErrorRegister, to); }
-        else if ( from->commandId == EasycommIdReset) {easycommResetSprintf(&from->as.reset, to); }
-        else if ( from->commandId == EasycommIdPark) {easycommParkSprintf(&from->as.park, to); }
+        else if ( from->commandId == EasycommIdReset) {easycommDoResetSprintf(&from->as.doReset, to); }
+        else if ( from->commandId == EasycommIdPark) {easycommDoParkSprintf(&from->as.doPark, to); }
     // clang-format on
 }
