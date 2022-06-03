@@ -11,54 +11,54 @@
 #include <unity.h>
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_left,
-                                      EasycommMoveLeftLength,
+                                      EasycommDoMoveLeftLength,
                                       EasycommParserStandard2,
                                       easycommDoMoveLeft,
-                                      EasycommIdMoveLeft,
+                                      EasycommIdDoMoveLeft,
                                       doMoveLeft)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_right,
-                                      EasycommMoveRightLength,
+                                      EasycommDoMoveRightLength,
                                       EasycommParserStandard2,
                                       easycommDoMoveRight,
-                                      EasycommIdMoveRight,
+                                      EasycommIdDoMoveRight,
                                       doMoveRight)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_up,
-                                      EasycommMoveUpLength,
+                                      EasycommDoMoveUpLength,
                                       EasycommParserStandard2,
                                       easycommDoMoveUp,
-                                      EasycommIdMoveUp,
+                                      EasycommIdDoMoveUp,
                                       doMoveUp)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_down,
-                                      EasycommMoveDownLength,
+                                      EasycommDoMoveDownLength,
                                       EasycommParserStandard2,
                                       easycommDoMoveDown,
-                                      EasycommIdMoveDown,
+                                      EasycommIdDoMoveDown,
                                       doMoveDown)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_stop_azimuth_move,
-                                      EasycommStopAzimuthMoveLength,
+                                      EasycommDoStopAzimuthMoveLength,
                                       EasycommParserStandard2,
                                       easycommDoStopAzimuthMove,
-                                      EasycommIdStopAzimuthMove,
+                                      EasycommIdDoStopAzimuthMove,
                                       doStopAzimuthMove)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_stop_elevation_move,
-                                      EasycommStopElevationMoveLength,
+                                      EasycommDoStopElevationMoveLength,
                                       EasycommParserStandard2,
                                       easycommDoStopElevationMove,
-                                      EasycommIdStopElevationMove,
+                                      EasycommIdDoStopElevationMove,
                                       doStopElevationMove)
 
 
-void test_parse_move_left()
+void test_parse_do_move_left()
 {
     const char *valid_data = "ML";
     const char *expected_representation = "ML";
@@ -70,7 +70,7 @@ void test_parse_move_left()
 }
 
 
-void test_parse_move_right()
+void test_parse_do_move_right()
 {
     const char *valid_data = "MR";
     const char *expected_representation = "MR";
@@ -82,7 +82,7 @@ void test_parse_move_right()
 }
 
 
-void test_parse_move_up()
+void test_parse_do_move_up()
 {
     const char *valid_data = "MU";
     const char *expected_representation = "MU";
@@ -94,7 +94,7 @@ void test_parse_move_up()
 }
 
 
-void test_parse_move_down()
+void test_parse_do_move_down()
 {
     const char *valid_data = "MD";
     const char *expected_representation = "MD";
@@ -106,7 +106,7 @@ void test_parse_move_down()
 }
 
 
-void test_parse_stop_azimuth_move()
+void test_parse_do_stop_azimuth_move()
 {
     const char *valid_data = "SA";
     const char *expected_representation = "SA";
@@ -119,7 +119,7 @@ void test_parse_stop_azimuth_move()
 }
 
 
-void test_parse_stop_elevation_move()
+void test_parse_do_stop_elevation_move()
 {
     const char *valid_data = "SE";
     const char *expected_representation = "SE";
@@ -134,12 +134,12 @@ void test_parse_stop_elevation_move()
 int tests()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_parse_move_left);
-    RUN_TEST(test_parse_move_right);
-    RUN_TEST(test_parse_move_up);
-    RUN_TEST(test_parse_move_down);
-    RUN_TEST(test_parse_stop_azimuth_move);
-    RUN_TEST(test_parse_stop_elevation_move);
+    RUN_TEST(test_parse_do_move_left);
+    RUN_TEST(test_parse_do_move_right);
+    RUN_TEST(test_parse_do_move_up);
+    RUN_TEST(test_parse_do_move_down);
+    RUN_TEST(test_parse_do_stop_azimuth_move);
+    RUN_TEST(test_parse_do_stop_elevation_move);
     return UNITY_END();
 }
 

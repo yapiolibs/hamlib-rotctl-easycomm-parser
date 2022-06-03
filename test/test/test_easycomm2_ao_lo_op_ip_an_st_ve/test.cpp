@@ -27,26 +27,26 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_loss_of_signal,
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_set_output,
-                                      EasycommSetOutputMaxLength,
+                                      EasycommSetDigitalOutputMaxLength,
                                       EasycommParserStandard2,
                                       easycommSetDigitalOutput,
-                                      EasycommIdSetOutput,
+                                      EasycommIdSetDigitalOutput,
                                       setDigitalOutput)
 
 
-INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_input,
-                                      EasycommReadInputMaxLength,
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_digital_input,
+                                      EasycommGetDigitalInputMaxLength,
                                       EasycommParserStandard2,
                                       easycommGetDigitalInput,
-                                      EasycommIdReadInput,
+                                      EasycommIdGetDigitalInput,
                                       getDigitalInput)
 
 
-INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_analogue_input,
-                                      EasycommReadAnalogueInputMaxLength,
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_analogue_input,
+                                      EasycommGetAnalogueInputMaxLength,
                                       EasycommParserStandard2,
                                       easycommGetAnalogueInput,
-                                      EasycommIdReadAnalogueInput,
+                                      EasycommIdGetAnalogueInput,
                                       getAnalogueInput)
 
 
@@ -58,11 +58,19 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_set_time,
                                       setTime)
 
 
-INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_request_version,
-                                      EasycommRequestVersionLength,
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_time,
+                                      EasycommGetTimeLength,
+                                      EasycommParserStandard2,
+                                      easycommGetTime,
+                                      EasycommIdGetTime,
+                                      getTime)
+
+
+INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_version,
+                                      EasycommGetVersionLength,
                                       EasycommParserStandard2,
                                       easycommGetVersion,
-                                      EasycommIdRequestVersion,
+                                      EasycommIdGetVersion,
                                       getVersion)
 
 
@@ -91,7 +99,7 @@ void test_parse_loss_of_signal()
 }
 
 
-void test_parse_set_output_01()
+void test_parse_set_digital_output_01()
 {
     const char *valid_data = "OP01,2";
     const char *expected_representation = "OP1,1";
@@ -105,7 +113,7 @@ void test_parse_set_output_01()
 }
 
 
-void test_parse_set_output_02()
+void test_parse_set_digital_output_02()
 {
     const char *valid_data = "OP002,0";
     const char *expected_representation = "OP2,0";
@@ -118,7 +126,7 @@ void test_parse_set_output_02()
 }
 
 
-void test_parse_read_input_01()
+void test_parse_get_digital_input_01()
 {
     const char *valid_data = "IP13";
     const char *expected_representation = "IP13";
@@ -127,11 +135,12 @@ void test_parse_read_input_01()
     expected_result.as.getDigitalInput.number = 13;
     const bool expect_parser_success = true;
 
-    invariant_test_parse_read_input(valid_data, &expected_result, expected_representation, expect_parser_success);
+    invariant_test_parse_get_digital_input(valid_data, &expected_result, expected_representation,
+                                           expect_parser_success);
 }
 
 
-void test_parse_read_input_02()
+void test_parse_get_digital_input_02()
 {
     const char *valid_data = "IP002";
     const char *expected_representation = "IP2";
@@ -140,11 +149,12 @@ void test_parse_read_input_02()
     expected_result.as.getDigitalInput.number = 2;
     const bool expect_parser_success = true;
 
-    invariant_test_parse_read_input(valid_data, &expected_result, expected_representation, expect_parser_success);
+    invariant_test_parse_get_digital_input(valid_data, &expected_result, expected_representation,
+                                           expect_parser_success);
 }
 
 
-void test_parse_read_analogue_input_01()
+void test_parse_get_analogue_input_01()
 {
     const char *valid_data = "AN13";
     const char *expected_representation = "AN13";
@@ -153,12 +163,12 @@ void test_parse_read_analogue_input_01()
     expected_result.as.getAnalogueInput.number = 13;
     const bool expect_parser_success = true;
 
-    invariant_test_parse_read_analogue_input(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_get_analogue_input(valid_data, &expected_result, expected_representation,
+                                            expect_parser_success);
 }
 
 
-void test_parse_read_analogue_input_02()
+void test_parse_get_analogue_input_02()
 {
     const char *valid_data = "AN000";
     const char *expected_representation = "AN0";
@@ -167,8 +177,8 @@ void test_parse_read_analogue_input_02()
     expected_result.as.getAnalogueInput.number = 0;
     const bool expect_parser_success = true;
 
-    invariant_test_parse_read_analogue_input(valid_data, &expected_result, expected_representation,
-                                             expect_parser_success);
+    invariant_test_parse_get_analogue_input(valid_data, &expected_result, expected_representation,
+                                            expect_parser_success);
 }
 
 
@@ -253,7 +263,19 @@ void test_parse_set_time_03()
 }
 
 
-void test_parse_request_version()
+void test_parse_get_time_01()
+{
+    const char *valid_data = "ST";
+    const char *expected_representation = "ST";
+    EasycommData expected_result;
+    easycommGetTime(&expected_result.as.getTime);
+    const bool expect_parser_success = true;
+
+    invariant_test_parse_get_time(valid_data, &expected_result, expected_representation, expect_parser_success);
+}
+
+
+void test_parse_get_version()
 {
     const char *valid_data = "VE";
     const char *expected_representation = "VE";
@@ -261,7 +283,7 @@ void test_parse_request_version()
     easycommGetVersion(&expected_result.as.getVersion);
     const bool expect_parser_success = true;
 
-    invariant_test_parse_request_version(valid_data, &expected_result, expected_representation, expect_parser_success);
+    invariant_test_parse_get_version(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
 int tests()
@@ -269,17 +291,18 @@ int tests()
     UNITY_BEGIN();
     RUN_TEST(test_parse_acquisition_of_signal);
     RUN_TEST(test_parse_loss_of_signal);
-    RUN_TEST(test_parse_set_output_01);
-    RUN_TEST(test_parse_set_output_02);
-    RUN_TEST(test_parse_read_input_01);
-    RUN_TEST(test_parse_read_input_02);
-    RUN_TEST(test_parse_read_analogue_input_01);
-    RUN_TEST(test_parse_read_analogue_input_02);
+    RUN_TEST(test_parse_set_digital_output_01);
+    RUN_TEST(test_parse_set_digital_output_02);
+    RUN_TEST(test_parse_get_digital_input_01);
+    RUN_TEST(test_parse_get_digital_input_02);
+    RUN_TEST(test_parse_get_analogue_input_01);
+    RUN_TEST(test_parse_get_analogue_input_02);
     RUN_TEST(test_parse_set_time_string);
     RUN_TEST(test_parse_set_time_01);
     RUN_TEST(test_parse_set_time_02);
     RUN_TEST(test_parse_set_time_03);
-    RUN_TEST(test_parse_request_version);
+    RUN_TEST(test_parse_get_time_01);
+    RUN_TEST(test_parse_get_version);
     return UNITY_END();
 }
 

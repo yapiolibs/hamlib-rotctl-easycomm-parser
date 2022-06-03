@@ -10,7 +10,7 @@
 #include <unity.h>
 
 
-void test_response_read_config_01()
+void test_response_config_register_01()
 {
     const char *expected_response = "CR1,#+!$abc";
     EasycommResponseConfigRegister response;
@@ -23,7 +23,7 @@ void test_response_read_config_01()
 }
 
 
-void test_response_get_status_register_01()
+void test_response_status_register_01()
 {
     const char *expected_response = "GS2";
     EasycommResponseStatusRegister response;
@@ -35,7 +35,7 @@ void test_response_get_status_register_01()
 }
 
 
-void test_response_get_error_register_01()
+void test_response_error_register_01()
 {
     const char *expected_response = "GE2";
     EasycommResponseErrorRegister response;
@@ -49,9 +49,9 @@ void test_response_get_error_register_01()
 int tests()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_response_read_config_01);
-    RUN_TEST(test_response_get_status_register_01);
-    RUN_TEST(test_response_get_error_register_01);
+    RUN_TEST(test_response_config_register_01);
+    RUN_TEST(test_response_status_register_01);
+    RUN_TEST(test_response_error_register_01);
     return UNITY_END();
 }
 

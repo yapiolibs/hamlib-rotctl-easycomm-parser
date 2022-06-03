@@ -13,10 +13,11 @@ extern "C"
     void easycommResponseDownlinkFrequency(EasycommResponseDownlinkFrequency *d);
     void easycommResponseUplinkMode(EasycommResponseUplinkMode *d);
     void easycommResponseDownlinkMode(EasycommResponseDownlinkMode *d);
-    void easycommResponseDownlinkRadioNumber(EasycommResponseDownlinkRadioNumber *d);
-    void easycommResponseUplinkRadioNumber(EasycommResponseUplinkRadioNumber *d);
+    void easycommResponseDownlinkRadio(EasycommResponseDownlinkRadio *d);
+    void easycommResponseUplinkRadio(EasycommResponseUplinkRadio *d);
     void easycommResponseDigitalInput(EasycommResponseDigitalInput *d);
     void easycommResponseAnalogueInput(EasycommResponseAnalogueInput *d);
+    void easycommResponseTime(EasycommResponseTime *d);
     void easycommResponseVersion(EasycommResponseVersion *d);
     void easycommResponseAlarm(EasycommResponseAlarm *d);
     void easycommResponseVelocityLeft(EasycommResponseVelocityLeft *d);

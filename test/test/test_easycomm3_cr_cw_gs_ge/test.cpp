@@ -11,18 +11,18 @@
 #include <unity.h>
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_config,
-                                      EasycommReadConfigMaxLength,
+                                      EasycommGetConfigRegisterMaxLength,
                                       EasycommParserStandard3,
                                       easycommGetConfigRegister,
-                                      EasycommIdReadConfig,
+                                      EasycommIdGetConfigRegister,
                                       getConfigRegister)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_write_config,
-                                      EasycommWriteConfigMaxLength,
+                                      EasycommSetConfigRegisterMaxLength,
                                       EasycommParserStandard3,
                                       easycommSetConfigRegister,
-                                      EasycommIdWriteConfig,
+                                      EasycommIdSetConfigRegister,
                                       setConfigRegister)
 
 
@@ -42,7 +42,7 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_error_register,
                                       getErrorRegister)
 
 
-void test_parse_read_config()
+void test_parse_get_config_register()
 {
     const char *valid_data = "CR123";
     const char *expected_representation = "CR123";
@@ -55,7 +55,7 @@ void test_parse_read_config()
 }
 
 
-void test_parse_write_config()
+void test_parse_set_config_register()
 {
     const char *valid_data = "CW123,0815";
     const char *expected_representation = "CW123,0815";
@@ -97,8 +97,8 @@ void test_parse_get_error_register()
 int tests()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_parse_read_config);
-    RUN_TEST(test_parse_write_config);
+    RUN_TEST(test_parse_get_config_register);
+    RUN_TEST(test_parse_set_config_register);
     RUN_TEST(test_parse_get_status_register);
     RUN_TEST(test_parse_get_error_register);
     return UNITY_END();

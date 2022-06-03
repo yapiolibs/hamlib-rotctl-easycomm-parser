@@ -45,15 +45,15 @@ void easycommResponseDownlinkMode(EasycommResponseDownlinkMode *d)
 }
 
 
-void easycommResponseDownlinkRadioNumber(EasycommResponseDownlinkRadioNumber *d)
+void easycommResponseDownlinkRadio(EasycommResponseDownlinkRadio *d)
 {
-    memset(d, 0, sizeof(EasycommResponseDownlinkRadioNumber));
+    memset(d, 0, sizeof(EasycommResponseDownlinkRadio));
 }
 
 
-void easycommResponseUplinkRadioNumber(EasycommResponseUplinkRadioNumber *d)
+void easycommResponseUplinkRadio(EasycommResponseUplinkRadio *d)
 {
-    memset(d, 0, sizeof(EasycommResponseUplinkRadioNumber));
+    memset(d, 0, sizeof(EasycommResponseUplinkRadio));
 }
 
 
@@ -67,6 +67,9 @@ void easycommResponseAnalogueInput(EasycommResponseAnalogueInput *d)
 {
     memset(d, 0, sizeof(EasycommResponseAnalogueInput));
 }
+
+
+void easycommResponseTime(EasycommResponseTime *d) { memset(d, 0, sizeof(EasycommResponseTime)); }
 
 
 void easycommResponseVersion(EasycommResponseVersion *d)

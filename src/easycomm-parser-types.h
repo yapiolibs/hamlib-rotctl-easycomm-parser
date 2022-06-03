@@ -37,7 +37,7 @@ extern "C"
      * example: "AZnnn.n"
      * standard: Easycomm 2
      */
-    typedef struct EassycommSetAzimuth
+    typedef struct EasycommSetAzimuth
     {
         EasycommCommandId commandId;
         float azimuth;
@@ -49,7 +49,7 @@ extern "C"
      * example: "AZ"
      * standard: Easycomm 2
      */
-    typedef struct EassycommGetAzimuth
+    typedef struct EasycommGetAzimuth
     {
         EasycommCommandId commandId;
     } EasycommGetAzimuth;
@@ -91,6 +91,17 @@ extern "C"
     } EasycommSetUplinkFrequency;
 
     /**
+     * command: UP
+     * meaning: get uplink frequency in [Hz]
+     * example: "UP"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetUplinkFrequency
+    {
+        EasycommCommandId commandId;
+    } EasycommGetUplinkFrequency;
+
+    /**
      * command: DN
      * meaning: set downlink frequeny in [Hz]
      * example: "DNnnnnnnnnn"
@@ -101,6 +112,17 @@ extern "C"
         EasycommCommandId commandId;
         EasycommFrequency frequency;
     } EasycommSetDownlinkFrequency;
+
+    /**
+     * command: DN
+     * meaning: get downlink frequeny in [Hz]
+     * example: "DN"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetDownlinkFrequency
+    {
+        EasycommCommandId commandId;
+    } EasycommGetDownlinkFrequency;
 
     /**
      * command: UM
@@ -115,6 +137,17 @@ extern "C"
     } EasycommSetUplinkMode;
 
     /**
+     * command: UM
+     * meaning: get uplink mode as string
+     * example: "UM"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetUplinkMode
+    {
+        EasycommCommandId commandId;
+    } EasycommGetUplinkMode;
+
+    /**
      * command: DM
      * meaning: set downlink mode as string
      * examples: "DMccc"
@@ -127,16 +160,38 @@ extern "C"
     } EasycommSetDownlinkMode;
 
     /**
+     * command: DM
+     * meaning: get downlink mode as string
+     * examples: "DM"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetDownlinkMode
+    {
+        EasycommCommandId commandId;
+    } EasycommGetDownlinkMode;
+
+    /**
      * command: DR
      * meaning: set downlink radio number
      * example: "DRnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommSetDownlinkRadioNumber
+    typedef struct EasycommSetDownlinkRadio
     {
         EasycommCommandId commandId;
         uint16_t number;
-    } EasycommSetDownlinkRadioNumber;
+    } EasycommSetDownlinkRadio;
+
+    /**
+     * command: DR
+     * meaning: get downlink radio number
+     * example: "DR"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetDownlinkRadio
+    {
+        EasycommCommandId commandId;
+    } EasycommGetDownlinkRadio;
 
     /**
      * command: UR
@@ -144,13 +199,22 @@ extern "C"
      * example: "URnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommSetUplinkRadioNumber
+    typedef struct EasycommSetUplinkRadio
     {
         EasycommCommandId commandId;
         uint16_t number;
+    } EasycommSetUplinkRadio;
 
-    } EasycommSetUplinkRadioNumber;
-
+    /**
+     * command: UR
+     * meaning: get uplink radio number
+     * example: "UR"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommGetUplinkRadio
+    {
+        EasycommCommandId commandId;
+    } EasycommGetUplinkRadio;
 
     /**
      * command: ML
@@ -432,7 +496,7 @@ extern "C"
     {
         EasycommCommandId commandId;
         uint16_t registerNumber;
-        EasycommConfigValue value;
+        EasycommConfigRegisterValue value;
     } EasycommSetConfigRegister;
 
     /**
@@ -491,11 +555,17 @@ extern "C"
         EasycommSetElevation setElevation;
         EasycommGetElevation getElevation;
         EasycommSetUplinkFrequency setUplinkFrequency;
+        EasycommGetUplinkFrequency getUplinkFrequency;
         EasycommSetDownlinkFrequency setDownlinkFrequency;
+        EasycommGetDownlinkFrequency getDownlinkFrequency;
         EasycommSetUplinkMode setUplinkMode;
+        EasycommGetUplinkMode getUplinkMode;
         EasycommSetDownlinkMode setDownlinkMode;
-        EasycommSetUplinkRadioNumber setUplinkRadio;
-        EasycommSetDownlinkRadioNumber setDownlinkRadio;
+        EasycommGetDownlinkMode getDownlinkMode;
+        EasycommSetUplinkRadio setUplinkRadio;
+        EasycommGetUplinkRadio getUplinkRadio;
+        EasycommSetDownlinkRadio setDownlinkRadio;
+        EasycommGetDownlinkRadio getDownlinkRadio;
         EasycommDoMoveLeft doMoveLeft;
         EasycommDoMoveRight doMoveRight;
         EasycommDoMoveUp doMoveUp;
@@ -508,6 +578,7 @@ extern "C"
         EasycommGetDigitalInput getDigitalInput;
         EasycommGetAnalogueInput getAnalogueInput;
         EasycommSetTime setTime;
+        EasycommGetTime getTime;
         EasycommGetVersion getVersion;
         EasycommSetVelocityLeft setVelocityLeft;
         EasycommGetVelocityLeft getVelocityLeft;

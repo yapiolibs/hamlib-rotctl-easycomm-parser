@@ -20,18 +20,18 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_single_line,
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_reset,
-                                      EasycommResetLength,
+                                      EasycommDoResetLength,
                                       EasycommParserStandard1,
                                       easycommDoReset,
-                                      EasycommIdReset,
+                                      EasycommIdDoReset,
                                       doReset)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_park,
-                                      EasycommParkLength,
+                                      EasycommDoParkLength,
                                       EasycommParserStandard1,
                                       easycommDoPark,
-                                      EasycommIdPark,
+                                      EasycommIdDoPark,
                                       doPark)
 
 void test_parse_elevation_01()

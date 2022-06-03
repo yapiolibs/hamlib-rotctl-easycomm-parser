@@ -79,10 +79,23 @@ bool easycommSetUplinkFrequencyEquals(const EasycommSetUplinkFrequency *a, const
 }
 
 
+bool easycommGetUplinkFrequencyEquals(const EasycommGetUplinkFrequency *a, const EasycommGetUplinkFrequency *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetUplinkFrequency));
+}
+
+
 bool easycommSetDownlinkFrequencyEquals(const EasycommSetDownlinkFrequency *a,
                                         const EasycommSetDownlinkFrequency *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommSetDownlinkFrequency));
+}
+
+
+bool easycommGetDownlinkFrequencyEquals(const EasycommGetDownlinkFrequency *a,
+                                        const EasycommGetDownlinkFrequency *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetDownlinkFrequency));
 }
 
 
@@ -92,23 +105,45 @@ bool easycommSetUplinkModeEquals(const EasycommSetUplinkMode *a, const EasycommS
 }
 
 
+bool easycommGetUplinkModeEquals(const EasycommGetUplinkMode *a, const EasycommGetUplinkMode *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetUplinkMode));
+}
+
+
 bool easycommSetDownlinkModeEquals(const EasycommSetDownlinkMode *a, const EasycommSetDownlinkMode *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommSetDownlinkMode));
 }
 
 
-bool easycommSetUplinkRadioNumberEquals(const EasycommSetUplinkRadioNumber *a,
-                                        const EasycommSetUplinkRadioNumber *b)
+bool easycommGetDownlinkModeEquals(const EasycommGetDownlinkMode *a, const EasycommGetDownlinkMode *b)
 {
-    return 0 == memcmp(a, b, sizeof(EasycommSetUplinkRadioNumber));
+    return 0 == memcmp(a, b, sizeof(EasycommGetDownlinkMode));
 }
 
 
-bool easycommSetDownlinkRadioNumberEquals(const EasycommSetDownlinkRadioNumber *a,
-                                          const EasycommSetDownlinkRadioNumber *b)
+bool easycommSetUplinkRadioEquals(const EasycommSetUplinkRadio *a, const EasycommSetUplinkRadio *b)
 {
-    return 0 == memcmp(a, b, sizeof(EasycommSetDownlinkRadioNumber));
+    return 0 == memcmp(a, b, sizeof(EasycommSetUplinkRadio));
+}
+
+
+bool easycommGetUplinkRadioEquals(const EasycommGetUplinkRadio *a, const EasycommGetUplinkRadio *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetUplinkRadio));
+}
+
+
+bool easycommSetDownlinkRadioEquals(const EasycommSetDownlinkRadio *a, const EasycommSetDownlinkRadio *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommSetDownlinkRadio));
+}
+
+
+bool easycommGetDownlinkRadioEquals(const EasycommGetDownlinkRadio *a, const EasycommGetDownlinkRadio *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetDownlinkRadio));
 }
 
 
@@ -181,6 +216,12 @@ bool easycommGetAnalogueInputEquals(const EasycommGetAnalogueInput *a, const Eas
 bool easycommSetTimeEquals(const EasycommSetTime *a, const EasycommSetTime *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommSetTime));
+}
+
+
+bool easycommGetTimeEquals(const EasycommGetTime *a, const EasycommGetTime *b)
+{
+    return 0 == memcmp(a, b, sizeof(EasycommGetTime));
 }
 
 
@@ -271,40 +312,4 @@ bool easycommDoResetEquals(const EasycommDoReset *a, const EasycommDoReset *b)
 bool easycommDoParkEquals(const EasycommDoPark *a, const EasycommDoPark *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommDoPark));
-}
-
-
-// ----- copy (equivalent to =, shallow copy)
-
-
-void easycommDataCopy(const EasycommData *from, EasycommData *to)
-{
-    memcpy(to, from, sizeof(EasycommData));
-}
-
-void easycommPayloadCopy(const EasycommPayload *from, EasycommPayload *to)
-{
-    memcpy(to, from, sizeof(EasycommPayload));
-}
-
-void easycommSingleLineCopy(const EasycommSingleLine *from, EasycommSingleLine *to)
-{
-    memcpy(to, from, sizeof(EasycommSingleLine));
-}
-
-
-void easycommFrequencyCopy(const EasycommFrequency *from, EasycommFrequency *to)
-{
-    memcpy(to, from, sizeof(EasycommFrequency));
-}
-
-
-void easycommSetAzimuthCopy(const EasycommSetAzimuth *from, EasycommSetAzimuth *to)
-{
-    memcpy(to, from, sizeof(EasycommSetAzimuth));
-}
-
-void easycommSetElevationCopy(const EasycommSetElevation *from, EasycommSetElevation *to)
-{
-    memcpy(to, from, sizeof(EasycommSetElevation));
 }

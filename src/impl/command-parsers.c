@@ -41,7 +41,8 @@ bool isEasycomm1SingleLine(const char *buffer)
 
 bool isEasycomm2SetAzimuth(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommAzimuthMinLength, EasycommAzimuthMaxLength, "AZ", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetAzimuthMinLength,
+                                         EasycommSetAzimuthMaxLength, "AZ", 2);
 }
 
 
@@ -53,8 +54,8 @@ bool isEasycomm2GetAzimuth(const char *buffer)
 
 bool isEasycomm2SetElevation(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommElevationMinLength,
-                                         EasycommElevationMaxLength, "EL", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetElevationMinLength,
+                                         EasycommSetElevationMaxLength, "EL", 2);
 }
 
 
@@ -66,79 +67,115 @@ bool isEasycomm2GetElevation(const char *buffer)
 
 bool isEasycomm2SetUplinkFrequency(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommUplinkFrequencyMinLength,
-                                         EasycommUplinkFrequencyMaxLength, "UP", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetUplinkFrequencyMinLength,
+                                         EasycommSetUplinkFrequencyMaxLength, "UP", 2);
+}
+
+
+bool isEasycomm2GetUplinkFrequency(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetUplinkFrequencyLength, "UP", 2);
 }
 
 
 bool isEasycomm2SetDownlinkFrequency(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommDownlinkFrequencyMinLength,
-                                         EasycommDownlinkFrequencyMaxLength, "DN", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetDownlinkFrequencyMinLength,
+                                         EasycommSetDownlinkFrequencyMaxLength, "DN", 2);
+}
+
+
+bool isEasycomm2GetDownlinkFrequency(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetDownlinkFrequencyLength, "DN", 2);
 }
 
 
 bool isEasycomm2SetUplinkMode(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommUplinkModeMinLength,
-                                         EasycommUplinkModeMaxLength, "UM", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetUplinkModeMinLength,
+                                         EasycommSetUplinkModeMaxLength, "UM", 2);
+}
+
+
+bool isEasycomm2GetUplinkMode(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetUplinkModeLength, "UM", 2);
 }
 
 
 bool isEasycomm2SetDownlinkMode(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommDownlinkModeMinLength,
-                                         EasycommDownlinkModeMaxLength, "DM", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetDownlinkModeMinLength,
+                                         EasycommSetDownlinkModeMaxLength, "DM", 2);
 }
 
 
-bool isEasycomm2SetUplinkRadioNumber(const char *buffer)
+bool isEasycomm2GetDownlinkMode(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommUplinkRadioNumberMinLength,
-                                         EasycommUplinkRadioNumberMaxLength, "UR", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommGetDownlinkModeLength, "DM", 2);
 }
 
 
-bool isEasycomm2SetDownlinkRadioNumber(const char *buffer)
+bool isEasycomm2SetUplinkRadio(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommUplinkRadioNumberMinLength,
-                                         EasycommUplinkRadioNumberMaxLength, "DR", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetUplinkRadioMinLength,
+                                         EasycommSetUplinkRadioMaxLength, "UR", 2);
+}
+
+
+bool isEasycomm2GetUplinkRadio(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetUplinkRadioLength, "UR", 2);
+}
+
+
+bool isEasycomm2SetDownlinkRadio(const char *buffer)
+{
+    return isDynamicLengthCommandPattern(buffer, EasycommSetUplinkRadioMinLength,
+                                         EasycommSetUplinkRadioMaxLength, "DR", 2);
+}
+
+
+bool isEasycomm2GetDownlinkRadio(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetDownlinkRadioLength, "DR", 2);
 }
 
 
 bool isEasycomm2DoMoveLeft(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommMoveLeftLength, "ML", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommDoMoveLeftLength, "ML", 2);
 }
 
 
 bool isEasycomm2DoMoveRight(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommMoveRightLength, "MR", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommDoMoveRightLength, "MR", 2);
 }
 
 
 bool isEasycomm2DoMoveUp(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommMoveUpLength, "MU", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommDoMoveUpLength, "MU", 2);
 }
 
 
 bool isEasycomm2DoMoveDown(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommMoveDownLength, "MD", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommDoMoveDownLength, "MD", 2);
 }
 
 
 bool isEasycomm2DoStopAzimuthMove(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommStopAzimuthMoveLength, "SA", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommDoStopAzimuthMoveLength, "SA", 2);
 }
 
 
 bool isEasycomm2DoStopElevationMove(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommStopElevationMoveLength, "SE", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommDoStopElevationMoveLength, "SE", 2);
 }
 
 
@@ -156,22 +193,22 @@ bool isEasycomm2LossOfSignal(const char *buffer)
 
 bool isEasycomm2SetDigitalOutput(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommSetOutputMinLength,
-                                         EasycommSetOutputMaxLength, "OP", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetDigitalOutputMinLength,
+                                         EasycommSetDigitalOutputMaxLength, "OP", 2);
 }
 
 
 bool isEasycomm2GetDigitalInput(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommReadInputMinLength,
-                                         EasycommReadInputMaxLength, "IP", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommGetDigitalInputMinLength,
+                                         EasycommGetDigitalInputMaxLength, "IP", 2);
 }
 
 
 bool isEasycomm2GetAnalogueInput(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommReadAnalogueInputMinLength,
-                                         EasycommReadAnalogueInputMaxLength, "AN", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommGetAnalogueInputMinLength,
+                                         EasycommGetAnalogueInputMaxLength, "AN", 2);
 }
 
 
@@ -181,16 +218,22 @@ bool isEasycomm2SetTime(const char *buffer)
 }
 
 
+bool isEasycomm2GetTime(const char *buffer)
+{
+    return isFixedLengthCommandPattern(buffer, EasycommGetTimeLength, "ST", 2);
+}
+
+
 bool isEasycomm2GetVersion(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommRequestVersionLength, "VE", 2);
+    return isFixedLengthCommandPattern(buffer, EasycommGetVersionLength, "VE", 2);
 }
 
 
 bool isEasycomm3SetVelocityLeft(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommVelocityLeftMinLength,
-                                         EasycommVelocityLeftMaxLength, "VL", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetVelocityLeftMinLength,
+                                         EasycommSetVelocityLeftMaxLength, "VL", 2);
 }
 
 
@@ -202,8 +245,8 @@ bool isEasycomm3GetVelocityLeft(const char *buffer)
 
 bool isEasycomm3SetVelocityRight(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommVelocityRightMinLength,
-                                         EasycommVelocityRightMaxLength, "VR", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetVelocityRightMinLength,
+                                         EasycommSetVelocityRightMaxLength, "VR", 2);
 }
 
 
@@ -215,8 +258,8 @@ bool isEasycomm3GetVelocityRight(const char *buffer)
 
 bool isEasycomm3SetVelocityUp(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommVelocityUpMinLength,
-                                         EasycommVelocityUpMaxLength, "VU", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetVelocityUpMinLength,
+                                         EasycommSetVelocityUpMaxLength, "VU", 2);
 }
 
 
@@ -228,8 +271,8 @@ bool isEasycomm3GetVelocityUp(const char *buffer)
 
 bool isEasycomm3SetVelocityDown(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommVelocityDownMinLength,
-                                         EasycommVelocityDownMaxLength, "VD", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetVelocityDownMinLength,
+                                         EasycommSetVelocityDownMaxLength, "VD", 2);
 }
 
 
@@ -241,15 +284,15 @@ bool isEasycomm3GetVelocityDown(const char *buffer)
 
 bool isEasycomm3GetConfigRegister(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommReadConfigMinLength,
-                                         EasycommReadConfigMaxLength, "CR", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommGetConfigRegisterMinLength,
+                                         EasycommGetConfigRegisterMaxLength, "CR", 2);
 }
 
 
 bool isEasycomm3SetConfigRegister(const char *buffer)
 {
-    return isDynamicLengthCommandPattern(buffer, EasycommWriteConfigMinLength,
-                                         EasycommWriteConfigMaxLength, "CW", 2);
+    return isDynamicLengthCommandPattern(buffer, EasycommSetConfigRegisterMinLength,
+                                         EasycommSetConfigRegisterMaxLength, "CW", 2);
 }
 
 
@@ -267,13 +310,13 @@ bool isEasycomm3GetErrorRegister(const char *buffer)
 
 bool isEasycommDoReset(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommResetLength, "RESET", 5);
+    return isFixedLengthCommandPattern(buffer, EasycommDoResetLength, "RESET", 5);
 }
 
 
 bool isEasycommDoPark(const char *buffer)
 {
-    return isFixedLengthCommandPattern(buffer, EasycommParkLength, "PARK", 4);
+    return isFixedLengthCommandPattern(buffer, EasycommDoParkLength, "PARK", 4);
 }
 
 
@@ -374,6 +417,14 @@ bool parseEasycomm2SetUplinkFrequency(const char *buffer, EasycommData *parsed)
 }
 
 
+bool parseEasycomm2GetUplinkFrequency(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "UF"
+    easycommGetUplinkFrequency(&parsed->as.getUplinkFrequency);
+    return true;
+}
+
+
 bool parseEasycomm2SetDownlinkFrequency(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "DNddddddddd", ..., "DNd"
@@ -396,6 +447,14 @@ bool parseEasycomm2SetDownlinkFrequency(const char *buffer, EasycommData *parsed
 }
 
 
+bool parseEasycomm2GetDownlinkFrequency(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "DF"
+    easycommGetDownlinkFrequency(&parsed->as.getDownlinkFrequency);
+    return true;
+}
+
+
 bool parseEasycomm2SetUplinkMode(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "UMmmm", "UMmm", "UMm"
@@ -403,6 +462,14 @@ bool parseEasycomm2SetUplinkMode(const char *buffer, EasycommData *parsed)
     easycommSetUplinkMode(&parsed->as.setUplinkMode);
     return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.setUplinkMode.mode[0],
                        &parsed->as.setUplinkMode.mode[1], &parsed->as.setUplinkMode.mode[2]);
+}
+
+
+bool parseEasycomm2GetUplinkMode(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "UM"
+    easycommGetUplinkMode(&parsed->as.getUplinkMode);
+    return true;
 }
 
 
@@ -416,11 +483,19 @@ bool parseEasycomm2SetDownlinkMode(const char *buffer, EasycommData *parsed)
 }
 
 
-bool parseEasycomm2SetUplinkRadioNumber(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetDownlinkMode(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "UM"
+    easycommGetDownlinkMode(&parsed->as.getDownlinkMode);
+    return true;
+}
+
+
+bool parseEasycomm2SetUplinkRadio(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "URnnn", "URnn", "URn"
     char c;
-    easycommSetUplinkRadioNumber(&parsed->as.setUplinkRadio);
+    easycommSetUplinkRadio(&parsed->as.setUplinkRadio);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -433,11 +508,19 @@ bool parseEasycomm2SetUplinkRadioNumber(const char *buffer, EasycommData *parsed
 }
 
 
-bool parseEasycomm2SetDownlinkRadioNumber(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetUplinkRadio(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "UR"
+    easycommGetUplinkRadio(&parsed->as.getUplinkRadio);
+    return true;
+}
+
+
+bool parseEasycomm2SetDownlinkRadio(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "DRnnn", "DRnn", "DRn"
     char c;
-    easycommSetDownlinkRadioNumber(&parsed->as.setDownlinkRadio);
+    easycommSetDownlinkRadio(&parsed->as.setDownlinkRadio);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -451,6 +534,14 @@ bool parseEasycomm2SetDownlinkRadioNumber(const char *buffer, EasycommData *pars
                        "%c%c%hu",
 #endif
                        &c, &c, &parsed->as.setDownlinkRadio.number);
+}
+
+
+bool parseEasycomm2GetDownlinkRadio(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "DR"
+    easycommGetDownlinkRadio(&parsed->as.getDownlinkRadio);
+    return true;
 }
 
 
@@ -597,6 +688,14 @@ bool parseEasycomm2SetTime(const char *buffer, EasycommData *parsed)
 #endif
                        &parsed->as.setTime.year, &parsed->as.setTime.month, &parsed->as.setTime.day,
                        &parsed->as.setTime.hour, &parsed->as.setTime.minute, &parsed->as.setTime.second);
+}
+
+
+bool parseEasycomm2GetTime(const char *buffer, EasycommData *parsed)
+{
+    // buffer examples: "ST"
+    easycommGetTime(&parsed->as.getTime);
+    return true;
 }
 
 
