@@ -247,7 +247,6 @@ void test_parse_park()
 int tests()
 {
     UNITY_BEGIN();
-    TEST_MESSAGE("xxx bar");
     RUN_TEST(test_parse_elevation_01);
     RUN_TEST(test_parse_elevation_02);
     RUN_TEST(test_parse_elevation_03);
