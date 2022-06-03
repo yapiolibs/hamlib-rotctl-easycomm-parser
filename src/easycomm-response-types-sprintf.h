@@ -16,11 +16,12 @@ extern "C"
     void easycommResponseDownlinkFrequencySprintf(const EasycommResponseDownlinkFrequency *from, char *to);
     void easycommResponseUplinkModeSprintf(const EasycommResponseUplinkMode *from, char *to);
     void easycommResponseDownlinkModeSprintf(const EasycommResponseDownlinkMode *from, char *to);
-    void easycommResponseDownlinkRadioNumberSprintf(const EasycommResponseDownlinkRadioNumber *from, char *to);
-    void easycommResponseUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioNumber *from, char *to);
+    void easycommResponseDownlinkRadioSprintf(const EasycommResponseDownlinkRadio *from, char *to);
+    void easycommResponseUplinkRadioSprintf(const EasycommResponseUplinkRadio *from, char *to);
     void easycommResponseDigitalInputSprintf(const EasycommResponseDigitalInput *from, char *to);
     void easycommResponseAnalogueInputSprintf(const EasycommResponseAnalogueInput *from, char *to);
     void easycommResponseVersionSprintf(const EasycommResponseVersion *from, char *to);
+    void easycommResponseTimeSprintf(const EasycommResponseTime *from, char *to);
     void easycommResponseAlarmSprintf(const EasycommResponseAlarm *from, char *to);
     void easycommResponseVelocityLeftSprintf(const EasycommResponseVelocityLeft *from, char *to);
     void easycommResponseVelocityRightSprintf(const EasycommResponseVelocityRight *from, char *to);

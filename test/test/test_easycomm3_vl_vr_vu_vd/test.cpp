@@ -12,34 +12,34 @@
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_left,
-                                      EasycommVelocityLeftMaxLength,
+                                      EasycommSetVelocityLeftMaxLength,
                                       EasycommParserStandard3,
                                       easycommSetVelocityLeft,
-                                      EasycommIdVelocityLeft,
+                                      EasycommIdSetVelocityLeft,
                                       setVelocityLeft)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_right,
-                                      EasycommVelocityRightMaxLength,
+                                      EasycommSetVelocityRightMaxLength,
                                       EasycommParserStandard3,
                                       easycommSetVelocityRight,
-                                      EasycommIdVelocityRight,
+                                      EasycommIdSetVelocityRight,
                                       setVelocityRight)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_up,
-                                      EasycommVelocityUpMaxLength,
+                                      EasycommSetVelocityUpMaxLength,
                                       EasycommParserStandard3,
                                       easycommSetVelocityUp,
-                                      EasycommIdVelocityUp,
+                                      EasycommIdSetVelocityUp,
                                       setVelocityUp)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_velocity_down,
-                                      EasycommVelocityDownMaxLength,
+                                      EasycommSetVelocityDownMaxLength,
                                       EasycommParserStandard3,
                                       easycommSetVelocityDown,
-                                      EasycommIdVelocityDown,
+                                      EasycommIdSetVelocityDown,
                                       setVelocityDown)
 
 
@@ -74,7 +74,7 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_velocity_down,
                                       EasycommIdGetVelocityDown,
                                       getVelocityDown)
 
-void test_parse_velocity_left()
+void test_parse_set_velocity_left()
 {
     const char *valid_data = "VL00123";
     const char *expected_representation = "VL123";
@@ -86,7 +86,7 @@ void test_parse_velocity_left()
     invariant_test_parse_velocity_left(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
-void test_parse_velocity_right()
+void test_parse_set_velocity_right()
 {
     const char *valid_data = "VR00123";
     const char *expected_representation = "VR123";
@@ -99,7 +99,7 @@ void test_parse_velocity_right()
 }
 
 
-void test_parse_velocity_up()
+void test_parse_set_velocity_up()
 {
     const char *valid_data = "VU00123";
     const char *expected_representation = "VU123";
@@ -112,7 +112,7 @@ void test_parse_velocity_up()
 }
 
 
-void test_parse_velocity_down()
+void test_parse_set_velocity_down()
 {
     const char *valid_data = "VD00123";
     const char *expected_representation = "VD123";
@@ -177,10 +177,10 @@ void test_parse_get_velocity_down()
 int tests()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_parse_velocity_left);
-    RUN_TEST(test_parse_velocity_right);
-    RUN_TEST(test_parse_velocity_up);
-    RUN_TEST(test_parse_velocity_down);
+    RUN_TEST(test_parse_set_velocity_left);
+    RUN_TEST(test_parse_set_velocity_right);
+    RUN_TEST(test_parse_set_velocity_up);
+    RUN_TEST(test_parse_set_velocity_down);
     RUN_TEST(test_parse_get_velocity_left);
     RUN_TEST(test_parse_get_velocity_right);
     RUN_TEST(test_parse_get_velocity_up);

@@ -318,6 +318,181 @@ class Easycomm2IntegrationTests(TestSet):
         )
 
     @staticmethod
+    def _test_easycomm2_rotctl_v34_get_uplink_frequency() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get uplink frequency: UP",
+            rotctl_commands="w UP\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >UP<",
+                r"response: >UP30000000<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w UP",
+                "Reply: UP30000000",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v34_get_downlink_frequency() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get downlink frequency: DN",
+            rotctl_commands="w DN\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >DN<",
+                r"response: >DN29000000<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w DN",
+                "Reply: DN29000000",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v34_get_uplink_mode() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get uplink mode: UM",
+            rotctl_commands="w UM\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >UM<",
+                r"response: >UMCW<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w UM",
+                "Reply: UMCW",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v34_get_downlink_mode() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get downlink mode: DM",
+            rotctl_commands="w DM\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >DM<",
+                r"response: >DMUSB<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w DM",
+                "Reply: DMUSB",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v34_get_uplink_radio() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get uplink radio: UR",
+            rotctl_commands="w UR\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >UR<",
+                r"response: >UR1<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w UR",
+                "Reply: UR1",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v34_get_downlink_radio() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get downlink radio: DR",
+            rotctl_commands="w DR\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >DR<",
+                r"response: >DR2<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w DR",
+                "Reply: DR2",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
+    def _test_easycomm2_rotctl_v34_get_time() -> TestData:
+        return TestData(
+            description="rotctl=v3|4 easycomm=2 get time: ST",
+            rotctl_commands="w ST\n\\pause 0.2\nw RESET\nq\n",
+            expected_test_program_stdout_lines=[
+                r"received: >ST<",
+                r"response: >ST70:01:01:23:59:59<",
+                r"received: >RESET<"],
+            allowed_test_program_return_codes=[0],
+            expected_rotctl_stdout_lines=[
+                "Rotator command: w ST",
+                "Reply: ST70:01:01:23:59:59",
+                "",
+                "",
+                r"Rotator command: \\pause 0.2\d*",
+                "",
+                r"Rotator command: w RESET",
+                "Reply: ",
+                "Rotator command: q"],
+            allowed_rotctl_return_codes=[0],
+            rotctl_extra_program_cli_args=[EASYCOMM_2_CLI_ARG],
+            allowed_rotctl_versions=ROTCTL_VERSION_3OR4
+        )
+
+    @staticmethod
     def _test_easycomm2_get_info():
         return None  # TODO
 

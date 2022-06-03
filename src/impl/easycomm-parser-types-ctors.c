@@ -30,7 +30,7 @@ void easycommFrequency(EasycommFrequency *d) { memset(d, 0, sizeof(EasycommFrequ
 void easycommSetAzimuth(EasycommSetAzimuth *d)
 {
     memset(d, 0, sizeof(EasycommSetAzimuth));
-    d->commandId = EasycommIdAzimuth;
+    d->commandId = EasycommIdSetAzimuth;
 }
 
 void easycommGetAzimuth(EasycommGetAzimuth *d)
@@ -43,7 +43,7 @@ void easycommGetAzimuth(EasycommGetAzimuth *d)
 void easycommSetElevation(EasycommSetElevation *d)
 {
     memset(d, 0, sizeof(EasycommSetElevation));
-    d->commandId = EasycommIdElevation;
+    d->commandId = EasycommIdSetElevation;
 }
 
 
@@ -57,84 +57,126 @@ void easycommGetElevation(EasycommGetElevation *d)
 void easycommSetUplinkFrequency(EasycommSetUplinkFrequency *d)
 {
     memset(d, 0, sizeof(EasycommSetUplinkFrequency));
-    d->commandId = EasycommIdUplinkFrequency;
+    d->commandId = EasycommIdSetUplinkFrequency;
+}
+
+
+void easycommGetUplinkFrequency(EasycommGetUplinkFrequency *d)
+{
+    memset(d, 0, sizeof(EasycommGetUplinkFrequency));
+    d->commandId = EasycommIdGetUplinkFrequency;
 }
 
 
 void easycommSetDownlinkFrequency(EasycommSetDownlinkFrequency *d)
 {
     memset(d, 0, sizeof(EasycommSetDownlinkFrequency));
-    d->commandId = EasycommIdDownlinkFrequency;
+    d->commandId = EasycommIdSetDownlinkFrequency;
+}
+
+
+void easycommGetDownlinkFrequency(EasycommGetDownlinkFrequency *d)
+{
+    memset(d, 0, sizeof(EasycommGetDownlinkFrequency));
+    d->commandId = EasycommIdGetDownlinkFrequency;
 }
 
 
 void easycommSetUplinkMode(EasycommSetUplinkMode *d)
 {
     memset(d, 0, sizeof(EasycommSetUplinkMode));
-    d->commandId = EasycommIdUplinkMode;
+    d->commandId = EasycommIdSetUplinkMode;
+}
+
+
+void easycommGetUplinkMode(EasycommGetUplinkMode *d)
+{
+    memset(d, 0, sizeof(EasycommGetUplinkMode));
+    d->commandId = EasycommIdGetUplinkMode;
 }
 
 
 void easycommSetDownlinkMode(EasycommSetDownlinkMode *d)
 {
     memset(d, 0, sizeof(EasycommSetDownlinkMode));
-    d->commandId = EasycommIdDownlinkMode;
+    d->commandId = EasycommIdSetDownlinkMode;
 }
 
 
-void easycommSetUplinkRadioNumber(EasycommSetUplinkRadioNumber *d)
+void easycommGetDownlinkMode(EasycommGetDownlinkMode *d)
 {
-    memset(d, 0, sizeof(EasycommSetUplinkRadioNumber));
-    d->commandId = EasycommIdUplinkRadioNumber;
+    memset(d, 0, sizeof(EasycommGetDownlinkMode));
+    d->commandId = EasycommIdGetDownlinkMode;
 }
 
 
-void easycommSetDownlinkRadioNumber(EasycommSetDownlinkRadioNumber *d)
+void easycommSetUplinkRadio(EasycommSetUplinkRadio *d)
 {
-    memset(d, 0, sizeof(EasycommSetDownlinkRadioNumber));
-    d->commandId = EasycommIdDownlinkRadioNumber;
+    memset(d, 0, sizeof(EasycommSetUplinkRadio));
+    d->commandId = EasycommIdSetUplinkRadio;
+}
+
+
+void easycommGetUplinkRadio(EasycommGetUplinkRadio *d)
+{
+    memset(d, 0, sizeof(EasycommGetUplinkRadio));
+    d->commandId = EasycommIdGetUplinkRadio;
+}
+
+
+void easycommSetDownlinkRadio(EasycommSetDownlinkRadio *d)
+{
+    memset(d, 0, sizeof(EasycommSetDownlinkRadio));
+    d->commandId = EasycommIdSetDownlinkRadio;
+}
+
+
+void easycommGetDownlinkRadio(EasycommGetDownlinkRadio *d)
+{
+    memset(d, 0, sizeof(EasycommGetDownlinkRadio));
+    d->commandId = EasycommIdGetDownlinkRadio;
 }
 
 
 void easycommDoMoveLeft(EasycommDoMoveLeft *d)
 {
     memset(d, 0, sizeof(EasycommDoMoveLeft));
-    d->commandId = EasycommIdMoveLeft;
+    d->commandId = EasycommIdDoMoveLeft;
 }
 
 
 void easycommDoMoveRight(EasycommDoMoveRight *d)
 {
     memset(d, 0, sizeof(EasycommDoMoveRight));
-    d->commandId = EasycommIdMoveRight;
+    d->commandId = EasycommIdDoMoveRight;
 }
 
 
 void easycommDoMoveUp(EasycommDoMoveUp *d)
 {
     memset(d, 0, sizeof(EasycommDoMoveUp));
-    d->commandId = EasycommIdMoveUp;
+    d->commandId = EasycommIdDoMoveUp;
 }
 
 
 void easycommDoMoveDown(EasycommDoMoveDown *d)
 {
     memset(d, 0, sizeof(EasycommDoMoveDown));
-    d->commandId = EasycommIdMoveDown;
+    d->commandId = EasycommIdDoMoveDown;
 }
 
 
 void easycommDoStopAzimuthMove(EasycommDoStopAzimuthMove *d)
 {
     memset(d, 0, sizeof(EasycommDoStopAzimuthMove));
-    d->commandId = EasycommIdStopAzimuthMove;
+    d->commandId = EasycommIdDoStopAzimuthMove;
 }
 
 
 void easycommDoStopElevationMove(EasycommDoStopElevationMove *d)
 {
     memset(d, 0, sizeof(EasycommDoStopElevationMove));
-    d->commandId = EasycommIdStopElevationMove;
+    d->commandId = EasycommIdDoStopElevationMove;
 }
 
 
@@ -155,21 +197,21 @@ void easycommLossOfSignal(EasycommLossOfSignal *d)
 void easycommSetDigitalOutput(EasycommSetDigitalOutput *d)
 {
     memset(d, 0, sizeof(EasycommSetDigitalOutput));
-    d->commandId = EasycommIdSetOutput;
+    d->commandId = EasycommIdSetDigitalOutput;
 }
 
 
 void easycommGetDigitalInput(EasycommGetDigitalInput *d)
 {
     memset(d, 0, sizeof(EasycommGetDigitalInput));
-    d->commandId = EasycommIdReadInput;
+    d->commandId = EasycommIdGetDigitalInput;
 }
 
 
 void easycommGetAnalogueInput(EasycommGetAnalogueInput *d)
 {
     memset(d, 0, sizeof(EasycommGetAnalogueInput));
-    d->commandId = EasycommIdReadAnalogueInput;
+    d->commandId = EasycommIdGetAnalogueInput;
 }
 
 
@@ -180,17 +222,24 @@ void easycommSetTime(EasycommSetTime *d)
 }
 
 
+void easycommGetTime(EasycommGetTime *d)
+{
+    memset(d, 0, sizeof(EasycommGetTime));
+    d->commandId = EasycommIdGetTime;
+}
+
+
 void easycommGetVersion(EasycommGetVersion *d)
 {
     memset(d, 0, sizeof(EasycommGetVersion));
-    d->commandId = EasycommIdRequestVersion;
+    d->commandId = EasycommIdGetVersion;
 }
 
 
 void easycommSetVelocityLeft(EasycommSetVelocityLeft *d)
 {
     memset(d, 0, sizeof(EasycommSetVelocityLeft));
-    d->commandId = EasycommIdVelocityLeft;
+    d->commandId = EasycommIdSetVelocityLeft;
 }
 
 void easycommGetVelocityLeft(EasycommGetVelocityLeft *d)
@@ -203,7 +252,7 @@ void easycommGetVelocityLeft(EasycommGetVelocityLeft *d)
 void easycommSetVelocityRight(EasycommSetVelocityRight *d)
 {
     memset(d, 0, sizeof(EasycommSetVelocityRight));
-    d->commandId = EasycommIdVelocityRight;
+    d->commandId = EasycommIdSetVelocityRight;
 }
 
 
@@ -217,7 +266,7 @@ void easycommGetVelocityRight(EasycommGetVelocityRight *d)
 void easycommSetVelocityUp(EasycommSetVelocityUp *d)
 {
     memset(d, 0, sizeof(EasycommSetVelocityUp));
-    d->commandId = EasycommIdVelocityUp;
+    d->commandId = EasycommIdSetVelocityUp;
 }
 
 
@@ -231,7 +280,7 @@ void easycommGetVelocityUp(EasycommGetVelocityUp *d)
 void easycommSetVelocityDown(EasycommSetVelocityDown *d)
 {
     memset(d, 0, sizeof(EasycommSetVelocityDown));
-    d->commandId = EasycommIdVelocityDown;
+    d->commandId = EasycommIdSetVelocityDown;
 }
 
 
@@ -245,14 +294,14 @@ void easycommGetVelocityDown(EasycommGetVelocityDown *d)
 void easycommGetConfigRegister(EasycommGetConfigRegister *d)
 {
     memset(d, 0, sizeof(EasycommGetConfigRegister));
-    d->commandId = EasycommIdReadConfig;
+    d->commandId = EasycommIdGetConfigRegister;
 }
 
 
 void easycommSetConfigRegister(EasycommSetConfigRegister *d)
 {
     memset(d, 0, sizeof(EasycommSetConfigRegister));
-    d->commandId = EasycommIdWriteConfig;
+    d->commandId = EasycommIdSetConfigRegister;
 }
 
 
@@ -273,12 +322,12 @@ void easycommGetErrorRegister(EasycommGetErrorRegister *d)
 void easycommDoReset(EasycommDoReset *d)
 {
     memset(d, 0, sizeof(EasycommDoReset));
-    d->commandId = EasycommIdReset;
+    d->commandId = EasycommIdDoReset;
 }
 
 
 void easycommDoPark(EasycommDoPark *d)
 {
     memset(d, 0, sizeof(EasycommDoPark));
-    d->commandId = EasycommIdPark;
+    d->commandId = EasycommIdDoPark;
 }

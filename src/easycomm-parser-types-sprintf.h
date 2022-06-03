@@ -15,11 +15,17 @@ extern "C"
     void easycommSetElevationSprintf(const EasycommSetElevation *from, char *to);
     void easycommGetElevationSprintf(const EasycommGetElevation *from, char *to);
     void easycommSetUplinkFrequencySprintf(const EasycommSetUplinkFrequency *from, char *to);
+    void easycommGetUplinkFrequencySprintf(const EasycommGetUplinkFrequency *from, char *to);
     void easycommSetDownlinkFrequencySprintf(const EasycommSetDownlinkFrequency *from, char *to);
+    void easycommGetDownlinkFrequencySprintf(const EasycommGetDownlinkFrequency *from, char *to);
     void easycommSetUplinkModeSprintf(const EasycommSetUplinkMode *from, char *to);
+    void easycommGetUplinkModeSprintf(const EasycommGetUplinkMode *from, char *to);
     void easycommSetDownlinkModeSprintf(const EasycommSetDownlinkMode *from, char *to);
-    void easycommSetUplinkRadioNumberSprintf(const EasycommSetUplinkRadioNumber *from, char *to);
-    void easycommSetDownlinkRadioNumberSprintf(const EasycommSetDownlinkRadioNumber *from, char *to);
+    void easycommGetDownlinkModeSprintf(const EasycommGetDownlinkMode *from, char *to);
+    void easycommSetUplinkRadioSprintf(const EasycommSetUplinkRadio *from, char *to);
+    void easycommGetUplinkRadioSprintf(const EasycommGetUplinkRadio *from, char *to);
+    void easycommSetDownlinkRadioSprintf(const EasycommSetDownlinkRadio *from, char *to);
+    void easycommGetDownlinkRadioSprintf(const EasycommGetDownlinkRadio *from, char *to);
     void easycommDoMoveLeftSprintf(const EasycommDoMoveLeft *from, char *to);
     void easycommDoMoveRightSprintf(const EasycommDoMoveRight *from, char *to);
     void easycommDoMoveUpSprintf(const EasycommDoMoveUp *from, char *to);
@@ -32,6 +38,7 @@ extern "C"
     void easycommGetDigitalInputSprintf(const EasycommGetDigitalInput *from, char *to);
     void easycommGetAnalogueInputSprintf(const EasycommGetAnalogueInput *from, char *to);
     void easycommSetTimeSprintf(const EasycommSetTime *from, char *to);
+    void easycommGetTimeSprintf(const EasycommGetTime *from, char *to);
     void easycommGetVersionSprintf(const EasycommGetVersion *from, char *to);
     void easycommSetVelocityLeftSprintf(const EasycommSetVelocityLeft *from, char *to);
     void easycommGetVelocityLeftSprintf(const EasycommGetVelocityLeft *from, char *to);

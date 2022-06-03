@@ -78,13 +78,13 @@ void easycommResponseDownlinkModeSprintf(const EasycommResponseDownlinkMode *fro
 }
 
 
-void easycommResponseDownlinkRadioNumberSprintf(const EasycommResponseDownlinkRadioNumber *from, char *to)
+void easycommResponseDownlinkRadioSprintf(const EasycommResponseDownlinkRadio *from, char *to)
 {
     sprintf(to, "DR%u", from->number);
 }
 
 
-void easycommResponseUplinkRadioNumberSprintf(const EasycommResponseUplinkRadioNumber *from, char *to)
+void easycommResponseUplinkRadioSprintf(const EasycommResponseUplinkRadio *from, char *to)
 {
     sprintf(to, "UR%u", from->number);
 }
@@ -105,6 +105,13 @@ void easycommResponseAnalogueInputSprintf(const EasycommResponseAnalogueInput *f
 void easycommResponseVersionSprintf(const EasycommResponseVersion *from, char *to)
 {
     sprintf(to, "VE%u.%u", from->major, from->minor);
+}
+
+
+void easycommResponseTimeSprintf(const EasycommResponseTime *from, char *to)
+{
+    sprintf(to, "ST%02u:%02u:%02u:%02u:%02u:%02u", from->year, from->month, from->day, from->hour,
+            from->minute, from->second);
 }
 
 

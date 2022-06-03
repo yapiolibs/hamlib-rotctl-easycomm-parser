@@ -51,7 +51,7 @@ typedef struct CallbackData
 
 // -------------------------------------------------------------------------------------------------
 
-static void printCommandCallback(const EasycommData *command, void *custom_data)
+static void printResponse(const EasycommData *command, void *custom_data)
 {
     CallbackData *data = (CallbackData *)custom_data;
     if(data->num_commands_pending == 0)
@@ -67,7 +67,7 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     printf("received: >%s<\n", string_buffer);
     fprintf(data->log_file, "      parsed: >%s<\n", string_buffer);
 
-    if(EasycommIdReset == command->commandId)
+    if(EasycommIdDoReset == command->commandId)
     {
         if(0 != close(data->serial_fd))
         {
@@ -81,63 +81,117 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     }
     else if(command->commandId == EasycommIdGetAzimuth)
     {
-        EasycommResponseAzimuth az;
-        easycommResponseAzimuth(&az);
-        az.azimuth = 11;
-        easycommResponseAzimuthSprintf(&az, string_buffer);
+        EasycommResponseAzimuth r;
+        easycommResponseAzimuth(&r);
+        r.azimuth = 11;
+        easycommResponseAzimuthSprintf(&r, string_buffer);
     }
     else if(command->commandId == EasycommIdGetElevation)
     {
-        EasycommResponseElevation el;
-        easycommResponseElevation(&el);
-        el.elevation = 12;
-        easycommResponseElevationSprintf(&el, string_buffer);
+        EasycommResponseElevation r;
+        easycommResponseElevation(&r);
+        r.elevation = 12;
+        easycommResponseElevationSprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetUplinkFrequency)
+    {
+        EasycommResponseUplinkFrequency r;
+        easycommResponseUplinkFrequency(&r);
+        r.frequency.as.uint32 = 30000000;
+        easycommResponseUplinkFrequencySprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetDownlinkFrequency)
+    {
+        EasycommResponseDownlinkFrequency r;
+        easycommResponseDownlinkFrequency(&r);
+        r.frequency.as.uint32 = 29000000;
+        easycommResponseDownlinkFrequencySprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetUplinkMode)
+    {
+        EasycommResponseUplinkMode r;
+        easycommResponseUplinkMode(&r);
+        memcpy(&r.mode, "CW", 2);
+        easycommResponseUplinkModeSprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetDownlinkMode)
+    {
+        EasycommResponseDownlinkMode r;
+        easycommResponseDownlinkMode(&r);
+        memcpy(&r.mode, "USB", 3);
+        easycommResponseDownlinkModeSprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetUplinkRadio)
+    {
+        EasycommResponseUplinkRadio r;
+        easycommResponseUplinkRadio(&r);
+        r.number = 1;
+        easycommResponseUplinkRadioSprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetDownlinkRadio)
+    {
+        EasycommResponseDownlinkRadio r;
+        easycommResponseDownlinkRadio(&r);
+        r.number = 2;
+        easycommResponseDownlinkRadioSprintf(&r, string_buffer);
+    }
+    else if(command->commandId == EasycommIdGetTime)
+    {
+        EasycommResponseTime r;
+        easycommResponseTime(&r);
+        r.year = 70;
+        r.month = 1;
+        r.day = 1;
+        r.hour = 23;
+        r.minute = 59;
+        r.second = 59;
+        easycommResponseTimeSprintf(&r, string_buffer);
     }
     else if(command->commandId == EasycommIdGetStatusRegister)
     {
-        EasycommResponseStatusRegister sr;
-        easycommResponseStatusRegister(&sr);
-        sr.status = EasycommStatusMoving;
-        easycommResponseStatusRegisterSprintf(&sr, string_buffer);
+        EasycommResponseStatusRegister r;
+        easycommResponseStatusRegister(&r);
+        r.status = EasycommStatusMoving;
+        easycommResponseStatusRegisterSprintf(&r, string_buffer);
     }
     else if(command->commandId == EasycommIdGetErrorRegister)
     {
-        EasycommResponseErrorRegister er;
-        easycommResponseErrorRegister(&er);
-        er.status = EasycommErrorSensor;
-        easycommResponseErrorRegisterSprintf(&er, string_buffer);
+        EasycommResponseErrorRegister r;
+        easycommResponseErrorRegister(&r);
+        r.status = EasycommErrorSensor;
+        easycommResponseErrorRegisterSprintf(&r, string_buffer);
     }
-    else if(command->commandId == EasycommIdReadInput)
+    else if(command->commandId == EasycommIdGetDigitalInput)
     {
-        EasycommResponseDigitalInput di;
-        easycommResponseDigitalInput(&di);
-        di.number = 1;
-        di.value = true;
-        easycommResponseDigitalInputSprintf(&di, string_buffer);
+        EasycommResponseDigitalInput r;
+        easycommResponseDigitalInput(&r);
+        r.number = 1;
+        r.value = true;
+        easycommResponseDigitalInputSprintf(&r, string_buffer);
     }
-    else if(command->commandId == EasycommIdReadAnalogueInput)
+    else if(command->commandId == EasycommIdGetAnalogueInput)
     {
-        EasycommResponseAnalogueInput ai;
-        easycommResponseAnalogueInput(&ai);
-        ai.number = 1;
-        ai.value = 42;
-        easycommResponseAnalogueInputSprintf(&ai, string_buffer);
+        EasycommResponseAnalogueInput r;
+        easycommResponseAnalogueInput(&r);
+        r.number = 1;
+        r.value = 42;
+        easycommResponseAnalogueInputSprintf(&r, string_buffer);
     }
-    else if(command->commandId == EasycommIdRequestVersion)
+    else if(command->commandId == EasycommIdGetVersion)
     {
-        EasycommResponseVersion ve;
-        easycommResponseVersion(&ve);
-        ve.major = 0;
-        ve.minor = 1;
-        easycommResponseVersionSprintf(&ve, string_buffer);
+        EasycommResponseVersion r;
+        easycommResponseVersion(&r);
+        r.major = 0;
+        r.minor = 1;
+        easycommResponseVersionSprintf(&r, string_buffer);
     }
-    else if(command->commandId == EasycommIdReadConfig)
+    else if(command->commandId == EasycommIdGetConfigRegister)
     {
-        EasycommResponseConfigRegister cr;
-        easycommResponseConfigRegister(&cr);
-        cr.registerNumber = 1;
-        memcpy(&cr.value.as.str, "asdf", 4);
-        easycommResponseConfigRegisterSprintf(&cr, string_buffer);
+        EasycommResponseConfigRegister r;
+        easycommResponseConfigRegister(&r);
+        r.registerNumber = 1;
+        memcpy(&r.value.as.str, "asdf", 4);
+        easycommResponseConfigRegisterSprintf(&r, string_buffer);
     }
     else
         return;
@@ -221,7 +275,7 @@ int main(int argc, const char **argv)
 
 
     EasycommCommandsCallback cb_handler;
-    easycommCommandsCallbackCustomDefaultCb(&cb_handler, EasycommParserStandard123, printCommandCallback);
+    easycommCommandsCallbackCustomDefaultCb(&cb_handler, EasycommParserStandard123, printResponse);
 
     EasycommBufferedTokenizerState line_token_state;
     easycommBufferedTokenizerState(&line_token_state);

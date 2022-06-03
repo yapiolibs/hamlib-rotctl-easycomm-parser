@@ -15,11 +15,17 @@ extern "C"
     void easycommSetElevation(EasycommSetElevation *d);
     void easycommGetElevation(EasycommGetElevation *d);
     void easycommSetUplinkFrequency(EasycommSetUplinkFrequency *d);
+    void easycommGetUplinkFrequency(EasycommGetUplinkFrequency *d);
     void easycommSetDownlinkFrequency(EasycommSetDownlinkFrequency *d);
+    void easycommGetDownlinkFrequency(EasycommGetDownlinkFrequency *d);
     void easycommSetUplinkMode(EasycommSetUplinkMode *d);
+    void easycommGetUplinkMode(EasycommGetUplinkMode *d);
     void easycommSetDownlinkMode(EasycommSetDownlinkMode *d);
-    void easycommSetUplinkRadioNumber(EasycommSetUplinkRadioNumber *d);
-    void easycommSetDownlinkRadioNumber(EasycommSetDownlinkRadioNumber *d);
+    void easycommGetDownlinkMode(EasycommGetDownlinkMode *d);
+    void easycommSetUplinkRadio(EasycommSetUplinkRadio *d);
+    void easycommGetUplinkRadio(EasycommGetUplinkRadio *d);
+    void easycommSetDownlinkRadio(EasycommSetDownlinkRadio *d);
+    void easycommGetDownlinkRadio(EasycommGetDownlinkRadio *d);
     void easycommDoMoveLeft(EasycommDoMoveLeft *d);
     void easycommDoMoveRight(EasycommDoMoveRight *d);
     void easycommDoMoveUp(EasycommDoMoveUp *d);
@@ -32,6 +38,7 @@ extern "C"
     void easycommGetDigitalInput(EasycommGetDigitalInput *d);
     void easycommGetAnalogueInput(EasycommGetAnalogueInput *d);
     void easycommSetTime(EasycommSetTime *d);
+    void easycommGetTime(EasycommGetTime *d);
     void easycommGetVersion(EasycommGetVersion *d);
     void easycommSetVelocityLeft(EasycommSetVelocityLeft *d);
     void easycommGetVelocityLeft(EasycommGetVelocityLeft *d);

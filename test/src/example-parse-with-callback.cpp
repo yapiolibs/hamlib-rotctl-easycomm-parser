@@ -18,7 +18,7 @@ void loop()
     easycommCommandsCallback(&cb_handler, EasycommParserStandard2);
 
     // override a specific CB
-    cb_handler.registry[EasycommIdAzimuth] = customCallback;
+    cb_handler.registry[EasycommIdSetAzimuth] = customCallback;
 
     bool some_cb_invoked = { false };
     bool custom_cb_invoked = { false };

@@ -1,6 +1,7 @@
 #include "../easycomm-parser.h"
 #include "command-parsers.h"
 
+#include <stdio.h>
 #include <string.h>
 
 typedef bool (*ParserPredicateFunction)(const char *);
@@ -13,7 +14,7 @@ typedef struct CommandParser
     CommandReaderFunction parseCommand;
 } CommandParser;
 
-#include <stdio.h>
+
 static bool invokeCommandParsers(const char *buffer, CommandParser *parsers, EasycommData *result)
 {
     CommandParser *command_parser = parsers;
@@ -55,11 +56,17 @@ static bool easycommParse2(const char *buffer, EasycommData *parsed)
         { .isCommand = isEasycomm2SetElevation, .parseCommand = parseEasycomm2SetElevation },
         { .isCommand = isEasycomm2GetElevation, .parseCommand = parseEasycomm2GetElevation },
         { .isCommand = isEasycomm2SetUplinkFrequency, .parseCommand = parseEasycomm2SetUplinkFrequency },
+        { .isCommand = isEasycomm2GetUplinkFrequency, .parseCommand = parseEasycomm2GetUplinkFrequency },
         { .isCommand = isEasycomm2SetDownlinkFrequency, .parseCommand = parseEasycomm2SetDownlinkFrequency },
+        { .isCommand = isEasycomm2GetDownlinkFrequency, .parseCommand = parseEasycomm2GetDownlinkFrequency },
         { .isCommand = isEasycomm2SetUplinkMode, .parseCommand = parseEasycomm2SetUplinkMode },
+        { .isCommand = isEasycomm2GetUplinkMode, .parseCommand = parseEasycomm2GetUplinkMode },
         { .isCommand = isEasycomm2SetDownlinkMode, .parseCommand = parseEasycomm2SetDownlinkMode },
-        { .isCommand = isEasycomm2SetUplinkRadioNumber, .parseCommand = parseEasycomm2SetUplinkRadioNumber },
-        { .isCommand = isEasycomm2SetDownlinkRadioNumber, .parseCommand = parseEasycomm2SetDownlinkRadioNumber },
+        { .isCommand = isEasycomm2GetDownlinkMode, .parseCommand = parseEasycomm2GetDownlinkMode },
+        { .isCommand = isEasycomm2SetUplinkRadio, .parseCommand = parseEasycomm2SetUplinkRadio },
+        { .isCommand = isEasycomm2GetUplinkRadio, .parseCommand = parseEasycomm2GetUplinkRadio },
+        { .isCommand = isEasycomm2SetDownlinkRadio, .parseCommand = parseEasycomm2SetDownlinkRadio },
+        { .isCommand = isEasycomm2GetDownlinkRadio, .parseCommand = parseEasycomm2GetDownlinkRadio },
         { .isCommand = isEasycomm2DoMoveLeft, .parseCommand = parseEasycomm2DoMoveLeft },
         { .isCommand = isEasycomm2DoMoveRight, .parseCommand = parseEasycomm2DoMoveRight },
         { .isCommand = isEasycomm2DoMoveUp, .parseCommand = parseEasycomm2DoMoveUp },
@@ -72,6 +79,7 @@ static bool easycommParse2(const char *buffer, EasycommData *parsed)
         { .isCommand = isEasycomm2GetDigitalInput, .parseCommand = parseEasycomm2GetDigitalInput },
         { .isCommand = isEasycomm2GetAnalogueInput, .parseCommand = parseEasycomm2GetAnalogueInput },
         { .isCommand = isEasycomm2SetTime, .parseCommand = parseEasycomm2SetTime },
+        { .isCommand = isEasycomm2GetTime, .parseCommand = parseEasycomm2GetTime },
         { .isCommand = isEasycomm2GetVersion, .parseCommand = parseEasycomm2GetVersion },
         { .isCommand = fallbackPredicate, .parseCommand = fallbackParser },
         { .isCommand = NULL, .parseCommand = NULL },
@@ -91,8 +99,8 @@ static bool easycommParse3(const char *buffer, EasycommData *parsed)
         { .isCommand = isEasycomm3GetVelocityUp, .parseCommand = parseEasycomm3GetVelocityUp },
         { .isCommand = isEasycomm3SetVelocityDown, .parseCommand = parseEasycomm3SetVelocityDown },
         { .isCommand = isEasycomm3GetVelocityDown, .parseCommand = parseEasycomm3GetVelocityDown },
-        { .isCommand = isEasycomm3GetConfigRegister, .parseCommand = parseEasycomm3GetConfigRegister },
         { .isCommand = isEasycomm3SetConfigRegister, .parseCommand = parseEasycomm3SetConfigRegister },
+        { .isCommand = isEasycomm3GetConfigRegister, .parseCommand = parseEasycomm3GetConfigRegister },
         { .isCommand = isEasycomm3GetStatusRegister, .parseCommand = parseEasycomm3GetStatusRegister },
         { .isCommand = isEasycomm3GetErrorRegister, .parseCommand = parseEasycomm3GetErrorRegister },
         { .isCommand = fallbackPredicate, .parseCommand = fallbackParser },

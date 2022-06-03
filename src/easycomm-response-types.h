@@ -36,7 +36,7 @@ extern "C"
      * example: "AZaaa.a"
      * standard: Easycomm 2
      */
-    typedef struct EassycommResponseAzimuth
+    typedef struct EasycommResponseAzimuth
     {
         float azimuth;
     } EasycommResponseAzimuth;
@@ -90,19 +90,19 @@ extern "C"
      * example: "DRnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommResponseDownlinkRadioNumber
+    typedef struct EasycommResponseDownlinkRadio
     {
         uint16_t number;
-    } EasycommResponseDownlinkRadioNumber;
+    } EasycommResponseDownlinkRadio;
 
     /**
      * example: "URnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommResponseUplinkRadioNumber
+    typedef struct EasycommResponseUplinkRadio
     {
         uint16_t number;
-    } EasycommResponseUplinkRadioNumber;
+    } EasycommResponseUplinkRadio;
 
     /**
      * example: "IPnnn"
@@ -181,13 +181,29 @@ extern "C"
     } EasycommResponseVelocityDown;
 
     /**
+     * current time: [y]{1,2}:[m]{1,2}:[d]{1,2}:[M]{1,2}:[h]{1,2}:[s]{1,2}
+     * example: "STyy:mm:dd:hh:MM:ss"
+     * standard: Easycomm 2
+     */
+    typedef struct EasycommResponseTime
+    {
+        EasycommCommandId commandId;
+        uint8_t year;
+        uint8_t month;
+        uint8_t day;
+        uint8_t hour;
+        uint8_t minute;
+        uint8_t second;
+    } EasycommResponseTime;
+
+    /**
      * example: "CRnnn,vvv"
      * standard: Easycomm 3
      */
     typedef struct EasycommResponseConfigRegister
     {
         uint16_t registerNumber;
-        EasycommConfigValue value;
+        EasycommConfigRegisterValue value;
     } EasycommResponseConfigRegister;
 
     /**

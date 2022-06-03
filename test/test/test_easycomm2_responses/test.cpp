@@ -82,31 +82,31 @@ void test_response_downlink_mode_01()
 }
 
 
-void test_response_downlink_radioNumber_01()
+void test_response_downlink_radio_number_01()
 {
     const char *expected_response = "DR10";
-    EasycommResponseDownlinkRadioNumber response;
-    easycommResponseDownlinkRadioNumber(&response);
+    EasycommResponseDownlinkRadio response;
+    easycommResponseDownlinkRadio(&response);
     response.number = 10;
     char response_str[32];
-    easycommResponseDownlinkRadioNumberSprintf(&response, response_str);
+    easycommResponseDownlinkRadioSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
 
-void test_response_uplink_radioNumber_01()
+void test_response_uplink_radio_number_01()
 {
     const char *expected_response = "UR12";
-    EasycommResponseUplinkRadioNumber response;
-    easycommResponseUplinkRadioNumber(&response);
+    EasycommResponseUplinkRadio response;
+    easycommResponseUplinkRadio(&response);
     response.number = 12;
     char response_str[32];
-    easycommResponseUplinkRadioNumberSprintf(&response, response_str);
+    easycommResponseUplinkRadioSprintf(&response, response_str);
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
 
-void test_response_read_input_01()
+void test_response_digital_input_01()
 {
     const char *expected_response = "IP128,1";
     EasycommResponseDigitalInput response;
@@ -119,7 +119,7 @@ void test_response_read_input_01()
 }
 
 
-void test_response_read_analogue_input_01()
+void test_response_analogue_input_01()
 {
     const char *expected_response = "AN2,256";
     EasycommResponseAnalogueInput response;
@@ -132,7 +132,7 @@ void test_response_read_analogue_input_01()
 }
 
 
-void test_response_request_version_01()
+void test_response_version_01()
 {
     const char *expected_response = "VE0.16";
     EasycommResponseVersion response;
@@ -214,11 +214,11 @@ int tests()
     RUN_TEST(test_response_downlink_frequency_01);
     RUN_TEST(test_response_uplink_mode_01);
     RUN_TEST(test_response_downlink_mode_01);
-    RUN_TEST(test_response_uplink_radioNumber_01);
-    RUN_TEST(test_response_downlink_radioNumber_01);
-    RUN_TEST(test_response_read_input_01);
-    RUN_TEST(test_response_read_analogue_input_01);
-    RUN_TEST(test_response_request_version_01);
+    RUN_TEST(test_response_uplink_radio_number_01);
+    RUN_TEST(test_response_downlink_radio_number_01);
+    RUN_TEST(test_response_digital_input_01);
+    RUN_TEST(test_response_analogue_input_01);
+    RUN_TEST(test_response_version_01);
     RUN_TEST(test_response_alarm_01);
     RUN_TEST(test_response_velocity_left_01);
     RUN_TEST(test_response_velocity_right_01);

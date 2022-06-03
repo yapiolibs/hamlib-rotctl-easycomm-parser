@@ -42,43 +42,50 @@ extern "C"
     {
         EasycommIdInvalid,
         EasycommIdSingleLine,
-        EasycommIdAzimuth,
+        EasycommIdSetAzimuth,
         EasycommIdGetAzimuth,
-        EasycommIdElevation,
+        EasycommIdSetElevation,
         EasycommIdGetElevation,
-        EasycommIdUplinkFrequency,
-        EasycommIdDownlinkFrequency,
-        EasycommIdUplinkMode,
-        EasycommIdDownlinkMode,
-        EasycommIdUplinkRadioNumber,
-        EasycommIdDownlinkRadioNumber,
-        EasycommIdMoveLeft,
-        EasycommIdMoveRight,
-        EasycommIdMoveUp,
-        EasycommIdMoveDown,
-        EasycommIdStopAzimuthMove,
-        EasycommIdStopElevationMove,
+        EasycommIdSetUplinkFrequency,
+        EasycommIdGetUplinkFrequency,
+        EasycommIdSetDownlinkFrequency,
+        EasycommIdGetDownlinkFrequency,
+        EasycommIdSetUplinkMode,
+        EasycommIdGetUplinkMode,
+        EasycommIdSetDownlinkMode,
+        EasycommIdGetDownlinkMode,
+        EasycommIdSetUplinkRadio,
+        EasycommIdGetUplinkRadio,
+        EasycommIdSetDownlinkRadio,
+        EasycommIdGetDownlinkRadio,
+        EasycommIdDoMoveLeft,
+        EasycommIdDoMoveRight,
+        EasycommIdDoMoveUp,
+        EasycommIdDoMoveDown,
+        EasycommIdDoStopAzimuthMove,
+        EasycommIdDoStopElevationMove,
         EasycommIdAcquisitionOfSignal,
         EasycommIdLossOfSignal,
-        EasycommIdSetOutput,
-        EasycommIdReadInput,
-        EasycommIdReadAnalogueInput,
+        EasycommIdSetDigitalOutput,
+        EasycommIdGetDigitalInput,
+        EasycommIdGetAnalogueInput,
         EasycommIdSetTime,
-        EasycommIdRequestVersion,
-        EasycommIdVelocityLeft,
+        EasycommIdGetTime,
+        EasycommIdGetVersion,
+        EasycommIdSetVelocityLeft,
         EasycommIdGetVelocityLeft,
-        EasycommIdVelocityRight,
+        EasycommIdSetVelocityRight,
         EasycommIdGetVelocityRight,
-        EasycommIdVelocityUp,
+        EasycommIdSetVelocityUp,
         EasycommIdGetVelocityUp,
-        EasycommIdVelocityDown,
+        EasycommIdSetVelocityDown,
         EasycommIdGetVelocityDown,
-        EasycommIdReadConfig,
-        EasycommIdWriteConfig,
+        EasycommIdSetConfigRegister,
+        EasycommIdGetConfigRegister,
         EasycommIdGetStatusRegister,
         EasycommIdGetErrorRegister,
-        EasycommIdReset,
-        EasycommIdPark,
+        EasycommIdDoReset,
+        EasycommIdDoPark,
         EasycommIdsCount
     } EasycommCommandId;
 
@@ -87,47 +94,55 @@ extern "C"
      */
     typedef enum EasycommCommandLength
     {
-        // standard 1
+        // standard 1 - requests
         EasycommSingleLineMinLength = 27, // "AZa.a ELe.e UPuuu UUU DNddd DDD"
 
-        // standard 2
-        EasycommSingleLineMaxLength = 47,       // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
-        EasycommAzimuthMinLength = 5,           // "ACa.a"
-        EasycommAzimuthMaxLength = 7,           // "AZaaa.a"
-        EasycommGetAzimuthLength = 2,           // "AZ"
-        EasycommElevationMinLength = 5,         // "ELe.e"
-        EasycommElevationMaxLength = 7,         // "ELeee.e"
-        EasycommGetElevationLength = 2,         // "EL"
-        EasycommUplinkFrequencyMinLength = 3,   // "UPu"
-        EasycommUplinkFrequencyMaxLength = 11,  // "UPuuuuuuuuu"
-        EasycommDownlinkFrequencyMinLength = 3, // "DNd"
-        EasycommDownlinkFrequencyMaxLength = 11,  // "DNddddddddd"
-        EasycommUplinkModeMinLength = 3,          // "UMa"
-        EasycommUplinkModeMaxLength = 5,          // "UMabc"
-        EasycommDownlinkModeMinLength = 3,        // "DMa"
-        EasycommDownlinkModeMaxLength = 5,        // "DMabc"
-        EasycommDownlinkRadioNumberMinLength = 3, // "DRd"
-        EasycommDownlinkRadioNumberMaxLength = 5, // "DRddd"
-        EasycommUplinkRadioNumberMinLength = 3,   // "URu"
-        EasycommUplinkRadioNumberMaxLength = 5,   // "URuuu"
-        EasycommMoveLeftLength = 2,               // "ML"
-        EasycommMoveRightLength = 2,              // "MR"
-        EasycommMoveUpLength = 2,                 // "MU"
-        EasycommMoveDownLength = 2,               // "MD"
-        EasycommStopAzimuthMoveLength = 2,        // "SA"
-        EasycommStopElevationMoveLength = 2,      // "SE"
-        EasycommAcquisitionOfSignalLength = 2,    // "AO"  TODO: clarification needed
-        EasycommLossOfSignalLength = 2,           // "LO"  TODO: clarification needed
-        EasycommSetOutputMinLength = 5,           // "OPn,b" TODO: high vs low or set vs clear?
-        EasycommSetOutputMaxLength = 7,           // "OPnnn,b"
-        EasycommReadInputMinLength = 3,           // "IPn"
-        EasycommReadInputMaxLength = 5,           // "IPnnn"
-        EasycommReadAnalogueInputMinLength = 3,   // "An"
-        EasycommReadAnalogueInputMaxLength = 5,   // "ANnnn"
-        EasycommSetTimeMinLength = 13,            // "STY:m:d:h:M:s"
-        EasycommSetTimeMaxLength = 19,            // "STYY:mm:dd:hh:MM:ss"
-        EasycommRequestVersionLength = 2,         // "VE"
+        // standard 2 - requests
+        EasycommSingleLineMaxLength = 47,  // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
+        EasycommSetAzimuthMinLength = 5,   // "ACa.a"
+        EasycommSetAzimuthMaxLength = 7,   // "AZaaa.a"
+        EasycommGetAzimuthLength = 2,      // "AZ"
+        EasycommSetElevationMinLength = 5, // "ELe.e"
+        EasycommSetElevationMaxLength = 7, // "ELeee.e"
+        EasycommGetElevationLength = 2,    // "EL"
+        EasycommSetUplinkFrequencyMinLength = 3,    // "UPu"
+        EasycommSetUplinkFrequencyMaxLength = 11,   // "UPuuuuuuuuu"
+        EasycommGetUplinkFrequencyLength = 2,       // "UP"
+        EasycommSetDownlinkFrequencyMinLength = 3,  // "DNd"
+        EasycommSetDownlinkFrequencyMaxLength = 11, // "DNddddddddd"
+        EasycommGetDownlinkFrequencyLength = 2,     // "DN"
+        EasycommSetUplinkModeMinLength = 3,         // "UMa"
+        EasycommSetUplinkModeMaxLength = 5,         // "UMabc"
+        EasycommGetUplinkModeLength = 2,            // "UM"
+        EasycommSetDownlinkModeMinLength = 3,       // "DMa"
+        EasycommSetDownlinkModeMaxLength = 5,       // "DMabc"
+        EasycommGetDownlinkModeLength = 2,          // "DM"
+        EasycommSetDownlinkRadioMinLength = 3,      // "DRd"
+        EasycommSetDownlinkRadioMaxLength = 5,      // "DRddd"
+        EasycommGetDownlinkRadioLength = 2,         // "DR"
+        EasycommSetUplinkRadioMinLength = 3,        // "URu"
+        EasycommSetUplinkRadioMaxLength = 5,        // "URuuu"
+        EasycommGetUplinkRadioLength = 2,           // "UR"
+        EasycommDoMoveLeftLength = 2,               // "ML"
+        EasycommDoMoveRightLength = 2,              // "MR"
+        EasycommDoMoveUpLength = 2,                 // "MU"
+        EasycommDoMoveDownLength = 2,               // "MD"
+        EasycommDoStopAzimuthMoveLength = 2,        // "SA"
+        EasycommDoStopElevationMoveLength = 2,      // "SE"
+        EasycommAcquisitionOfSignalLength = 2,      // "AO"  TODO: clarification needed
+        EasycommLossOfSignalLength = 2,             // "LO"  TODO: clarification needed
+        EasycommSetDigitalOutputMinLength = 5,      // "OPn,b" TODO: high vs low or set vs clear?
+        EasycommSetDigitalOutputMaxLength = 7,      // "OPnnn,b"
+        EasycommGetDigitalInputMinLength = 3,       // "IPn"
+        EasycommGetDigitalInputMaxLength = 5,       // "IPnnn"
+        EasycommGetAnalogueInputMinLength = 3,      // "An"
+        EasycommGetAnalogueInputMaxLength = 5,      // "ANnnn"
+        EasycommSetTimeMinLength = 13,              // "STY:m:d:h:M:s"
+        EasycommSetTimeMaxLength = 19,              // "STYY:mm:dd:hh:MM:ss"
+        EasycommGetTimeLength = 2,                  // "ST"
+        EasycommGetVersionLength = 2,               // "VE"
 
+        // standard 2 - responses
         EasycommResponseSingleLineLength = 47, // "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
         EasycommResponseAzimuthLength = 7,     // "AZaaa.a"
         EasycommResponseElevationLength = 7,   // "ELeee.e"
@@ -135,48 +150,49 @@ extern "C"
         EasycommResponseDownlinkFrequencyLength = 11,  // "DNddddddddd"
         EasycommResponseUplinkModeLength = 5,          // "UMabc"
         EasycommResponseDownlinkModeLength = 5,        // "DMabc"
-        EasycommResponseDownlinkRadioNumberLength = 5, // "DRddd"
-        EasycommResponseUplinkRadioNumberLength = 5,   // "URuuu"
+        EasycommResponseDownlinkRadioLength = 5,       // "DRddd"
+        EasycommResponseUplinkRadioLength = 5,         // "URuuu"
         EasycommResponseAcquisitionOfSignalLength = 2, // "AO"  TODO: clarification needed
         EasycommResponseLossOfSignalLength = 2,        // "LO"  TODO: clarification needed
-        EasycommResponseSetOutputLength = 7,           // "OPnnn,b"
-        EasycommResponseReadInputLength = 5,           // "IPnnn"
-        EasycommResponseReadAnalogueInputLength = 5,   // "ANnnn"
-        EasycommResponseSetTimeLength = 19,            // "STYY:MM:DD:HH:MM:SS"
-        EasycommResponseRequestVersionLength = 2,      // "VE"
+        EasycommResponseOutputLength = 7,              // "OPnnn,b"
+        EasycommResponseDigitalInputLength = 5,        // "IPnnn"
+        EasycommResponseAnalogueInputLength = 5,       // "ANnnn"
+        EasycommResponseTimeLength = 19,               // "STYY:MM:DD:HH:MM:SS"
+        EasycommResponseVersionLength = 2,             // "VE"
         EasycommResponseAlarmLength = 32,              // "AL[a-zA-Z]{0,32}"
 
-        // standard 3
-        EasycommVelocityLeftMinLength = 3,   // "VLv"
-        EasycommVelocityLeftMaxLength = 11,  // "VLvvvvvvvvv"
-        EasycommGetVelocityLeftLength = 2,   // "VL"
-        EasycommVelocityRightMinLength = 3,  // "VRv"
-        EasycommVelocityRightMaxLength = 11, // "VRvvvvvvvvv"
-        EasycommGetVelocityRightLength = 2,  // "VR"
-        EasycommVelocityUpMinLength = 3,     // "VUv"
-        EasycommVelocityUpMaxLength = 11,    // "VUvvvvvvvvv"
-        EasycommGetVelocityUpLength = 2,     // "VU"
-        EasycommVelocityDownMinLength = 3,   // "VDv"
-        EasycommVelocityDownMaxLength = 11,  // "VDvvvvvvvvv"
-        EasycommGetVelocityDownLength = 2,   // "VD"
-        EasycommReadConfigMinLength = 3,     // "CRn"
-        EasycommReadConfigMaxLength = 5,     // "CRnnn"
-        EasycommWriteConfigMinLength = 5, // "CWn,v" // TODO: payload is not defined, see config hamlib config token
-        EasycommWriteConfigMaxLength = 15,   // "CWnnn,vvvvvvvvv"
-        EasycommGetStatusRegisterLength = 2, // "GS"
-        EasycommGetErrorRegisterLength = 2,  // "GE"
-        EasycommResetLength = 5,             // "RESET"
-        EasycommParkLength = 4,              // "PARK"
+        // standard 3 - requests
+        EasycommSetVelocityLeftMinLength = 3,    // "VLv"
+        EasycommSetVelocityLeftMaxLength = 11,   // "VLvvvvvvvvv"
+        EasycommGetVelocityLeftLength = 2,       // "VL"
+        EasycommSetVelocityRightMinLength = 3,   // "VRv"
+        EasycommSetVelocityRightMaxLength = 11,  // "VRvvvvvvvvv"
+        EasycommGetVelocityRightLength = 2,      // "VR"
+        EasycommSetVelocityUpMinLength = 3,      // "VUv"
+        EasycommSetVelocityUpMaxLength = 11,     // "VUvvvvvvvvv"
+        EasycommGetVelocityUpLength = 2,         // "VU"
+        EasycommSetVelocityDownMinLength = 3,    // "VDv"
+        EasycommSetVelocityDownMaxLength = 11,   // "VDvvvvvvvvv"
+        EasycommGetVelocityDownLength = 2,       // "VD"
+        EasycommGetConfigRegisterMinLength = 3,  // "CRn"
+        EasycommGetConfigRegisterMaxLength = 5,  // "CRnnn"
+                                                 // TODO rubienr: "CWn,v" payload is not defined,
+                                                 //   see config hamlib config token
+        EasycommSetConfigRegisterMinLength = 5,  // "CWn,v"
+        EasycommSetConfigRegisterMaxLength = 15, // "CWnnn,vvvvvvvvv"
+        EasycommGetStatusRegisterLength = 2,     // "GS"
+        EasycommGetErrorRegisterLength = 2,      // "GE"
+        EasycommDoResetLength = 5,               // "RESET"
+        EasycommDoParkLength = 4,                // "PARK"
 
-        EasycommResponseVelocityLeftLength = 11,     // "VLvvvvvvvvv"
-        EasycommResponseVelocityRightLength = 11,    // "VRvvvvvvvvv"
-        EasycommResponseVelocityUpLength = 11,       // "VUvvvvvvvvv"
-        EasycommResponseVelocityDownLength = 11,     // "VDvvvvvvvvv"
-        EasycommResponseGetStatusRegisterLength = 3, // "GSs"
-        EasycommResponseGetErrorRegisterLength = 3,  // "GEe"
-        EasycommResponseReadConfigLength = 6 + 32,   // "CRnnn,[a-zA-Z]{32}"
-
-        // TODO: VE IP OP AN are mentioned to be new in standard 3 but already defined in standard 2
+        // standard 3 - responses
+        EasycommResponseVelocityLeftLength = 11,       // "VLvvvvvvvvv"
+        EasycommResponseVelocityRightLength = 11,      // "VRvvvvvvvvv"
+        EasycommResponseVelocityUpLength = 11,         // "VUvvvvvvvvv"
+        EasycommResponseVelocityDownLength = 11,       // "VDvvvvvvvvv"
+        EasycommResponseStatusRegisterLength = 3,      // "GSs"
+        EasycommResponseErrorRegisterLength = 3,       // "GEe"
+        EasycommResponseConfigRegisterLength = 6 + 32, // "CRnnn,[a-zA-Z]{32}"
     } EasycommCommandLength;
 
 
@@ -194,7 +210,7 @@ extern "C"
         } as;
     } EasycommFrequency;
 
-    typedef struct EasycommConfigValue
+    typedef struct EasycommConfigRegisterValue
     {
         union
         {
@@ -207,7 +223,7 @@ extern "C"
             uint8_t bytes[28]; // response example "CRx,[a-zA-Z]{0,26}"
             char str[28];      // response_host_buffer == 32 -> 32-len("CRx,") = 30-4 = 28
         } as;
-    } EasycommConfigValue;
+    } EasycommConfigRegisterValue;
 
 
 #ifdef __cplusplus
