@@ -341,19 +341,8 @@ void test_parse_invalid_downlink_radio()
     invariant_test_parse_downlink_radio(invalid_data, dont_care, expected_representation, expect_parser_fail);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_uplink_frequency_01);
     RUN_TEST(test_parse_uplink_frequency_02);
@@ -377,8 +366,11 @@ void loop()
     RUN_TEST(test_parse_downlink_radio_01);
     RUN_TEST(test_parse_downlink_radio_02);
     RUN_TEST(test_parse_invalid_downlink_radio);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../run-tests.h"

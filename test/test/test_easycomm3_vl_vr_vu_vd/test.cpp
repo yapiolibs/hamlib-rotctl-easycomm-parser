@@ -174,19 +174,8 @@ void test_parse_get_velocity_down()
                                            expect_parser_success);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_velocity_left);
     RUN_TEST(test_parse_velocity_right);
@@ -196,8 +185,11 @@ void loop()
     RUN_TEST(test_parse_get_velocity_right);
     RUN_TEST(test_parse_get_velocity_up);
     RUN_TEST(test_parse_get_velocity_down);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../run-tests.h"

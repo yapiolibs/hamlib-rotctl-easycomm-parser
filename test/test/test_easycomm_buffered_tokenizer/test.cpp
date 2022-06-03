@@ -397,18 +397,8 @@ void test_buffered_tokenizer_multiple_token_with_pending_token_04()
 }
 
 
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_buffered_tokenizer_single_token_one_word_01);
     RUN_TEST(test_buffered_tokenizer_single_token_one_word_02);
@@ -429,9 +419,11 @@ void loop()
     RUN_TEST(test_buffered_tokenizer_multiple_token_with_pending_token_02);
     RUN_TEST(test_buffered_tokenizer_multiple_token_with_pending_token_03);
     RUN_TEST(test_buffered_tokenizer_multiple_token_with_pending_token_04);
-    UNITY_END();
-
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../run-tests.h"

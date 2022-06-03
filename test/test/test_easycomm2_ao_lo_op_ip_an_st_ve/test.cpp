@@ -10,10 +10,6 @@
 #include <string.h>
 #include <unity.h>
 
-void setUp() {}
-
-void tearDown() {}
-
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_acquition_of_signal,
                                       EasycommAcquisitionOfSignalLength,
                                       EasycommParserStandard2,
@@ -41,7 +37,7 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_set_output,
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_input,
                                       EasycommReadInputMaxLength,
                                       EasycommParserStandard2,
-                                      easycommGetDitigalInput,
+                                      easycommGetDigitalInput,
                                       EasycommIdReadInput,
                                       getDigitalInput)
 
@@ -268,7 +264,7 @@ void test_parse_request_version()
     invariant_test_parse_request_version(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
-int run_tests()
+int tests()
 {
     UNITY_BEGIN();
     RUN_TEST(test_parse_acquisition_of_signal);
@@ -287,23 +283,8 @@ int run_tests()
     return UNITY_END();
 }
 
-int main(int argc, char **argv) { return run_tests(); }
+void setUp() {}
 
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-void loop() {}
+void tearDown() {}
 
-void setup()
-#endif
-{
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-    return run_tests();
-#else
-    run_tests();
-#endif
-}
+#include "../run-tests.h"

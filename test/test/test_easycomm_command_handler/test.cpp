@@ -119,19 +119,8 @@ void test_command_handler_invoke_default_callbacks_version_123()
     TEST_ASSERT_EQUAL(7, num_callback_invocations);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_command_handler_invoke_registered_callback_01);
     RUN_TEST(test_command_handler_invoke_unregistered_callback_01);
@@ -139,9 +128,11 @@ void loop()
     RUN_TEST(test_command_handler_invoke_default_callbacks_version_1);
     RUN_TEST(test_command_handler_invoke_default_callbacks_version_12);
     RUN_TEST(test_command_handler_invoke_default_callbacks_version_123);
-    UNITY_END();
-
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../run-tests.h"

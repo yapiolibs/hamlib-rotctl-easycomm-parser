@@ -184,18 +184,8 @@ void test_parse_get_elevation_01()
 }
 
 
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_azimuth_01);
     RUN_TEST(test_parse_azimuth_02);
@@ -208,8 +198,11 @@ void loop()
     RUN_TEST(test_parse_unexpected_elevation);
     RUN_TEST(test_parse_get_azimuth_01);
     RUN_TEST(test_parse_get_elevation_01);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../run-tests.h"

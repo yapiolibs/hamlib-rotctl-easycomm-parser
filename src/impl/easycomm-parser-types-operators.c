@@ -172,7 +172,7 @@ bool easycommGetDigitalInputEquals(const EasycommGetDigitalInput *a, const Easyc
 }
 
 
-bool easycommReadAnalogueInputEquals(const EasycommGetAnalogueInput *a, const EasycommGetAnalogueInput *b)
+bool easycommGetAnalogueInputEquals(const EasycommGetAnalogueInput *a, const EasycommGetAnalogueInput *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommGetAnalogueInput));
 }
@@ -184,7 +184,7 @@ bool easycommSetTimeEquals(const EasycommSetTime *a, const EasycommSetTime *b)
 }
 
 
-bool easycommRequestVersionEquals(const EasycommGetVersion *a, const EasycommGetVersion *b)
+bool easycommGetVersionEquals(const EasycommGetVersion *a, const EasycommGetVersion *b)
 {
     return 0 == memcmp(a, b, sizeof(EasycommGetVersion));
 }

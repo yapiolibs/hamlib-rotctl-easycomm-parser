@@ -271,19 +271,8 @@ void test_response_get_error_register_01()
     TEST_ASSERT_EQUAL_STRING(expected_response, response_str);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_response_single_line_01);
     RUN_TEST(test_response_single_line_02);
@@ -306,8 +295,11 @@ void loop()
     RUN_TEST(test_response_read_config_01);
     RUN_TEST(test_response_get_status_register_01);
     RUN_TEST(test_response_get_error_register_01);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../run-tests.h"
