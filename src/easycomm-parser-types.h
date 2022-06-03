@@ -37,11 +37,11 @@ extern "C"
      * example: "AZnnn.n"
      * standard: Easycomm 2
      */
-    typedef struct EassycommAzimuth
+    typedef struct EassycommSetAzimuth
     {
         EasycommCommandId commandId;
         float azimuth;
-    } EasycommAzimuth;
+    } EasycommSetAzimuth;
 
     /**
      * command: AZ
@@ -60,11 +60,11 @@ extern "C"
      * example: "ELnnn.n"
      * standard: Easycomm 2
      */
-    typedef struct EasycommElevation
+    typedef struct EasycommSetElevation
     {
         EasycommCommandId commandId;
         float elevation;
-    } EasycommElevation;
+    } EasycommSetElevation;
 
     /**
      * command: EL
@@ -84,11 +84,11 @@ extern "C"
      * example: "UPnnnnnnnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommUplinkFrequency
+    typedef struct EasycommSetUplinkFrequency
     {
         EasycommCommandId commandId;
         EasycommFrequency frequency;
-    } EasycommUplinkFrequency;
+    } EasycommSetUplinkFrequency;
 
     /**
      * command: DN
@@ -96,11 +96,11 @@ extern "C"
      * example: "DNnnnnnnnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommDownlinkFrequency
+    typedef struct EasycommSetDownlinkFrequency
     {
         EasycommCommandId commandId;
         EasycommFrequency frequency;
-    } EasycommDownlinkFrequency;
+    } EasycommSetDownlinkFrequency;
 
     /**
      * command: UM
@@ -108,11 +108,11 @@ extern "C"
      * example: "UMccc"
      * standard: Easycomm 2
      */
-    typedef struct EasycommUplinkMode
+    typedef struct EasycommSetUplinkMode
     {
         EasycommCommandId commandId;
         char mode[4];
-    } EasycommUplinkMode;
+    } EasycommSetUplinkMode;
 
     /**
      * command: DM
@@ -120,11 +120,11 @@ extern "C"
      * examples: "DMccc"
      * standard: Easycomm 2
      */
-    typedef struct EasycommDownlinkMode
+    typedef struct EasycommSetDownlinkMode
     {
         EasycommCommandId commandId;
         char mode[4];
-    } EasycommDownlinkMode;
+    } EasycommSetDownlinkMode;
 
     /**
      * command: DR
@@ -132,11 +132,11 @@ extern "C"
      * example: "DRnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommDownlinkRadioNumber
+    typedef struct EasycommSetDownlinkRadioNumber
     {
         EasycommCommandId commandId;
         uint16_t number;
-    } EasycommDownlinkRadioNumber;
+    } EasycommSetDownlinkRadioNumber;
 
     /**
      * command: UR
@@ -144,12 +144,12 @@ extern "C"
      * example: "URnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommUplinkRadioNumber
+    typedef struct EasycommSetUplinkRadioNumber
     {
         EasycommCommandId commandId;
         uint16_t number;
 
-    } EasycommUplinkRadioNumber;
+    } EasycommSetUplinkRadioNumber;
 
 
     /**
@@ -158,10 +158,10 @@ extern "C"
      * example: "ML"
      * standard: Easycomm 2
      */
-    typedef struct EasycommMoveLeft
+    typedef struct EasycommDoMoveLeft
     {
         EasycommCommandId commandId;
-    } EasycommMoveLeft;
+    } EasycommDoMoveLeft;
 
 
     /**
@@ -170,10 +170,10 @@ extern "C"
      * example: "MR"
      * standard: Easycomm 2
      */
-    typedef struct EasycommMoveRight
+    typedef struct EasycommDoMoveRight
     {
         EasycommCommandId commandId;
-    } EasycommMoveRight;
+    } EasycommDoMoveRight;
 
     /**
      * command: MU
@@ -181,10 +181,10 @@ extern "C"
      * example: "MU"
      * standard: Easycomm 2
      */
-    typedef struct EasycommMoveUp
+    typedef struct EasycommDoMoveUp
     {
         EasycommCommandId commandId;
-    } EasycommMoveUp;
+    } EasycommDoMoveUp;
 
     /**
      * command: MD
@@ -192,10 +192,10 @@ extern "C"
      * example: "MD"
      * standard: Easycomm 2
      */
-    typedef struct EasycommMoveDown
+    typedef struct EasycommDoMoveDown
     {
         EasycommCommandId commandId;
-    } EasycommMoveDown;
+    } EasycommDoMoveDown;
 
     /**
      * command: SA
@@ -203,10 +203,10 @@ extern "C"
      * example: "SA"
      * standard: Easycomm 2
      */
-    typedef struct EasycommStopAzimuthMove
+    typedef struct EasycommDoStopAzimuthMove
     {
         EasycommCommandId commandId;
-    } EasycommStopAzimuthMove;
+    } EasycommDoStopAzimuthMove;
 
     /**
      * command: SE
@@ -214,10 +214,10 @@ extern "C"
      * example: "SE"
      * standard: Easycomm 2
      */
-    typedef struct EasycommStopElevationMove
+    typedef struct EasycommDoStopElevationMove
     {
         EasycommCommandId commandId;
-    } EasycommStopElevationMove;
+    } EasycommDoStopElevationMove;
 
     /**
      * command: AO
@@ -247,12 +247,12 @@ extern "C"
      * example: "OPnnn,b"
      * standard: Easycomm 2
      */
-    typedef struct EasycommSetOutput
+    typedef struct EasycommSetDigitalOutput
     {
         EasycommCommandId commandId;
         uint16_t number;
         bool value;
-    } EasycommSetOutput;
+    } EasycommSetDigitalOutput;
 
     /**
      * command: IP
@@ -260,11 +260,11 @@ extern "C"
      * example: "IPnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommReadInput
+    typedef struct EasycommGetDigitalInput
     {
         EasycommCommandId commandId;
         uint16_t number;
-    } EasycommReadInput;
+    } EasycommGetDigitalInput;
 
     /**
      * command: AN
@@ -272,11 +272,11 @@ extern "C"
      * example: "ANnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommReadAnalogueInput
+    typedef struct EasycommGetAnalogueInput
     {
         EasycommCommandId commandId;
         uint16_t number;
-    } EasycommReadAnalogueInput;
+    } EasycommGetAnalogueInput;
 
     /**
      * command: ST
@@ -312,10 +312,10 @@ extern "C"
      * example: "VE"
      * standard: Easycomm 2
      */
-    typedef struct EasycommRequestVersion
+    typedef struct EasycommGetVersion
     {
         EasycommCommandId commandId;
-    } EasycommRequestVersion;
+    } EasycommGetVersion;
 
     /**
      * command: VL
@@ -323,11 +323,11 @@ extern "C"
      * example: "VLnnn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommVelocityLeft
+    typedef struct EasycommSetVelocityLeft
     {
         EasycommCommandId commandId;
         uint16_t milliDegSecond;
-    } EasycommVelocityLeft;
+    } EasycommSetVelocityLeft;
 
     /**
      * command: VL
@@ -346,11 +346,11 @@ extern "C"
      * example: "VRnnn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommVelocityRight
+    typedef struct EasycommSetVelocityRight
     {
         EasycommCommandId commandId;
         uint16_t milliDegSecond;
-    } EasycommVelocityRight;
+    } EasycommSetVelocityRight;
 
     /**
      * command: VR
@@ -369,11 +369,11 @@ extern "C"
      * example: "VUnnn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommVelocityUp
+    typedef struct EasycommSetVelocityUp
     {
         EasycommCommandId commandId;
         uint16_t milliDegSecond;
-    } EasycommVelocityUp;
+    } EasycommSetVelocityUp;
 
     /**
      * command: VU
@@ -392,11 +392,11 @@ extern "C"
      * example: "VDnnn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommVelocityDown
+    typedef struct EasycommSetVelocityDown
     {
         EasycommCommandId commandId;
         uint16_t milliDegSecond;
-    } EasycommVelocityDown;
+    } EasycommSetVelocityDown;
 
     /**
      * command: VD
@@ -416,11 +416,11 @@ extern "C"
      * example: "CRnnn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommReadConfig
+    typedef struct EasycommGetConfigRegister
     {
         EasycommCommandId commandId;
         uint16_t registerNumber;
-    } EasycommReadConfig;
+    } EasycommGetConfigRegister;
 
     /**
      * command: CW
@@ -428,12 +428,12 @@ extern "C"
      * example: "CWnnn,nnn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommWriteConfig
+    typedef struct EasycommSetConfigRegister
     {
         EasycommCommandId commandId;
         uint16_t registerNumber;
         EasycommConfigValue value;
-    } EasycommWriteConfig;
+    } EasycommSetConfigRegister;
 
     /**
      * command: GS
@@ -463,10 +463,10 @@ extern "C"
      * example: "RESET"
      * standard: Easycomm ?
      */
-    typedef struct EasycommReset
+    typedef struct EasycommDoReset
     {
         EasycommCommandId commandId;
-    } EasycommReset;
+    } EasycommDoReset;
 
     /**
      * command: PARK
@@ -474,10 +474,10 @@ extern "C"
      * example: "PARK"
      * standard: Easycomm ?
      */
-    typedef struct EasycommPark
+    typedef struct EasycommDoPark
     {
         EasycommCommandId commandId;
-    } EasycommPark;
+    } EasycommDoPark;
 
     /*!
      * Convenience union for cast in between message types.
@@ -486,43 +486,43 @@ extern "C"
     {
         EasycommCommandId commandId;
         EasycommSingleLine singleLine;
-        EasycommAzimuth azimuth;
+        EasycommSetAzimuth setAzimuth;
         EasycommGetAzimuth getAzimuth;
-        EasycommElevation elevation;
+        EasycommSetElevation setElevation;
         EasycommGetElevation getElevation;
-        EasycommUplinkFrequency uplinkFrequency;
-        EasycommDownlinkFrequency downlinkFrequency;
-        EasycommUplinkMode uplinkMode;
-        EasycommDownlinkMode downlinkMode;
-        EasycommUplinkRadioNumber uplinkRadio;
-        EasycommDownlinkRadioNumber downlinkRadio;
-        EasycommMoveLeft moveLeft;
-        EasycommMoveRight moveRight;
-        EasycommMoveUp moveUp;
-        EasycommMoveDown moveDown;
-        EasycommStopAzimuthMove stopAzimuthMove;
-        EasycommStopElevationMove stopElevationMove;
+        EasycommSetUplinkFrequency setUplinkFrequency;
+        EasycommSetDownlinkFrequency setDownlinkFrequency;
+        EasycommSetUplinkMode setUplinkMode;
+        EasycommSetDownlinkMode setDownlinkMode;
+        EasycommSetUplinkRadioNumber setUplinkRadio;
+        EasycommSetDownlinkRadioNumber setDownlinkRadio;
+        EasycommDoMoveLeft doMoveLeft;
+        EasycommDoMoveRight doMoveRight;
+        EasycommDoMoveUp doMoveUp;
+        EasycommDoMoveDown doMoveDown;
+        EasycommDoStopAzimuthMove doStopAzimuthMove;
+        EasycommDoStopElevationMove doStopElevationMove;
         EasycommAcquisitionOfSignal acquisitionOfSignal;
         EasycommLossOfSignal lossOfSignal;
-        EasycommSetOutput setOutput;
-        EasycommReadInput readInput;
-        EasycommReadAnalogueInput readAnalogueInput;
+        EasycommSetDigitalOutput setDigitalOutput;
+        EasycommGetDigitalInput getDigitalInput;
+        EasycommGetAnalogueInput getAnalogueInput;
         EasycommSetTime setTime;
-        EasycommRequestVersion requestVersion;
-        EasycommVelocityLeft velocityLeft;
+        EasycommGetVersion getVersion;
+        EasycommSetVelocityLeft setVelocityLeft;
         EasycommGetVelocityLeft getVelocityLeft;
-        EasycommVelocityRight velocityRight;
+        EasycommSetVelocityRight setVelocityRight;
         EasycommGetVelocityRight getVelocityRight;
-        EasycommVelocityUp velocityUp;
+        EasycommSetVelocityUp setVelocityUp;
         EasycommGetVelocityUp getVelocityUp;
-        EasycommVelocityDown velocityDown;
+        EasycommSetVelocityDown setVelocityDown;
         EasycommGetVelocityDown getVelocityDown;
-        EasycommReadConfig readConfig;
-        EasycommWriteConfig writeConfig;
+        EasycommGetConfigRegister getConfigRegister;
+        EasycommSetConfigRegister setConfigRegister;
         EasycommGetStatusRegister getStatusRegister;
         EasycommGetErrorRegister getErrorRegister;
-        EasycommReset reset;
-        EasycommPark park;
+        EasycommDoReset doReset;
+        EasycommDoPark doPark;
     } EasycommPayload;
 
 

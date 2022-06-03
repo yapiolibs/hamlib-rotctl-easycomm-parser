@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #endif
 
-#include "../common-parse-command.h"
+#include "../helpers/common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -13,49 +13,49 @@
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_left,
                                       EasycommMoveLeftLength,
                                       EasycommParserStandard2,
-                                      easycommMoveLeft,
+                                      easycommDoMoveLeft,
                                       EasycommIdMoveLeft,
-                                      moveLeft)
+                                      doMoveLeft)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_right,
                                       EasycommMoveRightLength,
                                       EasycommParserStandard2,
-                                      easycommMoveRight,
+                                      easycommDoMoveRight,
                                       EasycommIdMoveRight,
-                                      moveRight)
+                                      doMoveRight)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_up,
                                       EasycommMoveUpLength,
                                       EasycommParserStandard2,
-                                      easycommMoveUp,
+                                      easycommDoMoveUp,
                                       EasycommIdMoveUp,
-                                      moveUp)
+                                      doMoveUp)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_move_down,
                                       EasycommMoveDownLength,
                                       EasycommParserStandard2,
-                                      easycommMoveDown,
+                                      easycommDoMoveDown,
                                       EasycommIdMoveDown,
-                                      moveDown)
+                                      doMoveDown)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_stop_azimuth_move,
                                       EasycommStopAzimuthMoveLength,
                                       EasycommParserStandard2,
-                                      easycommStopAzimuthMove,
+                                      easycommDoStopAzimuthMove,
                                       EasycommIdStopAzimuthMove,
-                                      stopAzimuthMove)
+                                      doStopAzimuthMove)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_stop_elevation_move,
                                       EasycommStopElevationMoveLength,
                                       EasycommParserStandard2,
-                                      easycommStopElevationMove,
+                                      easycommDoStopElevationMove,
                                       EasycommIdStopElevationMove,
-                                      stopElevationMove)
+                                      doStopElevationMove)
 
 
 void test_parse_move_left()
@@ -63,7 +63,7 @@ void test_parse_move_left()
     const char *valid_data = "ML";
     const char *expected_representation = "ML";
     EasycommData expected_result;
-    easycommMoveLeft(&expected_result.as.moveLeft);
+    easycommDoMoveLeft(&expected_result.as.doMoveLeft);
     const bool expect_parser_success = true;
 
     invariant_test_parse_move_left(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -75,7 +75,7 @@ void test_parse_move_right()
     const char *valid_data = "MR";
     const char *expected_representation = "MR";
     EasycommData expected_result;
-    easycommMoveRight(&expected_result.as.moveRight);
+    easycommDoMoveRight(&expected_result.as.doMoveRight);
     const bool expect_parser_success = true;
 
     invariant_test_parse_move_right(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -87,7 +87,7 @@ void test_parse_move_up()
     const char *valid_data = "MU";
     const char *expected_representation = "MU";
     EasycommData expected_result;
-    easycommMoveUp(&expected_result.as.moveUp);
+    easycommDoMoveUp(&expected_result.as.doMoveUp);
     const bool expect_parser_success = true;
 
     invariant_test_parse_move_up(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -99,7 +99,7 @@ void test_parse_move_down()
     const char *valid_data = "MD";
     const char *expected_representation = "MD";
     EasycommData expected_result;
-    easycommMoveDown(&expected_result.as.moveDown);
+    easycommDoMoveDown(&expected_result.as.doMoveDown);
     const bool expect_parser_success = true;
 
     invariant_test_parse_move_down(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -111,7 +111,7 @@ void test_parse_stop_azimuth_move()
     const char *valid_data = "SA";
     const char *expected_representation = "SA";
     EasycommData expected_result;
-    easycommStopAzimuthMove(&expected_result.as.stopAzimuthMove);
+    easycommDoStopAzimuthMove(&expected_result.as.doStopAzimuthMove);
     const bool expect_parser_success = true;
 
     invariant_test_parse_stop_azimuth_move(valid_data, &expected_result, expected_representation,
@@ -124,26 +124,15 @@ void test_parse_stop_elevation_move()
     const char *valid_data = "SE";
     const char *expected_representation = "SE";
     EasycommData expected_result;
-    easycommStopElevationMove(&expected_result.as.stopElevationMove);
+    easycommDoStopElevationMove(&expected_result.as.doStopElevationMove);
     const bool expect_parser_success = true;
 
     invariant_test_parse_stop_elevation_move(valid_data, &expected_result, expected_representation,
                                              expect_parser_success);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_move_left);
     RUN_TEST(test_parse_move_right);
@@ -151,8 +140,11 @@ void loop()
     RUN_TEST(test_parse_move_down);
     RUN_TEST(test_parse_stop_azimuth_move);
     RUN_TEST(test_parse_stop_elevation_move);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../helpers/run-tests.h"

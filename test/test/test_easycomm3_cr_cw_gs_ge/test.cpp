@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #endif
 
-#include "../common-parse-command.h"
+#include "../helpers/common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -13,17 +13,17 @@
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_read_config,
                                       EasycommReadConfigMaxLength,
                                       EasycommParserStandard3,
-                                      easycommReadConfig,
+                                      easycommGetConfigRegister,
                                       EasycommIdReadConfig,
-                                      readConfig)
+                                      getConfigRegister)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_write_config,
                                       EasycommWriteConfigMaxLength,
                                       EasycommParserStandard3,
-                                      easycommWriteConfig,
+                                      easycommSetConfigRegister,
                                       EasycommIdWriteConfig,
-                                      writeConfig)
+                                      setConfigRegister)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_get_status_register,
@@ -47,8 +47,8 @@ void test_parse_read_config()
     const char *valid_data = "CR123";
     const char *expected_representation = "CR123";
     EasycommData expected_result;
-    easycommReadConfig(&expected_result.as.readConfig);
-    expected_result.as.readConfig.registerNumber = 123;
+    easycommGetConfigRegister(&expected_result.as.getConfigRegister);
+    expected_result.as.getConfigRegister.registerNumber = 123;
     const bool expect_parser_success = true;
 
     invariant_test_parse_read_config(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -60,9 +60,9 @@ void test_parse_write_config()
     const char *valid_data = "CW123,0815";
     const char *expected_representation = "CW123,0815";
     EasycommData expected_result;
-    easycommWriteConfig(&expected_result.as.writeConfig);
-    expected_result.as.writeConfig.registerNumber = 123;
-    memcpy(expected_result.as.writeConfig.value.as.str, "0815", 4);
+    easycommSetConfigRegister(&expected_result.as.setConfigRegister);
+    expected_result.as.setConfigRegister.registerNumber = 123;
+    memcpy(expected_result.as.setConfigRegister.value.as.str, "0815", 4);
     const bool expect_parser_success = true;
 
     invariant_test_parse_write_config(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -94,26 +94,18 @@ void test_parse_get_error_register()
                                             expect_parser_success);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_read_config);
     RUN_TEST(test_parse_write_config);
     RUN_TEST(test_parse_get_status_register);
     RUN_TEST(test_parse_get_error_register);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../helpers/run-tests.h"

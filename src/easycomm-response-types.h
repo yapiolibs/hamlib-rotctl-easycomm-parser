@@ -108,32 +108,32 @@ extern "C"
      * example: "IPnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommResponseReadInput
+    typedef struct EasycommResponseDigitalInput
     {
         uint16_t number;
         bool value;
-    } EasycommResponseReadInput;
+    } EasycommResponseDigitalInput;
 
     /**
      * example: "ANnnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommResponseReadAnalogueInput
+    typedef struct EasycommResponseAnalogueInput
     {
         uint16_t number;
         uint16_t value;
-    } EasycommResponseReadAnalogueInput;
+    } EasycommResponseAnalogueInput;
 
 
     /**
      * example: "VEnnn.nnn"
      * standard: Easycomm 2
      */
-    typedef struct EasycommResponseRequestVersion
+    typedef struct EasycommResponseVersion
     {
         uint8_t minor;
         uint8_t major;
-    } EasycommResponseRequestVersion;
+    } EasycommResponseVersion;
 
     /**
      * example: "ALtextnospaces"
@@ -184,29 +184,29 @@ extern "C"
      * example: "CRnnn,vvv"
      * standard: Easycomm 3
      */
-    typedef struct EasycommResponseReadConfig
+    typedef struct EasycommResponseConfigRegister
     {
         uint16_t registerNumber;
         EasycommConfigValue value;
-    } EasycommResponseReadConfig;
+    } EasycommResponseConfigRegister;
 
     /**
      * example: "GSn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommResponseGetStatusRegister
+    typedef struct EasycommResponseStatusRegister
     {
         EasycommStatusRegister status;
-    } EasycommResponseGetStatusRegister;
+    } EasycommResponseStatusRegister;
 
     /**
      * example: "GEn"
      * standard: Easycomm 3
      */
-    typedef struct EasycommResponseGetErrorRegister
+    typedef struct EasycommResponseErrorRegister
     {
         EasycommErrorRegister status;
-    } EasycommResponseGetErrorRegister;
+    } EasycommResponseErrorRegister;
 
 
 #ifdef __cplusplus

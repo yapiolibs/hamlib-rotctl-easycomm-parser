@@ -95,49 +95,49 @@ static void printCommandCallback(const EasycommData *command, void *custom_data)
     }
     else if(command->commandId == EasycommIdGetStatusRegister)
     {
-        EasycommResponseGetStatusRegister gs;
-        easycommResponseGetStatusRegister(&gs);
-        gs.status = EasycommStatusMoving;
-        easycommResponseGetStatusRegisterSprintf(&gs, string_buffer);
+        EasycommResponseStatusRegister sr;
+        easycommResponseStatusRegister(&sr);
+        sr.status = EasycommStatusMoving;
+        easycommResponseStatusRegisterSprintf(&sr, string_buffer);
     }
     else if(command->commandId == EasycommIdGetErrorRegister)
     {
-        EasycommResponseGetErrorRegister ge;
-        easycommResponseGetErrorRegister(&ge);
-        ge.status = EasycommErrorSensor;
-        easycommResponseGetErrorRegisterSprintf(&ge, string_buffer);
+        EasycommResponseErrorRegister er;
+        easycommResponseErrorRegister(&er);
+        er.status = EasycommErrorSensor;
+        easycommResponseErrorRegisterSprintf(&er, string_buffer);
     }
     else if(command->commandId == EasycommIdReadInput)
     {
-        EasycommResponseReadInput ip;
-        easycommResponseReadInput(&ip);
-        ip.number = 1;
-        ip.value = true;
-        easycommResponseReadInputSprintf(&ip, string_buffer);
+        EasycommResponseDigitalInput di;
+        easycommResponseDigitalInput(&di);
+        di.number = 1;
+        di.value = true;
+        easycommResponseDigitalInputSprintf(&di, string_buffer);
     }
     else if(command->commandId == EasycommIdReadAnalogueInput)
     {
-        EasycommResponseReadAnalogueInput an;
-        easycommResponseReadAnalogueInput(&an);
-        an.number = 1;
-        an.value = 42;
-        easycommResponseReadAnalogueInputSprintf(&an, string_buffer);
+        EasycommResponseAnalogueInput ai;
+        easycommResponseAnalogueInput(&ai);
+        ai.number = 1;
+        ai.value = 42;
+        easycommResponseAnalogueInputSprintf(&ai, string_buffer);
     }
     else if(command->commandId == EasycommIdRequestVersion)
     {
-        EasycommResponseRequestVersion ve;
-        easycommResponseRequestVersion(&ve);
+        EasycommResponseVersion ve;
+        easycommResponseVersion(&ve);
         ve.major = 0;
         ve.minor = 1;
-        easycommResponseRequestVersionSprintf(&ve, string_buffer);
+        easycommResponseVersionSprintf(&ve, string_buffer);
     }
     else if(command->commandId == EasycommIdReadConfig)
     {
-        EasycommResponseReadConfig cr;
-        easycommResponseReadConfig(&cr);
+        EasycommResponseConfigRegister cr;
+        easycommResponseConfigRegister(&cr);
         cr.registerNumber = 1;
         memcpy(&cr.value.as.str, "asdf", 4);
-        easycommResponseReadConfigSprintf(&cr, string_buffer);
+        easycommResponseConfigRegisterSprintf(&cr, string_buffer);
     }
     else
         return;

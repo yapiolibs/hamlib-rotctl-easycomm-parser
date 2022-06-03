@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #endif
 
-#include "../common-parse-command.h"
+#include "../helpers/common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -22,17 +22,17 @@ INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_single_line,
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_reset,
                                       EasycommResetLength,
                                       EasycommParserStandard1,
-                                      easycommReset,
+                                      easycommDoReset,
                                       EasycommIdReset,
-                                      reset)
+                                      doReset)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_park,
                                       EasycommParkLength,
                                       EasycommParserStandard1,
-                                      easycommPark,
+                                      easycommDoPark,
                                       EasycommIdPark,
-                                      park)
+                                      doPark)
 
 void test_parse_elevation_01()
 {
@@ -226,7 +226,7 @@ void test_parse_reset()
     const char *valid_data = "RESET";
     const char *expected_representation = "RESET";
     EasycommData expected_result;
-    easycommReset(&expected_result.as.reset);
+    easycommDoReset(&expected_result.as.doReset);
     const bool expect_parser_success = true;
 
     invariant_test_parse_reset(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -238,24 +238,14 @@ void test_parse_park()
     const char *valid_data = "PARK";
     const char *expected_representation = "PARK";
     EasycommData expected_result;
-    easycommPark(&expected_result.as.park);
+    easycommDoPark(&expected_result.as.doPark);
     const bool expect_parser_success = true;
 
     invariant_test_parse_park(valid_data, &expected_result, expected_representation, expect_parser_success);
 }
 
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_elevation_01);
     RUN_TEST(test_parse_elevation_02);
@@ -272,9 +262,11 @@ void loop()
     RUN_TEST(test_parse_unexpected_uplink_frequency);
     RUN_TEST(test_parse_reset);
     RUN_TEST(test_parse_park);
-    UNITY_END();
-
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../helpers/run-tests.h"

@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #endif
 
-#include "../common-parse-command.h"
+#include "../helpers/common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -13,49 +13,49 @@
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_uplink_frequency,
                                       EasycommUplinkFrequencyMaxLength,
                                       EasycommParserStandard2,
-                                      easycommUplinkFrequency,
+                                      easycommSetUplinkFrequency,
                                       EasycommIdUplinkFrequency,
-                                      uplinkFrequency)
+                                      setUplinkFrequency)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_downlink_frequency,
                                       EasycommDownlinkFrequencyMaxLength,
                                       EasycommParserStandard2,
-                                      easycommDownlinkFrequency,
+                                      easycommSetDownlinkFrequency,
                                       EasycommIdDownlinkFrequency,
-                                      downlinkFrequency)
+                                      setDownlinkFrequency)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_uplink_mode,
                                       EasycommUplinkModeMaxLength,
                                       EasycommParserStandard2,
-                                      easycommUplinkMode,
+                                      easycommSetUplinkMode,
                                       EasycommIdUplinkMode,
-                                      uplinkMode)
+                                      setUplinkMode)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_downlink_mode,
                                       EasycommDownlinkModeMaxLength,
                                       EasycommParserStandard2,
-                                      easycommDownlinkMode,
+                                      easycommSetDownlinkMode,
                                       EasycommIdDownlinkMode,
-                                      downlinkMode)
+                                      setDownlinkMode)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_uplink_radio,
                                       EasycommUplinkRadioNumberMaxLength,
                                       EasycommParserStandard2,
-                                      easycommUplinkRadioNumber,
+                                      easycommSetUplinkRadioNumber,
                                       EasycommIdUplinkRadioNumber,
-                                      uplinkRadio)
+                                      setUplinkRadio)
 
 
 INVARIANT_TEST_PARSE_EASYCOMM_COMMAND(invariant_test_parse_downlink_radio,
                                       EasycommDownlinkRadioNumberMaxLength,
                                       EasycommParserStandard2,
-                                      easycommDownlinkRadioNumber,
+                                      easycommSetDownlinkRadioNumber,
                                       EasycommIdDownlinkRadioNumber,
-                                      downlinkRadio)
+                                      setDownlinkRadio)
 
 
 void test_parse_uplink_frequency_01()
@@ -63,8 +63,8 @@ void test_parse_uplink_frequency_01()
     const char *valid_data = "UP0";
     const char *expected_representation = "UP0";
     EasycommData expected_result;
-    easycommUplinkFrequency(&expected_result.as.uplinkFrequency);
-    expected_result.as.uplinkFrequency.frequency.as.uint32 = 0;
+    easycommSetUplinkFrequency(&expected_result.as.setUplinkFrequency);
+    expected_result.as.setUplinkFrequency.frequency.as.uint32 = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_frequency(valid_data, &expected_result, expected_representation,
@@ -76,8 +76,8 @@ void test_parse_uplink_frequency_02()
     const char *valid_data = "UP999999999";
     const char *expected_representation = "UP999999999";
     EasycommData expected_result;
-    easycommUplinkFrequency(&expected_result.as.uplinkFrequency);
-    expected_result.as.uplinkFrequency.frequency.as.uint32 = 999999999;
+    easycommSetUplinkFrequency(&expected_result.as.setUplinkFrequency);
+    expected_result.as.setUplinkFrequency.frequency.as.uint32 = 999999999;
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_frequency(valid_data, &expected_result, expected_representation,
@@ -112,8 +112,8 @@ void test_parse_downlink_frequency_01()
     const char *valid_data = "DN0";
     const char *expected_representation = "DN0";
     EasycommData expected_result;
-    easycommDownlinkFrequency(&expected_result.as.downlinkFrequency);
-    expected_result.as.downlinkFrequency.frequency.as.uint32 = 0;
+    easycommSetDownlinkFrequency(&expected_result.as.setDownlinkFrequency);
+    expected_result.as.setDownlinkFrequency.frequency.as.uint32 = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_frequency(valid_data, &expected_result, expected_representation,
@@ -125,8 +125,8 @@ void test_parse_downlink_frequency_02()
     const char *valid_data = "DN999999999";
     const char *expected_representation = "DN999999999";
     EasycommData expected_result;
-    easycommDownlinkFrequency(&expected_result.as.downlinkFrequency);
-    expected_result.as.downlinkFrequency.frequency.as.uint32 = 999999999;
+    easycommSetDownlinkFrequency(&expected_result.as.setDownlinkFrequency);
+    expected_result.as.setDownlinkFrequency.frequency.as.uint32 = 999999999;
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_frequency(valid_data, &expected_result, expected_representation,
@@ -161,10 +161,10 @@ void test_parse_downlink_mode_01()
     const char *valid_data = "DMabc";
     const char *expected_representation = "DMabc";
     EasycommData expected_result;
-    easycommDownlinkMode(&expected_result.as.downlinkMode);
-    expected_result.as.downlinkMode.mode[0] = 'a';
-    expected_result.as.downlinkMode.mode[1] = 'b';
-    expected_result.as.downlinkMode.mode[2] = 'c';
+    easycommSetDownlinkMode(&expected_result.as.setDownlinkMode);
+    expected_result.as.setDownlinkMode.mode[0] = 'a';
+    expected_result.as.setDownlinkMode.mode[1] = 'b';
+    expected_result.as.setDownlinkMode.mode[2] = 'c';
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_mode(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -176,10 +176,10 @@ void test_parse_downlink_mode_02()
     const char *valid_data = "DMab";
     const char *expected_representation = "DMab";
     EasycommData expected_result;
-    easycommDownlinkMode(&expected_result.as.downlinkMode);
-    expected_result.as.downlinkMode.mode[0] = 'a';
-    expected_result.as.downlinkMode.mode[1] = 'b';
-    expected_result.as.downlinkMode.mode[2] = 0;
+    easycommSetDownlinkMode(&expected_result.as.setDownlinkMode);
+    expected_result.as.setDownlinkMode.mode[0] = 'a';
+    expected_result.as.setDownlinkMode.mode[1] = 'b';
+    expected_result.as.setDownlinkMode.mode[2] = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_mode(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -191,10 +191,10 @@ void test_parse_downlink_mode_03()
     const char *valid_data = "DMa";
     const char *expected_representation = "DMa";
     EasycommData expected_result;
-    easycommDownlinkMode(&expected_result.as.downlinkMode);
-    expected_result.as.downlinkMode.mode[0] = 'a';
-    expected_result.as.downlinkMode.mode[1] = 0;
-    expected_result.as.downlinkMode.mode[2] = 0;
+    easycommSetDownlinkMode(&expected_result.as.setDownlinkMode);
+    expected_result.as.setDownlinkMode.mode[0] = 'a';
+    expected_result.as.setDownlinkMode.mode[1] = 0;
+    expected_result.as.setDownlinkMode.mode[2] = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_mode(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -217,10 +217,10 @@ void test_parse_uplink_mode_01()
     const char *valid_data = "UMabc";
     const char *expected_representation = "UMabc";
     EasycommData expected_result;
-    easycommUplinkMode(&expected_result.as.uplinkMode);
-    expected_result.as.uplinkMode.mode[0] = 'a';
-    expected_result.as.uplinkMode.mode[1] = 'b';
-    expected_result.as.uplinkMode.mode[2] = 'c';
+    easycommSetUplinkMode(&expected_result.as.setUplinkMode);
+    expected_result.as.setUplinkMode.mode[0] = 'a';
+    expected_result.as.setUplinkMode.mode[1] = 'b';
+    expected_result.as.setUplinkMode.mode[2] = 'c';
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_mode(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -232,10 +232,10 @@ void test_parse_uplink_mode_02()
     const char *valid_data = "UMab";
     const char *expected_representation = "UMab";
     EasycommData expected_result;
-    easycommUplinkMode(&expected_result.as.uplinkMode);
-    expected_result.as.uplinkMode.mode[0] = 'a';
-    expected_result.as.uplinkMode.mode[1] = 'b';
-    expected_result.as.uplinkMode.mode[2] = 0;
+    easycommSetUplinkMode(&expected_result.as.setUplinkMode);
+    expected_result.as.setUplinkMode.mode[0] = 'a';
+    expected_result.as.setUplinkMode.mode[1] = 'b';
+    expected_result.as.setUplinkMode.mode[2] = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_mode(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -247,10 +247,10 @@ void test_parse_uplink_mode_03()
     const char *valid_data = "UMa";
     const char *expected_representation = "UMa";
     EasycommData expected_result;
-    easycommUplinkMode(&expected_result.as.uplinkMode);
-    expected_result.as.uplinkMode.mode[0] = 'a';
-    expected_result.as.uplinkMode.mode[1] = 0;
-    expected_result.as.uplinkMode.mode[2] = 0;
+    easycommSetUplinkMode(&expected_result.as.setUplinkMode);
+    expected_result.as.setUplinkMode.mode[0] = 'a';
+    expected_result.as.setUplinkMode.mode[1] = 0;
+    expected_result.as.setUplinkMode.mode[2] = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_mode(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -273,8 +273,8 @@ void test_parse_uplink_radio_01()
     const char *valid_data = "UR0";
     const char *expected_representation = "UR0";
     EasycommData expected_result;
-    easycommUplinkRadioNumber(&expected_result.as.uplinkRadio);
-    expected_result.as.uplinkRadio.number = 0;
+    easycommSetUplinkRadioNumber(&expected_result.as.setUplinkRadio);
+    expected_result.as.setUplinkRadio.number = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_radio(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -286,8 +286,8 @@ void test_parse_uplink_radio_02()
     const char *valid_data = "UR999";
     const char *expected_representation = "UR999";
     EasycommData expected_result;
-    easycommUplinkRadioNumber(&expected_result.as.uplinkRadio);
-    expected_result.as.uplinkRadio.number = 999;
+    easycommSetUplinkRadioNumber(&expected_result.as.setUplinkRadio);
+    expected_result.as.setUplinkRadio.number = 999;
     const bool expect_parser_success = true;
 
     invariant_test_parse_uplink_radio(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -310,8 +310,8 @@ void test_parse_downlink_radio_01()
     const char *valid_data = "DR0";
     const char *expected_representation = "DR0";
     EasycommData expected_result;
-    easycommDownlinkRadioNumber(&expected_result.as.downlinkRadio);
-    expected_result.as.downlinkRadio.number = 0;
+    easycommSetDownlinkRadioNumber(&expected_result.as.setDownlinkRadio);
+    expected_result.as.setDownlinkRadio.number = 0;
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_radio(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -323,8 +323,8 @@ void test_parse_downlink_radio_02()
     const char *valid_data = "DR031";
     const char *expected_representation = "DR31";
     EasycommData expected_result;
-    easycommDownlinkRadioNumber(&expected_result.as.downlinkRadio);
-    expected_result.as.downlinkRadio.number = 31;
+    easycommSetDownlinkRadioNumber(&expected_result.as.setDownlinkRadio);
+    expected_result.as.setDownlinkRadio.number = 31;
     const bool expect_parser_success = true;
 
     invariant_test_parse_downlink_radio(valid_data, &expected_result, expected_representation, expect_parser_success);
@@ -341,19 +341,8 @@ void test_parse_invalid_downlink_radio()
     invariant_test_parse_downlink_radio(invalid_data, dont_care, expected_representation, expect_parser_fail);
 }
 
-
-#if defined(ARDUINO_AVR_MEGA2560) || defined(ENV_NATIVE)
-int main(int argc, char **argv)
-#else
-
-void setup() {}
-
-void loop()
-#endif
+int tests()
 {
-#if !defined(ARDUINO_AVR_MEGA2560) && !defined(ENV_NATIVE)
-    delay(1000);
-#endif
     UNITY_BEGIN();
     RUN_TEST(test_parse_uplink_frequency_01);
     RUN_TEST(test_parse_uplink_frequency_02);
@@ -377,8 +366,11 @@ void loop()
     RUN_TEST(test_parse_downlink_radio_01);
     RUN_TEST(test_parse_downlink_radio_02);
     RUN_TEST(test_parse_invalid_downlink_radio);
-    UNITY_END();
-#ifdef ARDUINO_AVR_MEGA2560
-    return 0;
-#endif
+    return UNITY_END();
 }
+
+void setUp() {}
+
+void tearDown() {}
+
+#include "../helpers/run-tests.h"

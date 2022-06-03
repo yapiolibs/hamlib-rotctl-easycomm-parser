@@ -39,7 +39,7 @@ bool isEasycomm1SingleLine(const char *buffer)
 }
 
 
-bool isEasycomm2Azimuth(const char *buffer)
+bool isEasycomm2SetAzimuth(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommAzimuthMinLength, EasycommAzimuthMaxLength, "AZ", 2);
 }
@@ -51,7 +51,7 @@ bool isEasycomm2GetAzimuth(const char *buffer)
 }
 
 
-bool isEasycomm2Elevation(const char *buffer)
+bool isEasycomm2SetElevation(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommElevationMinLength,
                                          EasycommElevationMaxLength, "EL", 2);
@@ -64,79 +64,79 @@ bool isEasycomm2GetElevation(const char *buffer)
 }
 
 
-bool isEasycomm2UplinkFrequency(const char *buffer)
+bool isEasycomm2SetUplinkFrequency(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommUplinkFrequencyMinLength,
                                          EasycommUplinkFrequencyMaxLength, "UP", 2);
 }
 
 
-bool isEasycomm2DownlinkFrequency(const char *buffer)
+bool isEasycomm2SetDownlinkFrequency(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommDownlinkFrequencyMinLength,
                                          EasycommDownlinkFrequencyMaxLength, "DN", 2);
 }
 
 
-bool isEasycomm2UplinkMode(const char *buffer)
+bool isEasycomm2SetUplinkMode(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommUplinkModeMinLength,
                                          EasycommUplinkModeMaxLength, "UM", 2);
 }
 
 
-bool isEasycomm2DownlinkMode(const char *buffer)
+bool isEasycomm2SetDownlinkMode(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommDownlinkModeMinLength,
                                          EasycommDownlinkModeMaxLength, "DM", 2);
 }
 
 
-bool isEasycomm2UplinkRadioNumber(const char *buffer)
+bool isEasycomm2SetUplinkRadioNumber(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommUplinkRadioNumberMinLength,
                                          EasycommUplinkRadioNumberMaxLength, "UR", 2);
 }
 
 
-bool isEasycomm2DownlinkRadioNumber(const char *buffer)
+bool isEasycomm2SetDownlinkRadioNumber(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommUplinkRadioNumberMinLength,
                                          EasycommUplinkRadioNumberMaxLength, "DR", 2);
 }
 
 
-bool isEasycomm2MoveLeft(const char *buffer)
+bool isEasycomm2DoMoveLeft(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommMoveLeftLength, "ML", 2);
 }
 
 
-bool isEasycomm2MoveRight(const char *buffer)
+bool isEasycomm2DoMoveRight(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommMoveRightLength, "MR", 2);
 }
 
 
-bool isEasycomm2MoveUp(const char *buffer)
+bool isEasycomm2DoMoveUp(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommMoveUpLength, "MU", 2);
 }
 
 
-bool isEasycomm2MoveDown(const char *buffer)
+bool isEasycomm2DoMoveDown(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommMoveDownLength, "MD", 2);
 }
 
 
-bool isEasycomm2StopAzimuthMove(const char *buffer)
+bool isEasycomm2DoStopAzimuthMove(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommStopAzimuthMoveLength, "SA", 2);
 }
 
 
-bool isEasycomm2StopElevationMove(const char *buffer)
+bool isEasycomm2DoStopElevationMove(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommStopElevationMoveLength, "SE", 2);
 }
@@ -154,21 +154,21 @@ bool isEasycomm2LossOfSignal(const char *buffer)
 }
 
 
-bool isEasycomm2SetOutput(const char *buffer)
+bool isEasycomm2SetDigitalOutput(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommSetOutputMinLength,
                                          EasycommSetOutputMaxLength, "OP", 2);
 }
 
 
-bool isEasycomm2ReadInput(const char *buffer)
+bool isEasycomm2GetDigitalInput(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommReadInputMinLength,
                                          EasycommReadInputMaxLength, "IP", 2);
 }
 
 
-bool isEasycomm2ReadAnalogueInput(const char *buffer)
+bool isEasycomm2GetAnalogueInput(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommReadAnalogueInputMinLength,
                                          EasycommReadAnalogueInputMaxLength, "AN", 2);
@@ -181,13 +181,13 @@ bool isEasycomm2SetTime(const char *buffer)
 }
 
 
-bool isEasycomm2RequestVersion(const char *buffer)
+bool isEasycomm2GetVersion(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommRequestVersionLength, "VE", 2);
 }
 
 
-bool isEasycomm3VelocityLeft(const char *buffer)
+bool isEasycomm3SetVelocityLeft(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommVelocityLeftMinLength,
                                          EasycommVelocityLeftMaxLength, "VL", 2);
@@ -200,7 +200,7 @@ bool isEasycomm3GetVelocityLeft(const char *buffer)
 }
 
 
-bool isEasycomm3VelocityRight(const char *buffer)
+bool isEasycomm3SetVelocityRight(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommVelocityRightMinLength,
                                          EasycommVelocityRightMaxLength, "VR", 2);
@@ -213,7 +213,7 @@ bool isEasycomm3GetVelocityRight(const char *buffer)
 }
 
 
-bool isEasycomm3VelocityUp(const char *buffer)
+bool isEasycomm3SetVelocityUp(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommVelocityUpMinLength,
                                          EasycommVelocityUpMaxLength, "VU", 2);
@@ -226,7 +226,7 @@ bool isEasycomm3GetVelocityUp(const char *buffer)
 }
 
 
-bool isEasycomm3VelocityDown(const char *buffer)
+bool isEasycomm3SetVelocityDown(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommVelocityDownMinLength,
                                          EasycommVelocityDownMaxLength, "VD", 2);
@@ -239,14 +239,14 @@ bool isEasycomm3GetVelocityDown(const char *buffer)
 }
 
 
-bool isEasycomm3ReadConfig(const char *buffer)
+bool isEasycomm3GetConfigRegister(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommReadConfigMinLength,
                                          EasycommReadConfigMaxLength, "CR", 2);
 }
 
 
-bool isEasycomm3WriteConfig(const char *buffer)
+bool isEasycomm3SetConfigRegister(const char *buffer)
 {
     return isDynamicLengthCommandPattern(buffer, EasycommWriteConfigMinLength,
                                          EasycommWriteConfigMaxLength, "CW", 2);
@@ -265,13 +265,13 @@ bool isEasycomm3GetErrorRegister(const char *buffer)
 }
 
 
-bool isEasycommReset(const char *buffer)
+bool isEasycommDoReset(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommResetLength, "RESET", 5);
 }
 
 
-bool isEasycommPark(const char *buffer)
+bool isEasycommDoPark(const char *buffer)
 {
     return isFixedLengthCommandPattern(buffer, EasycommParkLength, "PARK", 4);
 }
@@ -287,7 +287,7 @@ bool fallbackParser(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm1SingleLine(const char *buffer, EasycommData *parsed)
+bool parseEasycomm1SingleLine(const char *buffer, EasycommData *parsed)
 {
     // buffer examples:
     // - "AZaaa.a ELeee.e UPuuuuuuuuu UUU DNddddddddd DDD"
@@ -318,16 +318,16 @@ bool readEasycomm1SingleLine(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm2Azimuth(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetAzimuth(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "AZaaa.a", "AZaa.a", "AZa.a", "AZ.a"
     char c;
-    easycommAzimuth(&parsed->as.azimuth);
-    return 3 == sscanf(buffer, "%c%c%f", &c, &c, &parsed->as.azimuth.azimuth);
+    easycommSetAzimuth(&parsed->as.setAzimuth);
+    return 3 == sscanf(buffer, "%c%c%f", &c, &c, &parsed->as.setAzimuth.azimuth);
 }
 
 
-bool readEasycomm2GetAzimuth(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetAzimuth(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "AZ"
     easycommGetAzimuth(&parsed->as.getAzimuth);
@@ -335,16 +335,16 @@ bool readEasycomm2GetAzimuth(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm2Elevation(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetElevation(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "ELeee.e", "ELee.e", "ELe.e", "EL.e"
     char c;
-    easycommElevation(&parsed->as.elevation);
-    return 3 == sscanf(buffer, "%c%c%f", &c, &c, &parsed->as.elevation.elevation);
+    easycommSetElevation(&parsed->as.setElevation);
+    return 3 == sscanf(buffer, "%c%c%f", &c, &c, &parsed->as.setElevation.elevation);
 }
 
 
-bool readEasycomm2GetElevation(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetElevation(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "EL"
     easycommGetElevation(&parsed->as.getElevation);
@@ -352,11 +352,11 @@ bool readEasycomm2GetElevation(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm2UplinkFrequency(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetUplinkFrequency(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "UFuuuuuuuuu", ..., "UFu"
     char c;
-    easycommUplinkFrequency(&parsed->as.uplinkFrequency);
+    easycommSetUplinkFrequency(&parsed->as.setUplinkFrequency);
     return 3 == sscanf(buffer,
 
 #if defined(ARDUINO_ARCH_AVR)
@@ -370,15 +370,15 @@ bool readEasycomm2UplinkFrequency(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%u",
 #endif
-                       &c, &c, &parsed->as.uplinkFrequency.frequency.as.uint32);
+                       &c, &c, &parsed->as.setUplinkFrequency.frequency.as.uint32);
 }
 
 
-bool readEasycomm2DownlinkFrequency(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetDownlinkFrequency(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "DNddddddddd", ..., "DNd"
     char c;
-    easycommDownlinkFrequency(&parsed->as.downlinkFrequency);
+    easycommSetDownlinkFrequency(&parsed->as.setDownlinkFrequency);
     return 3 == sscanf(buffer,
 
 #if defined(ARDUINO_ARCH_AVR)
@@ -392,35 +392,35 @@ bool readEasycomm2DownlinkFrequency(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%u",
 #endif
-                       &c, &c, &parsed->as.downlinkFrequency.frequency.as.uint32);
+                       &c, &c, &parsed->as.setDownlinkFrequency.frequency.as.uint32);
 }
 
 
-bool readEasycomm2UplinkMode(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetUplinkMode(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "UMmmm", "UMmm", "UMm"
     char c;
-    easycommUplinkMode(&parsed->as.uplinkMode);
-    return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.uplinkMode.mode[0],
-                       &parsed->as.uplinkMode.mode[1], &parsed->as.uplinkMode.mode[2]);
+    easycommSetUplinkMode(&parsed->as.setUplinkMode);
+    return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.setUplinkMode.mode[0],
+                       &parsed->as.setUplinkMode.mode[1], &parsed->as.setUplinkMode.mode[2]);
 }
 
 
-bool readEasycomm2DownlinkMode(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetDownlinkMode(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "DMmmm", "DMmm", "DMm"
     char c;
-    easycommDownlinkMode(&parsed->as.downlinkMode);
-    return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.downlinkMode.mode[0],
-                       &parsed->as.downlinkMode.mode[1], &parsed->as.downlinkMode.mode[2]);
+    easycommSetDownlinkMode(&parsed->as.setDownlinkMode);
+    return 3 <= sscanf(buffer, "%c%c%c%c%c", &c, &c, &parsed->as.setDownlinkMode.mode[0],
+                       &parsed->as.setDownlinkMode.mode[1], &parsed->as.setDownlinkMode.mode[2]);
 }
 
 
-bool readEasycomm2UplinkRadioNumber(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetUplinkRadioNumber(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "URnnn", "URnn", "URn"
     char c;
-    easycommUplinkRadioNumber(&parsed->as.uplinkRadio);
+    easycommSetUplinkRadioNumber(&parsed->as.setUplinkRadio);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -429,15 +429,15 @@ bool readEasycomm2UplinkRadioNumber(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.uplinkRadio.number);
+                       &c, &c, &parsed->as.setUplinkRadio.number);
 }
 
 
-bool readEasycomm2DownlinkRadioNumber(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetDownlinkRadioNumber(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "DRnnn", "DRnn", "DRn"
     char c;
-    easycommDownlinkRadioNumber(&parsed->as.downlinkRadio);
+    easycommSetDownlinkRadioNumber(&parsed->as.setDownlinkRadio);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -450,59 +450,59 @@ bool readEasycomm2DownlinkRadioNumber(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.downlinkRadio.number);
+                       &c, &c, &parsed->as.setDownlinkRadio.number);
 }
 
 
-bool readEasycomm2MoveLeft(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2DoMoveLeft(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "ML"
-    easycommMoveLeft(&parsed->as.moveLeft);
+    easycommDoMoveLeft(&parsed->as.doMoveLeft);
     return true;
 }
 
 
-bool readEasycomm2MoveRight(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2DoMoveRight(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "MR"
-    easycommMoveRight(&parsed->as.moveRight);
+    easycommDoMoveRight(&parsed->as.doMoveRight);
     return true;
 }
 
 
-bool readEasycomm2MoveUp(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2DoMoveUp(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "MU"
-    easycommMoveUp(&parsed->as.moveUp);
+    easycommDoMoveUp(&parsed->as.doMoveUp);
     return true;
 }
 
 
-bool readEasycomm2MoveDown(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2DoMoveDown(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "MD"
-    easycommMoveDown(&parsed->as.moveDown);
+    easycommDoMoveDown(&parsed->as.doMoveDown);
     return true;
 }
 
 
-bool readEasycomm2StopAzimuthMove(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2DoStopAzimuthMove(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "SA"
-    easycommStopAzimuthMove(&parsed->as.stopAzimuthMove);
+    easycommDoStopAzimuthMove(&parsed->as.doStopAzimuthMove);
     return true;
 }
 
 
-bool readEasycomm2StopElevationMove(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2DoStopElevationMove(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "SE"
-    easycommStopElevationMove(&parsed->as.stopElevationMove);
+    easycommDoStopElevationMove(&parsed->as.doStopElevationMove);
     return true;
 }
 
 
-bool readEasycomm2AcquisitionOfSignal(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2AcquisitionOfSignal(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "AO"
     easycommAcquisitionOfSignal(&parsed->as.acquisitionOfSignal);
@@ -510,7 +510,7 @@ bool readEasycomm2AcquisitionOfSignal(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm2LossOfSignal(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2LossOfSignal(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "LO"
     easycommLossOfSignal(&parsed->as.lossOfSignal);
@@ -518,11 +518,11 @@ bool readEasycomm2LossOfSignal(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm2SetOutput(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetDigitalOutput(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "OPnnn,v", "OPnn,v", "OPn,v"
     char c, value;
-    easycommSetOutput(&parsed->as.setOutput);
+    easycommSetDigitalOutput(&parsed->as.setDigitalOutput);
     size_t items = sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                           "%c%c%u%c%c",
@@ -535,17 +535,17 @@ bool readEasycomm2SetOutput(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                           "%c%c%hu%c%c",
 #endif
-                          &c, &c, &parsed->as.setOutput.number, &c, &value);
-    parsed->as.setOutput.value = (value == '0') ? false : true;
+                          &c, &c, &parsed->as.setDigitalOutput.number, &c, &value);
+    parsed->as.setDigitalOutput.value = (value == '0') ? false : true;
     return 5 == items;
 }
 
 
-bool readEasycomm2ReadInput(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetDigitalInput(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "IPnnn", "IPn", "IPn"
     char c;
-    easycommReadInput(&parsed->as.readInput);
+    easycommGetDigitalInput(&parsed->as.getDigitalInput);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -558,15 +558,15 @@ bool readEasycomm2ReadInput(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.readInput.number);
+                       &c, &c, &parsed->as.getDigitalInput.number);
 }
 
 
-bool readEasycomm2ReadAnalogueInput(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetAnalogueInput(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "ANnnn", "ANn", "ANn"
     char c;
-    easycommReadAnalogueInput(&parsed->as.readAnalogueInput);
+    easycommGetAnalogueInput(&parsed->as.getAnalogueInput);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -579,11 +579,11 @@ bool readEasycomm2ReadAnalogueInput(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.readAnalogueInput.number);
+                       &c, &c, &parsed->as.getAnalogueInput.number);
 }
 
 
-bool readEasycomm2SetTime(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2SetTime(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "STyy:MM:dd:hh:mm:ss"
     easycommSetTime(&parsed->as.setTime);
@@ -600,19 +600,19 @@ bool readEasycomm2SetTime(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm2RequestVersion(const char *buffer, EasycommData *parsed)
+bool parseEasycomm2GetVersion(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VE"
-    easycommRequestVersion(&parsed->as.requestVersion);
+    easycommGetVersion(&parsed->as.getVersion);
     return true;
 }
 
 
-bool readEasycomm3VelocityLeft(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3SetVelocityLeft(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VLddd", "VLdd", "VLd"
     char c;
-    easycommVelocityLeft(&parsed->as.velocityLeft);
+    easycommSetVelocityLeft(&parsed->as.setVelocityLeft);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -625,11 +625,11 @@ bool readEasycomm3VelocityLeft(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.velocityLeft.milliDegSecond);
+                       &c, &c, &parsed->as.setVelocityLeft.milliDegSecond);
 }
 
 
-bool readEasycomm3GetVelocityLeft(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetVelocityLeft(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VL"
     easycommGetVelocityLeft(&parsed->as.getVelocityLeft);
@@ -637,11 +637,11 @@ bool readEasycomm3GetVelocityLeft(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm3VelocityRight(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3SetVelocityRight(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VRddd", "VRdd", "VRd"
     char c;
-    easycommVelocityRight(&parsed->as.velocityRight);
+    easycommSetVelocityRight(&parsed->as.setVelocityRight);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -650,11 +650,11 @@ bool readEasycomm3VelocityRight(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.velocityRight.milliDegSecond);
+                       &c, &c, &parsed->as.setVelocityRight.milliDegSecond);
 }
 
 
-bool readEasycomm3GetVelocityRight(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetVelocityRight(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VR"
     easycommGetVelocityRight(&parsed->as.getVelocityRight);
@@ -662,11 +662,11 @@ bool readEasycomm3GetVelocityRight(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm3VelocityUp(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3SetVelocityUp(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VUddd", "VUdd", "VUd"
     char c;
-    easycommVelocityUp(&parsed->as.velocityUp);
+    easycommSetVelocityUp(&parsed->as.setVelocityUp);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -675,11 +675,11 @@ bool readEasycomm3VelocityUp(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.velocityUp.milliDegSecond);
+                       &c, &c, &parsed->as.setVelocityUp.milliDegSecond);
 }
 
 
-bool readEasycomm3GetVelocityUp(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetVelocityUp(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VU"
     easycommGetVelocityUp(&parsed->as.getVelocityUp);
@@ -687,11 +687,11 @@ bool readEasycomm3GetVelocityUp(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm3VelocityDown(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3SetVelocityDown(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VDddd", "VDdd", "VDd"
     char c;
-    easycommVelocityDown(&parsed->as.velocityDown);
+    easycommSetVelocityDown(&parsed->as.setVelocityDown);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -704,11 +704,11 @@ bool readEasycomm3VelocityDown(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.velocityDown.milliDegSecond);
+                       &c, &c, &parsed->as.setVelocityDown.milliDegSecond);
 }
 
 
-bool readEasycomm3GetVelocityDown(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetVelocityDown(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "VD"
     easycommGetVelocityDown(&parsed->as.getVelocityDown);
@@ -716,11 +716,11 @@ bool readEasycomm3GetVelocityDown(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm3ReadConfig(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetConfigRegister(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "CRrrr", "CRrr", "CRr"
     char c;
-    easycommReadConfig(&parsed->as.readConfig);
+    easycommGetConfigRegister(&parsed->as.getConfigRegister);
     return 3 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u",
@@ -733,15 +733,15 @@ bool readEasycomm3ReadConfig(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu",
 #endif
-                       &c, &c, &parsed->as.readConfig.registerNumber);
+                       &c, &c, &parsed->as.getConfigRegister.registerNumber);
 }
 
 
-bool readEasycomm3WriteConfig(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3SetConfigRegister(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "CWnnn,vvvvvvvvv", ..., "CWn,v"
     char c;
-    easycommWriteConfig(&parsed->as.writeConfig);
+    easycommSetConfigRegister(&parsed->as.setConfigRegister);
     return 4 == sscanf(buffer,
 #if defined(ARDUINO_ARCH_AVR)
                        "%c%c%u,%s",
@@ -754,12 +754,12 @@ bool readEasycomm3WriteConfig(const char *buffer, EasycommData *parsed)
 #else // assume native platform
                        "%c%c%hu,%s",
 #endif
-                       &c, &c, &parsed->as.writeConfig.registerNumber,
-                       parsed->as.writeConfig.value.as.str);
+                       &c, &c, &parsed->as.setConfigRegister.registerNumber,
+                       parsed->as.setConfigRegister.value.as.str);
 }
 
 
-bool readEasycomm3GetStatusRegister(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetStatusRegister(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "GS"
     easycommGetStatusRegister(&parsed->as.getStatusRegister);
@@ -767,23 +767,23 @@ bool readEasycomm3GetStatusRegister(const char *buffer, EasycommData *parsed)
 }
 
 
-bool readEasycomm3GetErrorRegister(const char *buffer, EasycommData *parsed)
+bool parseEasycomm3GetErrorRegister(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "GE"
     easycommGetErrorRegister(&parsed->as.getErrorRegister);
     return true;
 }
 
-bool readEasycommReset(const char *buffer, EasycommData *parsed)
+bool parseEasycommDoReset(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "RESET"
-    easycommReset(&parsed->as.reset);
+    easycommDoReset(&parsed->as.doReset);
     return true;
 }
 
-bool readEasycommPark(const char *buffer, EasycommData *parsed)
+bool parseEasycommDoPark(const char *buffer, EasycommData *parsed)
 {
     // buffer examples: "PARK"
-    easycommPark(&parsed->as.park);
+    easycommDoPark(&parsed->as.doPark);
     return true;
 }
