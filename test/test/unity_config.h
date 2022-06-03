@@ -217,13 +217,14 @@
  * `stdout` option. You decide to route your test result output to a custom
  * serial `RS232_putc()` function you wrote like thus:
  */
-#include "arch_stm32_transport.h"
 /* #define UNITY_OUTPUT_CHAR(a)                    RS232_putc(a) */
 /* #define UNITY_OUTPUT_CHAR_HEADER_DECLARATION    RS232_putc(int) */
 /* #define UNITY_OUTPUT_FLUSH()                    RS232_flush() */
 /* #define UNITY_OUTPUT_FLUSH_HEADER_DECLARATION   RS232_flush(void) */
 /* #define UNITY_OUTPUT_START()                    RS232_config(115200,1,8,0) */
 /* #define UNITY_OUTPUT_COMPLETE()                 RS232_close() */
+#include "transport_arduino_arch_avr.h"
+#include "transport_arduino_arch_stm32.h"
 
 /* Some compilers require a custom attribute to be assigned to pointers, like
  * `near` or `far`. In these cases, you can give Unity a safe default for these
@@ -240,6 +241,6 @@
  *
  * TEST - PASS (10 ms)
  */
-/* #define UNITY_INCLUDE_EXEC_TIME */
+#define UNITY_INCLUDE_EXEC_TIME
 
 #endif /* UNITY_CONFIG_H */

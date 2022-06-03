@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #endif
 
-#include "../common-parse-command.h"
+#include "../helpers/common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -373,4 +373,4 @@ void setUp() {}
 
 void tearDown() {}
 
-#include "../run-tests.h"
+#include "../helpers/run-tests.h"

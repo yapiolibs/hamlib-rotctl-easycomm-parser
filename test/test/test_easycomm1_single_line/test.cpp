@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #endif
 
-#include "../common-parse-command.h"
+#include "../helpers/common-parse-command.h"
 #include <easycomm-parser-types-ctors.h>
 #include <easycomm-parser-types-operators.h>
 #include <easycomm-parser-types-sprintf.h>
@@ -247,6 +247,7 @@ void test_parse_park()
 int tests()
 {
     UNITY_BEGIN();
+    TEST_MESSAGE("xxx bar");
     RUN_TEST(test_parse_elevation_01);
     RUN_TEST(test_parse_elevation_02);
     RUN_TEST(test_parse_elevation_03);
@@ -269,4 +270,4 @@ void setUp() {}
 
 void tearDown() {}
 
-#include "../run-tests.h"
+#include "../helpers/run-tests.h"
