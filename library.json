@@ -13,7 +13,7 @@
     "maintainer": "true"
   }],
   "license": "Apache-2.0",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "frameworks": ["native", "arduino"],
   "platforms": ["native", "atmelavr", "ststm32", "espressiv8266", "espressif32"],
   "headers": [
