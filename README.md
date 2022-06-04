@@ -4,9 +4,12 @@ A PlatformIO parser library for Hamlib rotator control commands.
 - Parses the string-based protocol as described by Easycomm standards I, II or III.
   - from string to C-struct (reception)
   - from C-struct to string (response)
-- Programmed with less dependencies in C for C and C++ projects.
-- Requires float support for `scanf` and `printf`.
-- [Commands reference](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
+  - [Commands reference](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/tree/main/src/)
+- Programmed with less dependencies in C for C and C++ projects. 
+  - can be used without the PlatformIO framework
+  - not exclusively for micro cotrollers
+  - depends on `scanf` and `printf`
+- Requires `float` support for `scanf` and `printf`.
 
 **Integrate in project [example](https://github.com/yapiolibs/hamlib-rotctl-easycomm-parser/blob/main/test/platformio.ini)**
 ```ini
